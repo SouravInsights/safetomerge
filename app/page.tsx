@@ -20,7 +20,6 @@ const parts = [
         n: "01",
         title: "Why Green CI Isn't Evidence of Safety",
         blurb: "Passing tests prove the tests still pass, not that the product still works.",
-        upNext: true,
       },
       {
         n: "02",
@@ -71,7 +70,6 @@ const parts = [
         n: "10",
         title: "Before Anyone Decides, Someone Has to Read This",
         blurb: "How five sources of evidence become one document. It doesn't give a verdict. It gives a picture.",
-        upNext: true,
       },
     ],
   },
@@ -137,7 +135,6 @@ const parts = [
         n: "20",
         title: "Playbooks",
         blurb: 'For common situations, including: "we just gave an AI agent write access to our repo."',
-        upNext: true,
       },
     ],
   },
@@ -148,7 +145,6 @@ const parts = [
         n: "21",
         title: "How PostHog Does It",
         blurb: "A close read of one team working this out in public. What transfers to a smaller or differently-shaped team, and what's specific to being them.",
-        upNext: true,
       },
       {
         n: "22",
@@ -381,11 +377,6 @@ export default function Home() {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
                         <span className="font-medium text-lg leading-snug">{chapter.title}</span>
-                        {chapter.upNext && (
-                          <span className="font-mono text-[10px] tracking-widest uppercase border border-verified text-verified px-2 py-0.5">
-                            Up next
-                          </span>
-                        )}
                       </div>
                       <p className="text-muted text-[15px] leading-snug mt-1">{chapter.blurb}</p>
                     </div>
@@ -453,6 +444,96 @@ export default function Home() {
         <hr className="border-rule" />
       </div>
 
+      <section id="about" className="max-w-3xl mx-auto px-6 py-16 sm:py-20">
+        <p className="font-mono text-xs tracking-widest uppercase text-muted mb-6">
+          Who&apos;s putting this together
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-8 sm:gap-10">
+          <img
+            src="/avatar.jpeg"
+            alt="Sourav"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-rule object-cover shrink-0"
+          />
+
+          <div className="space-y-5 text-lg leading-relaxed max-w-xl">
+            <p>
+              Hi, I&apos;m{" "}
+              <a
+                href="https://souravinsights.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-4 decoration-rule hover:text-ink transition-colors"
+              >
+                Sourav
+              </a>
+              , a product engineer. I&apos;ve spent the last few
+              years building for small teams (Paragraph, Pimlico, Gallery,
+              RabbitHole) and working on my own things.
+            </p>
+
+            <p>
+              Right now, I&apos;m building{" "}
+              <a
+                href="https://www.beenthere.page/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-4 decoration-rule hover:text-ink"
+              >
+                BeenThere
+              </a>
+              , a minimal travel platform. To move faster as a solo developer, I started relying on agents to write code. I quickly learned that generating code is the easy part. Building the scaffolding, strict API contracts, and verification pipelines to actually merge that code without breaking production is where it gets hard.
+            </p>
+
+            <p>
+              I&apos;m putting this handbook together because I needed it. <mark className="mark">I&apos;m just writing down what actually works.</mark> Instead of guessing, I&apos;m reading the internal engineering deep-dives from the teams already doing this in production and the latest <a href="https://arxiv.org/abs/2607.03316" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-rule hover:text-ink">academic research</a> on agentic workflows. I want to know how they sandbox agents, how they handle review fatigue, and what they actually trust to merge.
+            </p>
+
+            <div className="py-2">
+              <p className="font-mono text-[10px] tracking-widest uppercase text-muted mb-3">
+                Teams I&apos;m studying:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { name: "PostHog", domain: "posthog.com", href: "https://posthog.com/blog/10k-prs-a-month" },
+                  { name: "CodeRabbit", domain: "coderabbit.ai", href: "https://www.coderabbit.ai/blog/agentic-sdlc-workflow" },
+                  { name: "OpenAI", domain: "openai.com", href: "https://openai.com/index/harness-engineering/" },
+                  { name: "Cursor", domain: "cursor.com", href: "https://cursor.com/blog/security-agents" },
+                  { name: "Ramp", domain: "ramp.com", href: "https://builders.ramp.com/post/why-we-built-our-background-agent" },
+                  { name: "Sourcegraph", domain: "sourcegraph.com", href: "https://sourcegraph.com/blog/agentic-coding" },
+                  { name: "Replit", domain: "replit.com", href: "https://replit.com/blog/inside-replits-snapshot-engine" },
+                  { name: "Modal", domain: "modal.com", href: "https://modal.com/blog/how-ramp-built-a-full-context-background-coding-agent-on-modal" },
+                  { name: "Prisma", domain: "prisma.io", href: "https://www.prisma.io/blog/series/agentic-engineering" },
+                  { name: "Incident.io", domain: "incident.io", href: "https://incident.io/blog/introducing-ai-sre" },
+                  { name: "Ashby", domain: "ashbyhq.com", href: "https://www.ashbyhq.com/blog/engineering/ai-ashby-engineering-and-the-future" },
+                  { name: "Greptile", domain: "greptile.com", href: "https://www.greptile.com/blog/ai-code-review" },
+                  { name: "Browserbase", domain: "browserbase.com", href: "https://www.browserbase.com/blog/internal-agents" },
+                  { name: "Augment", domain: "augmentcode.com", href: "https://www.augmentcode.com/blog/how-we-built-high-quality-ai-code-review-agent" },
+                  { name: "Polar", domain: "polar.sh", href: "https://polar.sh/blog/orbit-llm-safe-design-system" },
+                  { name: "Dagger", domain: "dagger.io", href: "https://dagger.io/blog/automate-your-ci-fixes-self-healing-pipelines-with-ai-agents/" },
+                  { name: "Vellum", domain: "vellum.ai", href: "https://www.vellum.ai/webinar/coding-agents-doubling-engineering-velocity" },
+                  { name: "Basis", domain: "getbasis.ai", href: "https://www.getbasis.ai/blogs/how-we-made-our-monorepo-ergonomic-for-agents" },
+                ].map((co) => (
+                  <a key={co.name} href={co.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-rule rounded text-sm text-ink bg-white/50 shadow-sm transition-colors hover:border-ink hover:bg-paper">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`https://www.google.com/s2/favicons?domain=${co.domain}&sz=64`} alt={co.name} className="w-3.5 h-3.5 rounded-[3px] grayscale opacity-80" />
+                    {co.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-muted pt-2">
+              Most of the breakthroughs here are their thinking, not mine. My job is just reading it closely, testing the patterns myself, and organizing it so you don&apos;t have to start from zero.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-3xl mx-auto px-6">
+        <hr className="border-rule" />
+      </div>
+
       <footer id="notify" className="max-w-3xl mx-auto px-6 py-16 sm:py-20">
         <p className="font-mono text-xs tracking-widest uppercase text-muted mb-6">
           Stay in the loop
@@ -477,7 +558,7 @@ export default function Home() {
             <span className="font-medium text-ink">Safe to Merge</span>
             <span className="text-muted/40">|</span>
             <span>
-              A project by <a href="https://souravinsights.com" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline underline-offset-4 decoration-rule transition-colors">Sourav</a>
+              Put together by <a href="https://souravinsights.com" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline underline-offset-4 decoration-rule transition-colors">Sourav</a>
             </span>
           </div>
           <p className="font-mono text-xs">© 2026</p>

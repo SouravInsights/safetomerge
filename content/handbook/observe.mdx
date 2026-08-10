@@ -1,0 +1,23 @@
+---
+title: "Observe"
+sidebar_position: 2
+---
+
+# Observe: Knowing what the system is doing
+
+When something goes wrong in your review pipeline, it's often because you didn't have a clear picture of what the system was doing *before* the change.
+
+## Telemetry as Context
+
+Agents write code based on the context they are given. If you don't have good telemetry in production, you can't provide that context.
+
+```javascript
+// Example of logging that provides good context
+logger.info("Processing user request", {
+  userId: user.id,
+  action: "merge_pr",
+  durationMs: 120,
+});
+```
+
+Observability is the first stage of the loop for a reason. You can't fix what you can't see.

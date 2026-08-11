@@ -104,7 +104,7 @@ const parts = [
       {
         n: "15",
         title: "Why a Script Isn't Enough",
-        blurb: "Verification that survives a crash, a timeout, or an agent that gets halfway through and stops.",
+        blurb: "Review processes that survive a crash, a timeout, or an agent that gets halfway through and stops.",
       },
       {
         n: "16",
@@ -482,7 +482,7 @@ export default function Home() {
               >
                 BeenThere
               </a>
-              , a minimal travel platform. To move faster as a solo developer, I started relying on agents to write code. I quickly learned that generating code is the easy part. Building the scaffolding, strict API contracts, and verification pipelines to actually merge that code without breaking production is where it gets hard.
+              , a minimal travel platform. To move faster as a solo developer, I started relying on agents to write code. I quickly learned that generating code is the easy part. Building the scaffolding, strict API contracts, and review pipelines to actually merge that code without breaking production is where it gets hard.
             </p>
 
             <p>

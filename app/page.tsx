@@ -1,4 +1,5 @@
 import { NotifyForm } from "./components/notify-form";
+import { ArrowRight } from "lucide-react";
 
 const loopStages = [
   { label: "OBSERVE", desc: "Knowing what's actually happening in production." },
@@ -179,29 +180,40 @@ export default function Home() {
           <mark className="mark">where a human still has to be the one who decides.</mark>
         </p>
 
-        <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-14">
+        <div className="mb-14 space-y-4">
           <NotifyForm
             id="notify-hero"
-            formClassName="flex w-full sm:w-auto flex-wrap"
-            inputClassName="w-full sm:w-64"
+            formClassName="flex flex-col sm:flex-row gap-3 max-w-md"
+            inputClassName="flex-1"
           />
-          <a
-            href="#contents"
-            className="font-mono text-sm text-muted hover:text-ink underline underline-offset-4 decoration-rule"
-          >
-            See what&apos;s inside
-          </a>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-muted pt-1">
+            <a
+              href="#contents"
+              className="hover:text-ink underline underline-offset-4 decoration-rule transition-colors"
+            >
+              See what&apos;s inside
+            </a>
+            <span className="text-muted/40" aria-hidden="true">&middot;</span>
+            <a
+              href="/contribute"
+              className="text-ink hover:text-verified underline underline-offset-4 decoration-rule transition-colors font-medium inline-flex items-center gap-1"
+            >
+              Share how your team ships
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         <nav
           aria-label="Page sections"
-          className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs tracking-widest uppercase text-muted"
+          className="flex overflow-x-auto whitespace-nowrap gap-5 pb-2 scrollbar-none font-mono text-xs tracking-widest uppercase text-muted -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap sm:pb-0"
         >
           {[
             { href: "#why", label: "Why" },
             { href: "#loop", label: "The loop" },
             { href: "#contents", label: "Contents" },
             { href: "#for-you", label: "Is this for you" },
+            { href: "/contribute", label: "Contribute" },
             { href: "#notify", label: "Get updates" },
           ].map((item) => (
             <a
@@ -224,19 +236,24 @@ export default function Home() {
           Why this exists
         </p>
         <div className="space-y-5 text-lg leading-relaxed max-w-2xl">
-          <p className="first-letter:font-serif first-letter:text-6xl first-letter:font-semibold first-letter:float-left first-letter:leading-[0.82] first-letter:mr-3 first-letter:mt-1">
-            PostHog went from 1,441 PRs in January to 4,725 in June. Over that
-            same stretch, the share opened by AI agents grew from around 20%
-            to over 70%.
-            <sup className="ml-0.5">
-              <a
-                href="#note-1"
-                className="font-mono text-[11px] text-verified hover:text-ink no-underline"
-              >
-                [1]
-              </a>
-            </sup>{" "}
-            More teams are heading the same direction. The question
+          <p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://www.google.com/s2/favicons?domain=posthog.com&sz=64"
+              alt="PostHog"
+              className="w-4 h-4 rounded-[3px] opacity-90 inline-block align-[-2px] mr-1.5"
+            />
+            <span className="font-medium text-ink">PostHog</span>{" "}
+            <a
+              href="https://posthog.com/blog/10k-prs-a-month"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4 decoration-rule hover:text-verified transition-colors text-ink font-normal"
+            >
+              went from 1,441 PRs in January to 4,725 in June
+            </a>
+            . Over that same stretch, the share opened by AI agents grew from around 20%
+            to over 70%. More teams are heading the same direction. The question
             that comes with it is the same one:{" "}
             <mark className="mark">how do you keep software reliable
             when you can&apos;t personally review every change?</mark>
@@ -263,23 +280,6 @@ export default function Home() {
             proves a change is safe. How to assemble it from tools a team
             likely already runs. Where a human still has to be the one who
             decides.
-          </p>
-
-          <p
-            id="note-1"
-            className="!text-sm font-mono text-muted pt-4 mt-8 border-t border-rule"
-          >
-            [1] PostHog,{" "}
-            <a
-              href="https://posthog.com/blog/10k-prs-a-month"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-4 decoration-rule hover:text-ink"
-            >
-              &ldquo;10,000 PRs a month is easy: How devex is evolving at
-              PostHog&rdquo;
-            </a>
-            , Jul 2026.
           </p>
         </div>
       </section>
@@ -344,7 +344,7 @@ export default function Home() {
           exist yet.
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-14">
+        <div className="flex overflow-x-auto whitespace-nowrap gap-2 mb-10 pb-2 scrollbar-none -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap">
           {parts.map((part, index) => {
             const [roman, ...rest] = part.title.split(":");
             return (
@@ -365,7 +365,7 @@ export default function Home() {
         <div className="space-y-14">
           {parts.map((part, index) => (
             <div key={part.title} id={partSlug(index)} className="scroll-mt-8">
-              <h3 className="sticky top-0 bg-paper/95 backdrop-blur-sm py-2 -mx-6 px-6 sm:mx-0 sm:px-0 font-mono text-xs tracking-widest uppercase text-ink mb-5 z-10">
+              <h3 className="sticky top-0 bg-paper/95 backdrop-blur-md py-2.5 -mx-6 px-6 sm:mx-0 sm:px-0 font-mono text-xs tracking-widest uppercase text-ink mb-5 z-10 border-b border-rule/50">
                 {part.title}
               </h3>
               <ol className="space-y-5">
@@ -440,9 +440,33 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="max-w-3xl mx-auto px-6">
-        <hr className="border-rule" />
-      </div>
+      <section id="contribute" className="section-band max-w-full py-16 sm:py-20 border-y border-rule">
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="mb-6">
+            <span className="inline-block font-mono text-xs tracking-widest uppercase text-verified bg-verified/10 px-2.5 py-1 border border-verified/20">
+              Call for contributions
+            </span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl font-semibold leading-tight tracking-tight mb-4">
+            How does your team ship code <mark className="mark">when agents write a lot of it</mark>?
+          </h2>
+
+          <p className="text-lg text-muted leading-relaxed max-w-xl mb-8">
+            This handbook isn&apos;t built on theories or based on one person&apos;s opinions. It&apos;s informed by software teams figuring this out in production right now. If you&apos;ve built something that works (or discovered where your workflow breaks), I want to learn from your experiences and feature it.
+          </p>
+
+          <div>
+            <a
+              href="/contribute"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest bg-ink text-paper px-6 py-3.5 hover:bg-verified transition-colors"
+            >
+              Share your team&apos;s workflow
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+      </section>
 
       <section id="about" className="max-w-3xl mx-auto px-6 py-16 sm:py-20">
         <p className="font-mono text-xs tracking-widest uppercase text-muted mb-6">
@@ -524,7 +548,14 @@ export default function Home() {
             </div>
 
             <p className="text-muted pt-2">
-              Most of the breakthroughs here are their thinking, not mine. My job is just reading it closely, testing the patterns myself, and organizing it so you don&apos;t have to start from zero.
+              Most of the breakthroughs here are their thinking, not mine. My job is just reading it closely, testing the patterns myself, and organizing it so you don&apos;t have to start from zero. If your team is figuring this out in production,{" "}
+              <a
+                href="/contribute"
+                className="text-ink font-medium underline underline-offset-4 decoration-rule hover:text-verified transition-colors inline-flex items-center gap-1"
+              >
+                share how your team ships
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>.
             </p>
           </div>
         </div>
@@ -553,15 +584,38 @@ export default function Home() {
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-muted border-t border-rule pt-8">
-          <div className="flex items-center gap-4">
-            <span className="font-medium text-ink">Safe to Merge</span>
-            <span className="text-muted/40">|</span>
-            <span>
-              Put together by <a href="https://souravinsights.com" target="_blank" rel="noopener noreferrer" className="hover:text-ink underline underline-offset-4 decoration-rule transition-colors">Sourav</a>
-            </span>
+        <div className="border-t border-rule pt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3 flex-wrap">
+            <a
+              href="/"
+              className="font-mono text-[11px] tracking-widest uppercase font-extrabold text-ink border-2 border-ink px-2.5 py-1 bg-paper shadow-[2px_2px_0px_0px_#1e2530] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] hover:border-verified hover:text-verified transition-all inline-block select-none"
+            >
+              SAFETOMERGE
+            </a>
+            <span className="text-muted/30 font-light">&bull;</span>
+            <a
+              href="/contribute"
+              className="font-mono text-xs uppercase tracking-wider text-muted hover:text-ink underline underline-offset-4 decoration-rule transition-colors"
+            >
+              Contribute
+            </a>
           </div>
-          <p className="font-mono text-xs">© 2026</p>
+
+          <div className="flex items-center gap-3 text-xs text-muted font-mono flex-wrap">
+            <span>
+              By{" "}
+              <a
+                href="https://souravinsights.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ink hover:text-verified underline underline-offset-4 decoration-rule transition-colors font-medium"
+              >
+                Sourav
+              </a>
+            </span>
+            <span className="text-muted/30">&middot;</span>
+            <span>&copy; 2026</span>
+          </div>
         </div>
       </footer>
     </main>

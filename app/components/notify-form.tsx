@@ -65,7 +65,7 @@ export function NotifyForm({
         }}
         aria-invalid={status === "invalid" || status === "error"}
         aria-describedby={status === "invalid" || status === "error" ? `${id}-error` : undefined}
-        className={`font-mono text-sm bg-transparent outline-none px-4 py-3 placeholder:text-muted/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
+        className={`font-mono text-base sm:text-sm bg-transparent outline-none px-4 py-3 h-12 sm:h-[46px] placeholder:text-muted/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
           status === "invalid" || status === "error"
             ? "border-flag focus:border-flag"
             : "border-rule focus:border-ink"
@@ -74,7 +74,7 @@ export function NotifyForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="font-mono text-sm uppercase tracking-wide bg-ink text-paper px-5 py-3 hover:bg-verified transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed h-[46px]"
+        className="font-mono text-xs sm:text-sm uppercase tracking-wide bg-ink text-paper px-5 py-3 hover:bg-verified transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed h-12 sm:h-[46px] shrink-0"
       >
         Notify me
       </button>

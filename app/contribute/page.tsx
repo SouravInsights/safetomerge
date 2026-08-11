@@ -14,6 +14,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { submitContribution } from "@/app/actions/contribute";
+import { Logo } from "@/components/logo";
 
 /* ── Form State Types ── */
 
@@ -181,9 +183,15 @@ export default function ContributePage() {
     }
 
     setSubmitting(true);
+    setError(null);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 700));
-      setSubmitted(true);
+      const res = await submitContribution(form, "v1");
+
+      if (res.success) {
+        setSubmitted(true);
+      } else {
+        setError(res.error || "Failed to save response. Please try again.");
+      }
     } catch {
       setError("Something went wrong submitting your response. Please try again.");
     } finally {
@@ -208,9 +216,10 @@ export default function ContributePage() {
           </p>
           <a
             href="/"
-            className="font-mono text-sm text-muted hover:text-ink underline underline-offset-4 decoration-rule"
+            className="font-mono text-sm text-muted hover:text-ink underline underline-offset-4 decoration-rule inline-flex items-center gap-2"
           >
-            &larr; Back to Safe to Merge
+            <ArrowLeft className="w-4 h-4" />
+            Back to home
           </a>
         </section>
       </main>
@@ -223,15 +232,10 @@ export default function ContributePage() {
     <main className="flex-1 min-h-screen flex flex-col">
       {/* ── Header ── */}
       <header className="max-w-3xl mx-auto px-6 pt-12 sm:pt-24 pb-6 w-full">
-        <div className="flex items-center gap-2 mb-4 sm:mb-6">
-          <a
-            href="/"
-            className="font-mono text-xs tracking-widest uppercase text-muted hover:text-ink transition-colors"
-          >
-            Safe to Merge
-          </a>
-          <span className="text-muted/40">/</span>
-          <span className="font-mono text-xs tracking-widest uppercase text-ink font-medium">
+        <div className="flex items-center gap-3.5 mb-4 sm:mb-6">
+          <Logo />
+          <span className="text-muted/40 font-mono text-xs select-none pl-0.5">/</span>
+          <span className="font-mono text-xs tracking-widest uppercase text-ink font-semibold">
             Contribute
           </span>
         </div>

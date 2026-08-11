@@ -1,5 +1,6 @@
 import { NotifyForm } from "./components/notify-form";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Plus, Minus } from "lucide-react";
+import { Logo } from "@/components/logo";
 
 const loopStages = [
   { label: "OBSERVE", desc: "Knowing what's actually happening in production." },
@@ -180,51 +181,30 @@ export default function Home() {
           <mark className="mark">where a human still has to be the one who decides.</mark>
         </p>
 
-        <div className="mb-14 space-y-4">
+        <div className="space-y-4">
           <NotifyForm
             id="notify-hero"
             formClassName="flex flex-col sm:flex-row gap-3 max-w-md"
             inputClassName="flex-1"
           />
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-muted pt-1">
+
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 font-mono text-xs text-muted pt-1">
             <a
               href="#contents"
-              className="hover:text-ink underline underline-offset-4 decoration-rule transition-colors"
+              className="py-2.5 hover:text-ink underline underline-offset-4 decoration-rule transition-colors touch-manipulation"
             >
               See what&apos;s inside
             </a>
-            <span className="text-muted/40" aria-hidden="true">&middot;</span>
+            <span className="text-muted/40 font-mono text-xs select-none px-0.5" aria-hidden="true">/</span>
             <a
               href="/contribute"
-              className="text-ink hover:text-verified underline underline-offset-4 decoration-rule transition-colors font-medium inline-flex items-center gap-1"
+              className="py-2.5 text-verified hover:text-ink font-medium underline underline-offset-4 decoration-verified/40 transition-colors inline-flex items-center gap-1.5 touch-manipulation"
             >
-              Share how your team ships
+              Contribute
               <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
-
-        <nav
-          aria-label="Page sections"
-          className="flex overflow-x-auto whitespace-nowrap gap-5 pb-2 scrollbar-none font-mono text-xs tracking-widest uppercase text-muted -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap sm:pb-0"
-        >
-          {[
-            { href: "#why", label: "Why" },
-            { href: "#loop", label: "The loop" },
-            { href: "#contents", label: "Contents" },
-            { href: "#for-you", label: "Is this for you" },
-            { href: "/contribute", label: "Contribute" },
-            { href: "#notify", label: "Get updates" },
-          ].map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="hover:text-ink transition-colors"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
       </header>
 
       <div className="max-w-3xl mx-auto px-6">
@@ -252,7 +232,7 @@ export default function Home() {
             >
               went from 1,441 PRs in January to 4,725 in June
             </a>
-            . Over that same stretch, the share opened by AI agents grew from around 20%
+            . Over that same stretch, the percentage of PRs created by AI agents grew from around 20%
             to over 70%. More teams are heading the same direction. The question
             that comes with it is the same one:{" "}
             <mark className="mark">how do you keep software reliable
@@ -409,9 +389,7 @@ export default function Home() {
                 "You want a mental model for the problem, more than another list of product launches to skim.",
               ].map((text) => (
                 <li key={text} className="flex gap-3">
-                  <span className="font-mono text-verified shrink-0" aria-hidden="true">
-                    +
-                  </span>
+                  <Plus className="w-4 h-4 text-verified shrink-0 mt-1" />
                   <span>{text}</span>
                 </li>
               ))}
@@ -428,9 +406,7 @@ export default function Home() {
                 "You need a finished manual right now. I'm still learning and writing this as I go.",
               ].map((text) => (
                 <li key={text} className="flex gap-3">
-                  <span className="font-mono text-flag shrink-0" aria-hidden="true">
-                    &minus;
-                  </span>
+                  <Minus className="w-4 h-4 text-flag shrink-0 mt-1" />
                   <span>{text}</span>
                 </li>
               ))}
@@ -547,15 +523,15 @@ export default function Home() {
               </div>
             </div>
 
-            <p className="text-muted pt-2">
-              Most of the breakthroughs here are their thinking, not mine. My job is just reading it closely, testing the patterns myself, and organizing it so you don&apos;t have to start from zero. If your team is figuring this out in production,{" "}
+            <p className="text-muted pt-2 leading-relaxed">
+              These insights come from real engineering teams shipping in production. My role is to test these patterns hands-on, see what actually works, and organize it so you don&apos;t have to figure it out from scratch. If your team is figuring this out in production,{" "}
               <a
                 href="/contribute"
-                className="text-ink font-medium underline underline-offset-4 decoration-rule hover:text-verified transition-colors inline-flex items-center gap-1"
+                className="text-ink font-medium underline underline-offset-4 decoration-rule hover:text-verified transition-colors"
               >
                 share how your team ships
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>.
+              </a>
+              .
             </p>
           </div>
         </div>
@@ -586,12 +562,7 @@ export default function Home() {
 
         <div className="border-t border-rule pt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3 flex-wrap">
-            <a
-              href="/"
-              className="font-mono text-[11px] tracking-widest uppercase font-extrabold text-ink border-2 border-ink px-2.5 py-1 bg-paper shadow-[2px_2px_0px_0px_#1e2530] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] hover:border-verified hover:text-verified transition-all inline-block select-none"
-            >
-              SAFETOMERGE
-            </a>
+            <Logo />
             <span className="text-muted/30 font-light">&bull;</span>
             <a
               href="/contribute"

@@ -288,8 +288,8 @@ export default function Home() {
         <hr className="border-rule" />
       </div>
 
-      <section id="loop" className="section-band max-w-full px-6 py-16 sm:py-20">
-        <div className="max-w-3xl mx-auto">
+      <section id="loop" className="section-band max-w-full py-16 sm:py-20">
+        <div className="max-w-3xl mx-auto px-6">
         <p className="font-mono text-xs tracking-widest uppercase text-muted mb-6">
           How it&apos;s organized
         </p>
@@ -392,8 +392,8 @@ export default function Home() {
         <hr className="border-rule" />
       </div>
 
-      <section id="for-you" className="section-band max-w-full px-6 py-16 sm:py-20">
-        <div className="max-w-3xl mx-auto">
+      <section id="for-you" className="section-band max-w-full py-16 sm:py-20">
+        <div className="max-w-3xl mx-auto px-6">
         <p className="font-mono text-xs tracking-widest uppercase text-muted mb-10">
           Is this for you
         </p>

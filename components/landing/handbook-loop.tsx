@@ -3,12 +3,30 @@ import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/landing/section-label";
 
 export const LOOP_STAGES = [
-  { label: "OBSERVE", desc: "Knowing what's actually happening in production." },
-  { label: "UNDERSTAND", desc: "Mapping the blast radius of a specific change." },
-  { label: "CHANGE", desc: "Authoring the code, whether by human or agent." },
-  { label: "VERIFY", desc: "Gathering evidence that the change is safe." },
-  { label: "SHIP", desc: "Moving the code to production reliably." },
-  { label: "LEARN", desc: "Feeding outcomes back into the next cycle." },
+  {
+    label: "OBSERVE",
+    desc: "Know what is actually happening: errors, usage, traces, replays, deployments, and failures.",
+  },
+  {
+    label: "UNDERSTAND",
+    desc: "Give the change the context it needs: intent, architecture, history, ownership, and blast radius.",
+  },
+  {
+    label: "CHANGE",
+    desc: "Let humans or agents make the change with the right tools, constraints, and durable execution.",
+  },
+  {
+    label: "VERIFY",
+    desc: "Assemble independent evidence that the intended behavior still holds, not just that a test suite is green.",
+  },
+  {
+    label: "SHIP",
+    desc: "Move changes through safe boundaries with progressive autonomy, approvals, rollback, and auditability.",
+  },
+  {
+    label: "LEARN",
+    desc: "Turn production outcomes, failures, and human decisions into better context, evaluations, checks, and workflows.",
+  },
 ];
 
 export function HandbookLoop() {
@@ -20,9 +38,8 @@ export function HandbookLoop() {
           The whole book maps to six stages.
         </h2>
         <p className="text-lg text-muted leading-relaxed max-w-xl mb-10">
-          Most teams are fine at five of these and struggling with one. The
-          handbook is built around each stage. If you know which one is weak
-          in your own process, you know where to start.
+          The loop stays simple. The handbook goes deeper into what each stage
+          needs when agents become a bigger part of how software gets built.
         </p>
 
         <ol className="grid sm:grid-cols-2 gap-x-12 gap-y-10 mt-6">
@@ -47,7 +64,7 @@ export function HandbookLoop() {
               &#8635;
             </span>
             <p className="text-sm text-muted italic leading-relaxed pt-1.5">
-              Then back to Observe, and the cycle repeats.
+              Then back to Observe. The system should get better as it runs.
             </p>
           </li>
         </ol>

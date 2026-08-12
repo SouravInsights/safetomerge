@@ -17,7 +17,9 @@ export function ContributionBanner() {
         </h2>
 
         <p className="text-lg text-muted leading-relaxed max-w-xl mb-8">
-          This handbook isn&apos;t built on theories or based on one person&apos;s opinions. It&apos;s informed by software teams figuring this out in production right now. If you&apos;ve built something that works (or discovered where your workflow breaks), I want to learn from your experiences and feature it.
+          I&apos;m looking for concrete workflows, failures, internal tools, and
+          lessons from teams figuring this out in production. No polished AI
+          opinions needed. If something worked — or broke — I want to learn from it.
         </p>
 
         <div>

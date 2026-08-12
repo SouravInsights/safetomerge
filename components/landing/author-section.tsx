@@ -44,34 +44,34 @@ export function AuthorSection() {
         <div className="space-y-6 text-lg leading-relaxed">
           <p>
             Hi, I&apos;m{" "}
-            <a
-              href="https://souravinsights.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-4 decoration-rule hover:text-ink transition-colors"
-            >
+            <a href="https://souravinsights.com" target="_blank" rel="noopener noreferrer"
+              className="underline underline-offset-4 decoration-rule hover:text-ink transition-colors">
               Sourav
             </a>
-            , a product engineer. I&apos;ve spent the last few
-            years building for small teams (Paragraph, Pimlico, Gallery,
-            RabbitHole) and working on my own things.
+            , a product engineer. I&apos;ve spent the last few years building for
+            small teams (Paragraph, Pimlico, Gallery, RabbitHole) and working on my own things.
           </p>
 
           <p>
             Right now, I&apos;m building{" "}
-            <a
-              href="https://www.beenthere.page/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-4 decoration-rule hover:text-ink"
-            >
+            <a href="https://www.beenthere.page/" target="_blank" rel="noopener noreferrer"
+              className="underline underline-offset-4 decoration-rule hover:text-ink">
               BeenThere
             </a>
-            , a minimal travel platform. To move faster as a solo developer, I started relying on agents to write code. I quickly learned that generating code is the easy part. Building the scaffolding, strict API contracts, and review pipelines to actually merge that code without breaking production is where it gets hard.
+            , a minimal travel platform. To move faster as a solo developer, I started
+            relying on agents to write code. I quickly learned that generating code is
+            the easy part. The harder problem is building the system around the agent:
+            giving it the right context, constraining what it can do, verifying its
+            changes, and learning from what happens after shipping.
           </p>
 
           <p>
-            I&apos;m putting this handbook together because I needed it. <mark className="mark">I&apos;m just writing down what actually works.</mark> Instead of guessing, I&apos;m reading the internal engineering deep-dives from the teams already doing this in production and the latest <a href="https://arxiv.org/abs/2607.03316" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-rule hover:text-ink">academic research</a> on agentic workflows. I want to know how they sandbox agents, how they handle review fatigue, and what they actually trust to merge.
+            I&apos;m putting this handbook together because I needed it.{" "}
+            <mark className="mark">I&apos;m just writing down what actually works.</mark>{" "}
+            I&apos;m studying the engineering deep-dives from teams already doing this
+            in production, talking to engineers directly, and reading the research around
+            agentic software engineering, evaluation, observability, reliability, and
+            self-healing systems. I want to understand what survives contact with reality.
           </p>
 
           <div className="py-2">
@@ -80,19 +80,11 @@ export function AuthorSection() {
             </p>
             <div className="flex flex-wrap gap-2">
               {STUDIED_TEAMS.map((co) => (
-                <a
-                  key={co.name}
-                  href={co.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-rule rounded-none text-sm text-ink bg-white/50 shadow-sm transition-colors hover:border-ink hover:bg-paper"
-                >
+                <a key={co.name} href={co.href} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-rule rounded-none text-sm text-ink bg-white/50 shadow-sm transition-colors hover:border-ink hover:bg-paper">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://www.google.com/s2/favicons?domain=${co.domain}&sz=64`}
-                    alt={co.name}
-                    className="w-3.5 h-3.5 rounded-[3px] grayscale opacity-80"
-                  />
+                  <img src={`https://www.google.com/s2/favicons?domain=${co.domain}&sz=64`}
+                    alt={co.name} className="w-3.5 h-3.5 rounded-[3px] grayscale opacity-80" />
                   {co.name}
                 </a>
               ))}
@@ -100,11 +92,12 @@ export function AuthorSection() {
           </div>
 
           <p className="text-muted pt-2 leading-relaxed">
-            These insights come from real engineering teams shipping in production. My role is to test these patterns hands-on, see what actually works, and organize it so you don&apos;t have to figure it out from scratch. If your team is figuring this out in production,{" "}
-            <a
-              href="/contribute"
-              className="text-ink font-medium underline underline-offset-4 decoration-rule hover:text-verified transition-colors"
-            >
+            These insights come from real engineering teams shipping in production.
+            My role is to test these patterns hands-on, see what actually works, and
+            organize it so you don&apos;t have to figure it out from scratch. If your
+            team is figuring this out in production,{" "}
+            <a href="/contribute"
+              className="text-ink font-medium underline underline-offset-4 decoration-rule hover:text-verified transition-colors">
               share how your team ships
             </a>
             .

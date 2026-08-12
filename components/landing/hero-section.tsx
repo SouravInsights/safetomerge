@@ -12,14 +12,14 @@ export function HeroSection() {
 
         <h1 className="text-4xl sm:text-6xl font-semibold leading-[1.05] tracking-tight mb-6">
           Software is moving <em className="italic font-medium">faster</em>{" "}
-          than you can review it.
+          than your engineering system can adapt.
         </h1>
 
         <p className="text-lg sm:text-xl text-muted leading-relaxed mb-10">
-          The pipeline that worked when humans wrote every line is starting to
-          break down. This handbook is about how teams are figuring out what
-          replaces it, and{" "}
-          <mark className="mark">where a human still has to be the one who decides.</mark>
+          Agents are making software cheaper to change. The hard part is building
+          the systems around them: enough context to understand a change, enough
+          evidence to trust it, and enough feedback to make the next change better.
+          <mark className="mark"> This handbook is about how teams are figuring that out.</mark>
         </p>
 
         <div className="space-y-4">

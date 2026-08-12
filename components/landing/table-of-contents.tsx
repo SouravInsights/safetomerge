@@ -15,143 +15,55 @@ export interface Part {
 
 export const HANDBOOK_PARTS: Part[] = [
   {
-    title: "Part I: Why Tooling Alone Isn't Enough",
+    title: "Part I: The New Engineering System",
     chapters: [
-      {
-        n: "01",
-        title: "Why Green CI Isn't Evidence of Safety",
-        blurb: "Passing tests prove the tests still pass, not that the product still works.",
-      },
-      {
-        n: "02",
-        title: "The Loop, and Where Your Team Is Weakest",
-        blurb: "Using Observe, Understand, Change, Verify, Ship, Learn to find where your own process breaks down.",
-      },
-      {
-        n: "03",
-        title: "You Don't Have Enough Attention to Review Everything",
-        blurb: "Focus your team's limited review time on the changes that need it most.",
-      },
-      {
-        n: "04",
-        title: "What Actually Changes When Agents Write the Code",
-        blurb: "The review load, what a human reviewer is checking for, and what the team's job becomes.",
-      },
+      { n: "01", title: "When Software Becomes Cheap to Change", blurb: "How agentic development changes the economics of shipping, and why verification is no longer the only bottleneck." },
+      { n: "02", title: "The Engineering Loop", blurb: "Observe, Understand, Change, Verify, Ship, Learn — and how the stages reinforce each other." },
+      { n: "03", title: "What Does 'Correct' Actually Mean?", blurb: "Intent, specifications, acceptance criteria, behavioral contracts, invariants, and the signals that let a machine reason about correctness." },
+      { n: "04", title: "The Cost of Moving Fast", blurb: "Review fatigue, AI-generated entropy, architectural drift, stale knowledge, and the maintenance work a high-velocity codebase creates." },
     ],
   },
   {
-    title: "Part II: What Counts as Evidence",
+    title: "Part II: Give the System the Right Context",
     chapters: [
-      {
-        n: "05",
-        title: "What CI Proves (and Doesn't)",
-        blurb: "Test-impact analysis, and handling the tests you no longer trust.",
-      },
-      {
-        n: "06",
-        title: "What Production Already Knows",
-        blurb: "Mining the observability you already have for what's already gone wrong.",
-      },
-      {
-        n: "07",
-        title: "What a Browser Can Verify Right Now",
-        blurb: "For the flows nothing else already covers.",
-      },
-      {
-        n: "08",
-        title: "What the Diff Itself Signals",
-        blurb: "Blast radius, historical norms, and the categories that never get waved through.",
-      },
-      {
-        n: "09",
-        title: "Who Should Look at This",
-        blurb: "Ownership and reviewer-routing from history: cheap, and usually skipped.",
-      },
-      {
-        n: "10",
-        title: "Before Anyone Decides, Someone Has to Read This",
-        blurb: "How five sources of evidence become one document. It doesn't give a verdict. It gives a picture.",
-      },
+      { n: "05", title: "Make the Codebase Legible to Agents", blurb: "Repository knowledge, architecture, domain context, history, ownership, and progressive disclosure." },
+      { n: "06", title: "Understand the Blast Radius", blurb: "How to connect diffs with dependencies, user journeys, ownership, historical patterns, and production behavior before changing anything." },
+      { n: "07", title: "Make Production Legible", blurb: "Errors, logs, traces, analytics, session replay, feature flags, deployments, and the production signals agents can actually use." },
+      { n: "08", title: "The Agent Harness", blurb: "Tools, skills, memory, permissions, sandboxes, state, checkpoints, retries, and the scaffolding around the model." },
     ],
   },
   {
-    title: "Part III: Getting Agents Ready to Touch Real Code",
+    title: "Part III: Change With Guardrails",
     chapters: [
-      {
-        n: "11",
-        title: "Before You Give an Agent Write Access",
-        blurb: "The conventions, docs, and permission boundaries that make the difference between an agent that helps and one that makes a mess.",
-      },
-      {
-        n: "12",
-        title: "The Agent Harness",
-        blurb: "Context, memory, sandboxing, and the scaffolding that lets an agent self-correct.",
-      },
-      {
-        n: "13",
-        title: "Safe Autonomy",
-        blurb: "What an agent may do alone, what needs approval, what never gets automated.",
-      },
+      { n: "09", title: "Before You Give an Agent Write Access", blurb: "Repository conventions, contracts, test environments, secrets, permissions, and the boundaries that make agent work safe." },
+      { n: "10", title: "Long-Running Agents", blurb: "Durable execution, resumability, partial failures, checkpoints, artifacts, handoffs, and what changes when an agent works for hours." },
+      { n: "11", title: "What Counts as Evidence?", blurb: "Why a green check is only one signal, and how tests, browser runs, traces, replays, static checks, and human judgment combine into evidence." },
+      { n: "12", title: "Verify the Change, Not the Whole World", blurb: "Risk-based verification, test-impact analysis, targeted browser checks, historical regressions, and evidence proportional to blast radius." },
     ],
   },
   {
-    title: "Part IV: Shipping and Learning From What Happens",
+    title: "Part IV: Trust, Autonomy & Shipping",
     chapters: [
-      {
-        n: "14",
-        title: "Where to Draw the Line Between Agents and Humans",
-        blurb: "How teams are actually deciding this, with real examples of where they've landed.",
-      },
-      {
-        n: "15",
-        title: "Why a Script Isn't Enough",
-        blurb: "Review processes that survive a crash, a timeout, or an agent that gets halfway through and stops.",
-      },
-      {
-        n: "16",
-        title: "Human-in-the-Loop That Doesn't Get Ignored",
-        blurb: "The alert-fatigue trap: flag too much and people stop reading it.",
-      },
-      {
-        n: "17",
-        title: "Did the Change Actually Work?",
-        blurb: "How to close the loop: feeding what actually happened back into what gets checked next time.",
-      },
+      { n: "13", title: "Who Should Decide?", blurb: "What agents can decide alone, what needs approval, and how teams can increase autonomy without removing accountability." },
+      { n: "14", title: "Independent Verification", blurb: "How to keep the agent from becoming its own oracle, including external checks, evidence quality, and failure-aware review." },
+      { n: "15", title: "Human Review Without the Noise", blurb: "Review routing, ownership, alert fatigue, AI review quality, and preserving human attention for decisions that need it." },
+      { n: "16", title: "Ship Safely", blurb: "Preview environments, CI/CD, progressive delivery, rollback, auditability, and safe boundaries between merge and production." },
     ],
   },
   {
-    title: "Part V: Evaluation & Adoption",
+    title: "Part V: Learn, Evaluate, Improve",
     chapters: [
-      {
-        n: "18",
-        title: "Measuring Whether Any of This Is Working",
-        blurb: "Backtesting, false-positive rates, time-to-detection. The section most guides like this skip.",
-      },
-      {
-        n: "19",
-        title: "How to Start, Week by Week",
-        blurb: "Start with what you already have, before building anything new.",
-      },
-      {
-        n: "20",
-        title: "Playbooks",
-        blurb: 'For common situations, including: "we just gave an AI agent write access to our repo."',
-      },
+      { n: "17", title: "Production Is Part of the Test Suite", blurb: "Turning incidents, user behavior, replays, and escaped defects into regression knowledge and future verification." },
+      { n: "18", title: "Build the Evaluation Loop", blurb: "Offline evals, production-derived evals, traces, golden cases, human judgments, false positives, and evaluating the evaluator." },
+      { n: "19", title: "Keep the System From Decaying", blurb: "Continuous cleanup of tests, docs, abstractions, architecture, agent skills, and other sources of software entropy." },
+      { n: "20", title: "Measure Whether It Actually Works", blurb: "Escaped defects, detection time, regression catch rate, evidence quality, intervention rate, cost, and safe engineering velocity." },
     ],
   },
   {
-    title: "Part VI: Case Studies & Research Shelf",
+    title: "Part VI: Build It With What You Already Have",
     chapters: [
-      {
-        n: "21",
-        title: "How PostHog Does It",
-        blurb: "A close read of one team working this out in public. What transfers to a smaller or differently-shaped team, and what's specific to being them.",
-      },
-      {
-        n: "22",
-        title: "Further Reading",
-        blurb: "Everything worth reading beyond this handbook, kept current.",
-      },
+      { n: "21", title: "Connecting the Stack", blurb: "Practical setups for GitHub, CI, preview environments, Playwright, Sentry, PostHog, Slack, agent tools, and the feedback loops between them." },
+      { n: "22", title: "Case Studies & Research Shelf", blurb: "Close reads of teams building these systems, concrete workflows and artifacts, plus a deliberately curated list of high-signal research and engineering writing." },
     ],
   },
 ];
@@ -169,24 +81,18 @@ export function TableOfContents() {
           The full table of contents
         </h2>
         <p className="text-lg text-muted leading-relaxed max-w-xl mb-8">
-          Twenty-two chapters across six parts, written a few at a time, in
-          public. Here&apos;s the whole map, including the parts that don&apos;t
-          exist yet.
+          Twenty-two chapters across six parts. The map will change as I learn
+          from teams doing this in production, but the underlying problem stays the same:
+          making software safer to change as agents become more capable.
         </p>
 
         <div className="flex overflow-x-auto whitespace-nowrap gap-2 mb-10 pb-2 scrollbar-none -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap">
           {HANDBOOK_PARTS.map((part, index) => {
             const [roman] = part.title.split(":");
             return (
-              <a
-                key={part.title}
-                href={`#${partSlug(index)}`}
-                className="font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-colors px-3 py-1.5 rounded-none"
-              >
-                {roman}
-                <span className="text-muted/70 normal-case tracking-normal ml-1">
-                  &middot; {part.chapters.length}
-                </span>
+              <a key={part.title} href={`#${partSlug(index)}`}
+                className="font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-colors px-3 py-1.5 rounded-none">
+                {roman}<span className="text-muted/70 normal-case tracking-normal ml-1">&middot; {part.chapters.length}</span>
               </a>
             );
           })}
@@ -201,9 +107,7 @@ export function TableOfContents() {
               <ol className="space-y-5">
                 {part.chapters.map((chapter) => (
                   <li key={chapter.n} className="flex gap-4">
-                    <span className="font-mono text-sm text-muted w-6 shrink-0 text-right">
-                      {chapter.n}
-                    </span>
+                    <span className="font-mono text-sm text-muted w-6 shrink-0 text-right">{chapter.n}</span>
                     <div className="flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
                         <span className="font-medium text-lg leading-snug">{chapter.title}</span>

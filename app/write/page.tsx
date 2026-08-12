@@ -43,7 +43,7 @@ export default function WriteDashboard() {
                 <Link 
                   key={chapter.slug}
                   href={`/write/${chapter.slug}`}
-                  className="group flex items-center justify-between p-4 bg-white/50 border border-rule hover:border-ink rounded-lg transition-colors"
+                  className="group flex items-center justify-between p-4 bg-white/50 border border-rule hover:border-ink rounded-none transition-colors"
                 >
                   <span className="font-medium text-ink">{chapter.title}</span>
                   <FileEdit className="w-4 h-4 text-muted group-hover:text-ink transition-colors" />
@@ -60,7 +60,7 @@ export default function WriteDashboard() {
             <h2 className="font-mono text-xs tracking-widest uppercase text-muted mb-6">
               New Chapter
             </h2>
-            <form action={handleCreate} className="bg-white/50 border border-rule p-6 rounded-lg">
+            <form action={handleCreate} className="bg-white/50 border border-rule p-6 rounded-none">
               <label htmlFor="title" className="block text-sm font-medium mb-2">
                 Chapter Title
               </label>
@@ -70,11 +70,11 @@ export default function WriteDashboard() {
                 name="title" 
                 required
                 placeholder="e.g. Setting up CI/CD"
-                className="w-full px-4 py-2 bg-transparent border border-rule rounded focus:outline-none focus:border-ink mb-4 font-mono text-sm"
+                className="w-full px-4 py-2 bg-transparent border border-rule rounded-none focus:outline-none focus:border-ink mb-4 font-mono text-sm"
               />
               <button 
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-ink text-paper py-2 px-4 rounded hover:bg-ink/90 transition-colors font-medium"
+                className="w-full flex items-center justify-center gap-2 bg-ink text-paper py-2 px-4 rounded-none hover:bg-ink/90 transition-colors font-medium"
               >
                 <Plus className="w-4 h-4" />
                 Create Chapter

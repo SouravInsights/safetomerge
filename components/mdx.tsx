@@ -7,10 +7,10 @@ export const mdxComponents = {
   p: (props: ComponentPropsWithoutRef<'p'>) => <p className="text-lg leading-relaxed text-muted mb-6" {...props} />,
   a: (props: ComponentPropsWithoutRef<'a'>) => <a className="text-verified underline hover:text-ink transition-colors" {...props} />,
   blockquote: (props: ComponentPropsWithoutRef<'blockquote'>) => (
-    <blockquote className="border-l-[3px] border-verified pl-6 py-1 my-8 italic text-lg text-ink bg-verified/5 rounded-r-lg" {...props} />
+    <blockquote className="border-l-[3px] border-verified pl-6 py-1 my-8 italic text-lg text-ink bg-verified/5 rounded-none" {...props} />
   ),
-  code: (props: ComponentPropsWithoutRef<'code'>) => <code className="font-mono text-[0.9em] bg-black/5 text-ink px-1.5 py-0.5 rounded" {...props} />,
-  pre: (props: ComponentPropsWithoutRef<'pre'>) => <pre className="bg-ink text-paper p-6 rounded-lg overflow-x-auto my-8 font-mono text-sm leading-relaxed" {...props} />,
+  code: (props: ComponentPropsWithoutRef<'code'>) => <code className="font-mono text-[0.9em] bg-black/5 text-ink px-1.5 py-0.5 rounded-none" {...props} />,
+  pre: (props: ComponentPropsWithoutRef<'pre'>) => <pre className="bg-ink text-paper p-6 rounded-none overflow-x-auto my-8 font-mono text-sm leading-relaxed" {...props} />,
   ul: (props: ComponentPropsWithoutRef<'ul'>) => <ul className="list-disc list-outside ml-6 mb-6 space-y-2 text-lg text-muted" {...props} />,
   ol: (props: ComponentPropsWithoutRef<'ol'>) => <ol className="list-decimal list-outside ml-6 mb-6 space-y-2 text-lg text-muted" {...props} />,
   li: (props: ComponentPropsWithoutRef<'li'>) => <li className="pl-2" {...props} />,

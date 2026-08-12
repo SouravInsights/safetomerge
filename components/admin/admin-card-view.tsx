@@ -2,6 +2,8 @@
 
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Contribution, FormAnswers } from "@/lib/db/schema";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { asString } from "./admin-utils";
 import { AdminResponseInspector } from "./admin-response-inspector";
 
@@ -57,15 +59,9 @@ export function AdminCardView({
                   <span className="font-mono text-base font-bold text-ink">
                     {email || "Anonymous Contributor"}
                   </span>
-                  {role && (
-                    <span className="font-mono text-xs uppercase tracking-wider text-ink bg-rule/40 px-2 py-0.5 font-medium">
-                      {role}
-                    </span>
-                  )}
+                  {role && <Badge variant="default">{role}</Badge>}
                   {followUp === "yes" && (
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-verified bg-verified/10 px-2 py-0.5 border border-verified/20 font-semibold">
-                      Open to 15-min call
-                    </span>
+                    <Badge variant="verified">Open to 15-min call</Badge>
                   )}
                 </div>
                 <p className="font-mono text-xs text-muted">
@@ -75,23 +71,25 @@ export function AdminCardView({
 
               <div className="flex items-center gap-2 font-mono text-xs flex-wrap">
                 {teamSize && (
-                  <span className="border border-rule px-2.5 py-1 bg-paper">
-                    Team: <strong className="text-ink">{teamSize}</strong>
-                  </span>
+                  <Badge variant="outline">
+                    Team: <strong className="text-ink font-mono">{teamSize}</strong>
+                  </Badge>
                 )}
                 {domain && (
-                  <span className="border border-rule px-2.5 py-1 bg-paper">
-                    Domain: <strong className="text-ink">{domain}</strong>
-                  </span>
+                  <Badge variant="outline">
+                    Domain: <strong className="text-ink font-mono">{domain}</strong>
+                  </Badge>
                 )}
                 {aiShare && (
-                  <span className="border border-verified/40 text-verified px-2.5 py-1 bg-verified/5">
-                    AI Code: <strong>{aiShare}</strong>
-                  </span>
+                  <Badge variant="verified">
+                    AI Code: <strong className="font-mono">{aiShare}</strong>
+                  </Badge>
                 )}
-                <button
+                <Button
+                  variant={isExpanded ? "outline" : "default"}
+                  size="sm"
                   onClick={() => onToggleExpand(item.id)}
-                  className="font-mono text-xs uppercase tracking-wider px-3 py-1 border border-ink bg-ink text-paper hover:bg-verified hover:border-verified transition-colors ml-2 font-medium inline-flex items-center gap-1.5"
+                  className="ml-2"
                 >
                   {isExpanded ? (
                     <>
@@ -104,7 +102,7 @@ export function AdminCardView({
                       View Answers
                     </>
                   )}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -113,7 +111,7 @@ export function AdminCardView({
               <div className="p-5 grid sm:grid-cols-2 gap-6 text-sm">
                 {prFlow ? (
                   <div>
-                    <h4 className="font-mono text-xs tracking-widest uppercase text-muted mb-1.5">
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-muted mb-1.5 font-semibold">
                       PR Review Flow
                     </h4>
                     <p className="text-ink leading-relaxed font-sans line-clamp-3">{prFlow}</p>
@@ -122,7 +120,7 @@ export function AdminCardView({
 
                 {boundaries ? (
                   <div>
-                    <h4 className="font-mono text-xs tracking-widest uppercase text-muted mb-1.5">
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-muted mb-1.5 font-semibold">
                       Agent Boundaries
                     </h4>
                     <p className="text-ink leading-relaxed font-sans line-clamp-3">{boundaries}</p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface AdminToolbarProps {
   search: string;
@@ -31,28 +32,22 @@ export function AdminToolbar({
 
       {domains.length > 0 && (
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none font-mono text-xs">
-          <button
+          <Button
+            variant={selectedDomain === "ALL" ? "default" : "outline"}
+            size="xs"
             onClick={() => onDomainChange("ALL")}
-            className={`px-3 py-1 border transition-colors whitespace-nowrap ${
-              selectedDomain === "ALL"
-                ? "bg-ink text-paper border-ink font-medium"
-                : "bg-paper text-muted border-rule hover:border-ink"
-            }`}
           >
             All ({totalCount})
-          </button>
+          </Button>
           {domains.map((dom) => (
-            <button
+            <Button
               key={dom}
+              variant={selectedDomain === dom ? "default" : "outline"}
+              size="xs"
               onClick={() => onDomainChange(dom)}
-              className={`px-3 py-1 border transition-colors whitespace-nowrap ${
-                selectedDomain === dom
-                  ? "bg-ink text-paper border-ink font-medium"
-                  : "bg-paper text-muted border-rule hover:border-ink"
-              }`}
             >
               {dom}
-            </button>
+            </Button>
           ))}
         </div>
       )}

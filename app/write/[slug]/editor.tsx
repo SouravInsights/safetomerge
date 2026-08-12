@@ -46,7 +46,7 @@ export default function Editor({
       {/* Global Header */}
       <header className="flex-none h-14 border-b border-rule flex items-center justify-between px-4 bg-white/50">
         <div className="flex items-center gap-4">
-          <Link href="/write" className="text-muted hover:text-ink transition-colors p-2 -ml-2 rounded-md hover:bg-black/5">
+          <Link href="/write" className="text-muted hover:text-ink transition-colors p-2 -ml-2 rounded-none hover:bg-black/5">
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <h1 className="font-mono text-sm font-semibold">{slug}.mdx</h1>
@@ -58,7 +58,7 @@ export default function Editor({
           <button
             onClick={handleSave}
             disabled={isPending}
-            className="flex items-center gap-2 bg-ink text-paper px-4 py-1.5 rounded text-sm font-medium hover:bg-ink/90 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 bg-ink text-paper px-4 py-1.5 rounded-none text-sm font-medium hover:bg-ink/90 transition-colors disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             {isPending ? 'Saving...' : 'Save'}
@@ -73,7 +73,7 @@ export default function Editor({
         <div className={`flex flex-col ${showPreview ? 'w-1/2 border-r border-rule' : 'w-full items-center bg-white/30'}`}>
           
           {/* Pane Toolbar */}
-          <div className={`h-8 border-b border-rule bg-gray-50 flex items-center justify-between px-4 ${showPreview ? 'w-full' : 'w-full max-w-4xl border-l border-r'}`}>
+          <div className={`h-8 border-b border-rule bg-paper flex items-center justify-between px-4 ${showPreview ? 'w-full' : 'w-full max-w-4xl border-l border-r'}`}>
             <span className="font-mono text-xs text-muted uppercase tracking-widest">Markdown Editor</span>
             <button
               onClick={() => setShowPreview(!showPreview)}
@@ -100,7 +100,7 @@ export default function Editor({
         {/* Live Preview Pane (iframe) */}
         {showPreview && (
           <div className="w-1/2 bg-white flex flex-col">
-            <div className="h-8 border-b border-rule bg-gray-50 flex items-center px-4">
+            <div className="h-8 border-b border-rule bg-paper flex items-center px-4">
               <span className="font-mono text-xs text-muted uppercase tracking-widest">Live Preview</span>
             </div>
             <iframe

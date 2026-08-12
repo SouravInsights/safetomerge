@@ -2,6 +2,8 @@
 
 import { Eye } from "lucide-react";
 import { Contribution, FormAnswers } from "@/lib/db/schema";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { SPREADSHEET_COLUMNS } from "./admin-config";
 import { asString } from "./admin-utils";
 
@@ -49,13 +51,14 @@ export function AdminSpreadsheetView({
                   {totalCount - idx}
                 </td>
                 <td className="p-3 border-r border-rule text-center">
-                  <button
+                  <Button
+                    variant="outline"
+                    size="xs"
                     onClick={() => onInspectItem(item.id)}
-                    className="px-2 py-1 border border-rule hover:border-ink bg-white text-ink hover:bg-ink hover:text-paper transition-all inline-flex items-center gap-1 font-mono text-[11px]"
                   >
                     <Eye className="w-3 h-3" />
                     View
-                  </button>
+                  </Button>
                 </td>
                 <td className="p-3 border-r border-rule text-muted whitespace-nowrap">{dateStr}</td>
 
@@ -75,7 +78,7 @@ export function AdminSpreadsheetView({
                         col.key === "email" ? (
                           <span className="font-mono font-bold text-ink">{displayVal}</span>
                         ) : col.key === "aiShare" ? (
-                          <span className="font-mono text-verified font-medium">{displayVal}</span>
+                          <Badge variant="verified">{displayVal}</Badge>
                         ) : (
                           displayVal
                         )

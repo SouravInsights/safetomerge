@@ -4,23 +4,15 @@ import { SectionLabel } from "@/components/landing/section-label";
 
 export const STUDIED_TEAMS = [
   { name: "PostHog", domain: "posthog.com", href: "https://posthog.com/blog/10k-prs-a-month" },
-  { name: "CodeRabbit", domain: "coderabbit.ai", href: "https://www.coderabbit.ai/blog/agentic-sdlc-workflow" },
   { name: "OpenAI", domain: "openai.com", href: "https://openai.com/index/harness-engineering/" },
-  { name: "Cursor", domain: "cursor.com", href: "https://cursor.com/blog/security-agents" },
-  { name: "Ramp", domain: "ramp.com", href: "https://builders.ramp.com/post/why-we-built-our-background-agent" },
-  { name: "Sourcegraph", domain: "sourcegraph.com", href: "https://sourcegraph.com/blog/agentic-coding" },
-  { name: "Replit", domain: "replit.com", href: "https://replit.com/blog/inside-replits-snapshot-engine" },
-  { name: "Modal", domain: "modal.com", href: "https://modal.com/blog/how-ramp-built-a-full-context-background-coding-agent-on-modal" },
-  { name: "Prisma", domain: "prisma.io", href: "https://www.prisma.io/blog/series/agentic-engineering" },
+  { name: "Cursor", domain: "cursor.com", href: "https://cursor.com/blog/continually-improving-agent-harness" },
+  { name: "Replit", domain: "replit.com", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+  { name: "Sourcegraph", domain: "sourcegraph.com", href: "https://sourcegraph.com/blog/why-coding-agents-fail-large-codebases" },
+  { name: "Factory", domain: "factory.ai", href: "https://factory.ai/news/incident-response" },
+  { name: "CodeRabbit", domain: "coderabbit.ai", href: "https://www.coderabbit.ai/blog/agentic-sdlc-workflow" },
   { name: "Incident.io", domain: "incident.io", href: "https://incident.io/blog/introducing-ai-sre" },
-  { name: "Ashby", domain: "ashbyhq.com", href: "https://www.ashbyhq.com/blog/engineering/ai-ashby-engineering-and-the-future" },
-  { name: "Greptile", domain: "greptile.com", href: "https://www.greptile.com/blog/ai-code-review" },
-  { name: "Browserbase", domain: "browserbase.com", href: "https://www.browserbase.com/blog/internal-agents" },
-  { name: "Augment", domain: "augmentcode.com", href: "https://www.augmentcode.com/blog/how-we-built-high-quality-ai-code-review-agent" },
-  { name: "Polar", domain: "polar.sh", href: "https://polar.sh/blog/orbit-llm-safe-design-system" },
   { name: "Dagger", domain: "dagger.io", href: "https://dagger.io/blog/automate-your-ci-fixes-self-healing-pipelines-with-ai-agents/" },
-  { name: "Vellum", domain: "vellum.ai", href: "https://www.vellum.ai/webinar/coding-agents-doubling-engineering-velocity" },
-  { name: "Basis", domain: "getbasis.ai", href: "https://www.getbasis.ai/blogs/how-we-made-our-monorepo-ergonomic-for-agents" },
+  { name: "Ramp", domain: "ramp.com", href: "https://builders.ramp.com/post/why-we-built-our-background-agent" },
 ];
 
 export function AuthorSection() {
@@ -60,18 +52,17 @@ export function AuthorSection() {
             </a>
             , a minimal travel platform. To move faster as a solo developer, I started
             relying on agents to write code. I quickly learned that generating code is
-            the easy part. The harder problem is building the system around the agent:
-            giving it the right context, constraining what it can do, verifying its
-            changes, and learning from what happens after shipping.
+            the easy part. <mark className="mark">The harder problem is building the system around the agent:</mark>
+            giving it the right context, understanding what a change can affect,
+            verifying the result, and learning from what happens after shipping.
           </p>
 
           <p>
-            I&apos;m putting this handbook together because I needed it.{" "}
-            <mark className="mark">I&apos;m just writing down what actually works.</mark>{" "}
-            I&apos;m studying the engineering deep-dives from teams already doing this
-            in production, talking to engineers directly, and reading the research around
-            agentic software engineering, evaluation, observability, reliability, and
-            self-healing systems. I want to understand what survives contact with reality.
+            I&apos;m putting this handbook together because I needed it. I&apos;m studying
+            engineering work from teams already doing this in production, talking to
+            engineers directly, and reading research on agentic software engineering,
+            evaluation, observability, reliability, and self-healing systems. I want to
+            understand what really works in practice.
           </p>
 
           <div className="py-2">
@@ -92,15 +83,12 @@ export function AuthorSection() {
           </div>
 
           <p className="text-muted pt-2 leading-relaxed">
-            These insights come from real engineering teams shipping in production.
-            My role is to test these patterns hands-on, see what actually works, and
-            organize it so you don&apos;t have to figure it out from scratch. If your
-            team is figuring this out in production,{" "}
-            <a href="/contribute"
+            These are the teams with useful public work or workflows worth studying. My role is to test the patterns hands-on,
+            see what actually works, and organize what I learn. If your team is figuring
+            this out in production, <a href="/contribute"
               className="text-ink font-medium underline underline-offset-4 decoration-rule hover:text-verified transition-colors">
               share how your team ships
-            </a>
-            .
+            </a>.
           </p>
         </div>
       </section>

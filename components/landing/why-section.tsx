@@ -26,37 +26,32 @@ export function WhySection() {
             . Over that same stretch, the percentage of PRs created by AI agents grew
             from around 20% to over 70%. The interesting question is no longer just
             how to make agents write code. It is{" "}
-            <mark className="mark">how to build an engineering system that can absorb that velocity.</mark>
+            <mark className="mark">how to build an engineering system that can keep up with that pace.</mark>
           </p>
 
           <p>
             The teams figuring this out are changing the whole pipeline: how
             production is observed, how intent and context reach an agent, how a
-            change&apos;s blast radius is understood, how evidence gets assembled,
-            and how outcomes feed back into the next decision. Humans move toward
-            the things that still need judgment:{" "}
-            <mark className="mark">what to build, what evidence is enough, and where autonomy should stop.</mark>
+            change is understood before it is merged, how evidence is gathered, and
+            how outcomes feed back into the next decision. Humans move toward the
+            things that still need judgment: <mark className="mark">what's actually worth building, what is safe enough to ship, how to keep systems reliable.</mark>
           </p>
 
           <p>
-            Most teams already have the raw materials: GitHub, CI, observability,
-            browser tests, deployment platforms, agent tooling. The harder problem
-            is connecting them into a system that stays trustworthy as the software,
-            agents, and workflows change.
+            Most teams already have the raw tools: GitHub, CI, observability,
+            browser tests, deployment platforms, and agent tooling. The harder problem
+            is connecting them into a system that stays useful as the software,
+            models, and workflows change.
           </p>
 
           <p>
-            And there is another problem: agents can make software easier to change
-            while also making it easier to accumulate entropy. Stale tests, duplicated
-            abstractions, outdated documentation, weak conventions, and architectural
-            drift all become things the system has to continuously detect and clean up.
+            There is another problem. Faster development can also mean faster accumulation of mess: stale tests, duplicated abstractions, outdated documentation, weak conventions, and architectural drift. The more we ship, the more important this maintenance becomes.
           </p>
 
           <p className="text-ink text-xl leading-relaxed border-l-2 border-mark pl-5 -ml-5">
-            I&apos;m writing this by studying the teams who are working it out:
-            reading their public engineering work, following what they are shipping,
-            talking to engineers directly, and testing the patterns myself. The goal
-            is to understand what actually survives contact with production.
+            I am writing this by studying teams who are figuring this out: reading their
+            engineering work, following what they are shipping, talking to engineers
+            directly, and testing the patterns myself. The goal is to understand what actually works, what doesn't, and why.
           </p>
         </div>
       </section>

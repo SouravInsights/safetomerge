@@ -9,19 +9,19 @@ export const LOOP_STAGES = [
   },
   {
     label: "UNDERSTAND",
-    desc: "Give the change the context it needs: intent, architecture, history, ownership, and blast radius.",
+    desc: "Know what the change is supposed to do, what it touches, and what context the agent needs before it acts.",
   },
   {
     label: "CHANGE",
-    desc: "Let humans or agents make the change with the right tools, constraints, and durable execution.",
+    desc: "Let humans or agents make the change with the right tools, constraints, context, and durable execution.",
   },
   {
     label: "VERIFY",
-    desc: "Assemble independent evidence that the intended behavior still holds, not just that a test suite is green.",
+    desc: "Gather evidence that the intended behavior still holds. A green test suite is only one piece of that evidence.",
   },
   {
     label: "SHIP",
-    desc: "Move changes through safe boundaries with progressive autonomy, approvals, rollback, and auditability.",
+    desc: "Move changes through safe boundaries with approvals, progressive delivery, rollback, and clear ownership.",
   },
   {
     label: "LEARN",
@@ -38,8 +38,8 @@ export function HandbookLoop() {
           The whole book maps to six stages.
         </h2>
         <p className="text-lg text-muted leading-relaxed max-w-xl mb-10">
-          The loop stays simple. The handbook goes deeper into what each stage
-          needs when agents become a bigger part of how software gets built.
+          The loop is simple. The hard part is building each stage well enough that
+          the next one can rely on it.
         </p>
 
         <ol className="grid sm:grid-cols-2 gap-x-12 gap-y-10 mt-6">
@@ -64,7 +64,7 @@ export function HandbookLoop() {
               &#8635;
             </span>
             <p className="text-sm text-muted italic leading-relaxed pt-1.5">
-              Then back to Observe. The system should get better as it runs.
+              Then back to Observe. The point is to make the next cycle better.
             </p>
           </li>
         </ol>

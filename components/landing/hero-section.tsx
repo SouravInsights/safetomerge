@@ -11,14 +11,14 @@ export function HeroSection() {
         <SectionLabel>A handbook for software teams</SectionLabel>
 
         <h1 className="text-4xl sm:text-6xl font-semibold leading-[1.05] tracking-tight mb-6">
-          Software is moving <em className="italic font-medium">faster</em>{" "}
-          than your engineering system can adapt.
+          Software is moving faster than you can review it.
         </h1>
 
         <p className="text-lg sm:text-xl text-muted leading-relaxed mb-10">
-          Agents are making software cheaper to change. The hard part is building
-          the systems around them: enough context to understand a change, enough
-          evidence to trust it, and enough feedback to make the next change better.
+          Agents can write, test, review, and ship software at a pace that changes
+          the old way of working. The harder problem is building the system around
+          them: clear intent, useful context, good evidence, safe boundaries, and
+          feedback from what actually happens in production.
           <mark className="mark"> This handbook is about how teams are figuring that out.</mark>
         </p>
 

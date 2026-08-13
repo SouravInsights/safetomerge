@@ -23,10 +23,10 @@ export function ContributionBanner() {
         <div>
           <a
             href="/contribute"
-            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest bg-ink text-paper px-6 py-3.5 hover:bg-verified transition-colors"
+            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest bg-ink text-paper px-6 py-3.5 hover:bg-verified active:translate-x-[1px] active:translate-y-[1px] transition-all duration-150"
           >
             Share your team&apos;s workflow
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover:translate-x-1" />
           </a>
         </div>
       </Container>

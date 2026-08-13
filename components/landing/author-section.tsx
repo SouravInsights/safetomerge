@@ -21,14 +21,31 @@ export function AuthorSection() {
       <section>
         <SectionLabel>Who&apos;s putting this together</SectionLabel>
 
-        <div className="flex items-center gap-4 sm:gap-5 border-b border-rule pb-6 mb-8">
-          <img
-            src="/avatar.jpeg"
-            alt="Sourav"
-            className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-rule object-cover shrink-0"
-          />
+        <div className="group/author flex items-center gap-4 sm:gap-5 border-b border-rule pb-6 mb-8">
+          <a
+            href="https://souravinsights.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-verified"
+            aria-label="Sourav's website"
+          >
+            <img
+              src="/avatar.jpeg"
+              alt="Sourav"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-rule object-cover shrink-0 transition-transform duration-300 ease-out group-hover/author:scale-105 group-hover/author:-rotate-3 active:scale-95 shadow-xs"
+            />
+          </a>
           <div>
-            <h3 className="text-xl sm:text-2xl font-semibold text-ink">Sourav</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold text-ink">
+              <a
+                href="https://souravinsights.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-verified transition-colors duration-150"
+              >
+                Sourav
+              </a>
+            </h3>
             <p className="font-mono text-xs text-muted mt-1">Product Engineer</p>
           </div>
         </div>
@@ -71,11 +88,19 @@ export function AuthorSection() {
             </p>
             <div className="flex flex-wrap gap-2">
               {STUDIED_TEAMS.map((co) => (
-                <a key={co.name} href={co.href} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-rule rounded-none text-sm text-ink bg-white/50 shadow-sm transition-colors hover:border-ink hover:bg-paper">
+                <a
+                  key={co.name}
+                  href={co.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 px-2.5 py-1 border border-rule rounded-none text-sm text-ink bg-white/50 shadow-xs transition-all duration-150 hover:border-ink hover:bg-paper hover:-translate-y-0.5 active:translate-y-0 active:scale-95 touch-manipulation"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`https://www.google.com/s2/favicons?domain=${co.domain}&sz=64`}
-                    alt={co.name} className="w-3.5 h-3.5 rounded-[3px] grayscale opacity-80" />
+                  <img
+                    src={`https://www.google.com/s2/favicons?domain=${co.domain}&sz=64`}
+                    alt={co.name}
+                    className="w-3.5 h-3.5 rounded-[3px] opacity-90 sm:grayscale sm:opacity-75 sm:group-hover:grayscale-0 sm:group-hover:opacity-100 transition-all duration-200"
+                  />
                   {co.name}
                 </a>
               ))}

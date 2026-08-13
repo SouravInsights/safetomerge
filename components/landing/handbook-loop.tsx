@@ -1,4 +1,5 @@
 import * as React from "react";
+import { RotateCcw } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/landing/section-label";
 
@@ -44,26 +45,29 @@ export function HandbookLoop() {
 
         <ol className="grid sm:grid-cols-2 gap-x-12 gap-y-10 mt-6">
           {LOOP_STAGES.map((stage, index) => (
-            <li key={stage.label} className="flex gap-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-ink bg-paper font-mono text-xs shrink-0 mt-0.5">
+            <li
+              key={stage.label}
+              className="group flex gap-4 cursor-pointer sm:cursor-default select-none touch-manipulation transition-transform duration-150 active:scale-[0.98]"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-ink bg-paper font-mono text-xs shrink-0 mt-0.5 transition-all duration-150 group-hover:bg-ink group-hover:text-paper group-active:bg-ink group-active:text-paper">
                 {index + 1}
               </span>
               <div>
-                <p className="font-mono text-xs tracking-widest uppercase text-verified mb-1">
+                <p className="font-mono text-xs tracking-widest uppercase text-verified mb-1 transition-colors group-hover:text-ink group-active:text-ink">
                   {stage.label}
                 </p>
                 <p className="text-sm text-muted leading-relaxed pr-2">{stage.desc}</p>
               </div>
             </li>
           ))}
-          <li className="flex gap-4 sm:col-span-2 border-t border-rule pt-8 mt-2">
+          <li className="group flex gap-4 sm:col-span-2 border-t border-rule pt-8 mt-2 cursor-default select-none">
             <span
               aria-hidden="true"
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-muted bg-paper font-mono text-xs shrink-0 text-muted mt-0.5"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-muted bg-paper shrink-0 text-muted mt-0.5 transition-colors duration-300 group-hover:border-ink group-hover:text-ink"
             >
-              &#8635;
+              <RotateCcw className="w-3.5 h-3.5 origin-center transition-transform duration-500 ease-out group-hover:-rotate-180 group-active:-rotate-360" />
             </span>
-            <p className="text-sm text-muted italic leading-relaxed pt-1.5">
+            <p className="text-sm text-muted italic leading-relaxed pt-1.5 transition-colors group-hover:text-ink">
               Then back to Observe. The point is to make the next cycle better.
             </p>
           </li>

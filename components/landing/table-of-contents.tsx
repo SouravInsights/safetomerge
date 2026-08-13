@@ -277,7 +277,7 @@ export function TableOfContents() {
             const [roman] = part.title.split(":");
             return (
               <a key={part.title} href={`#${partSlug(index)}`}
-                className="font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-colors px-3 py-1.5 rounded-none">
+                className="font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-all duration-150 active:translate-y-[1px] px-3 py-1.5 rounded-none bg-paper">
                 {roman}<span className="text-muted/70 normal-case tracking-normal ml-1">&middot; {part.chapters.length}</span>
               </a>
             );
@@ -292,11 +292,15 @@ export function TableOfContents() {
               </h3>
               <ol className="space-y-5">
                 {part.chapters.map((chapter) => (
-                  <li key={chapter.n} className="flex gap-4">
-                    <span className="font-mono text-sm text-muted w-6 shrink-0 text-right">{chapter.n}</span>
-                    <div className="flex-1">
+                  <li key={chapter.n} className="group flex gap-4 cursor-pointer sm:cursor-default select-none touch-manipulation transition-transform duration-150 active:scale-[0.99]">
+                    <span className="font-mono text-sm text-muted w-6 shrink-0 text-right transition-colors duration-150 group-hover:text-verified group-hover:font-semibold group-active:text-verified">
+                      {chapter.n}
+                    </span>
+                    <div className="flex-1 transition-transform duration-150 group-hover:translate-x-0.5 group-active:translate-x-0.5">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <span className="font-medium text-lg leading-snug">{chapter.title}</span>
+                        <span className="font-medium text-lg leading-snug transition-colors group-hover:text-ink group-active:text-ink">
+                          {chapter.title}
+                        </span>
                       </div>
                       <p className="text-muted text-[15px] leading-snug mt-1">{chapter.blurb}</p>
                       {chapter.sources?.length ? (

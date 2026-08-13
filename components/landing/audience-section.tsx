@@ -20,9 +20,9 @@ export function AudienceSection() {
                 "You want to understand the engineering systems emerging around agents, not another list of AI tools.",
                 "You're interested in making software improve its own checks and workflows from what happens in production.",
               ].map((text) => (
-                <li key={text} className="flex gap-3">
-                  <Plus className="w-4 h-4 text-verified shrink-0 mt-1" />
-                  <span>{text}</span>
+                <li key={text} className="group flex gap-3 cursor-default">
+                  <Plus className="w-4 h-4 text-verified shrink-0 mt-1 transition-transform duration-150 group-hover:scale-125" />
+                  <span className="transition-colors group-hover:text-ink">{text}</span>
                 </li>
               ))}
             </ul>
@@ -37,9 +37,9 @@ export function AudienceSection() {
                 "You want a generic AI-agent tutorial covering prompts, models, or frameworks.",
                 "You need a finished manual right now. I'm still learning and writing this as the field moves.",
               ].map((text) => (
-                <li key={text} className="flex gap-3">
-                  <Minus className="w-4 h-4 text-flag shrink-0 mt-1" />
-                  <span>{text}</span>
+                <li key={text} className="group flex gap-3 cursor-default">
+                  <Minus className="w-4 h-4 text-flag shrink-0 mt-1 transition-transform duration-150 group-hover:scale-125" />
+                  <span className="transition-colors group-hover:text-ink">{text}</span>
                 </li>
               ))}
             </ul>

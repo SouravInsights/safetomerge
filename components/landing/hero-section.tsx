@@ -39,10 +39,10 @@ export function HeroSection() {
             <span className="text-muted/40 font-mono text-xs select-none px-0.5" aria-hidden="true">/</span>
             <a
               href="/contribute"
-              className="py-2.5 text-verified hover:text-ink font-medium underline underline-offset-4 decoration-verified/40 transition-colors inline-flex items-center gap-1.5 touch-manipulation"
+              className="group py-2.5 text-verified hover:text-ink font-medium underline underline-offset-4 decoration-verified/40 transition-colors inline-flex items-center gap-1.5 touch-manipulation"
             >
               Contribute
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover:translate-x-1" />
             </a>
           </div>
         </div>

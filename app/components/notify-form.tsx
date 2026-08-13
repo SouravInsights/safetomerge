@@ -74,7 +74,7 @@ export function NotifyForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="font-mono text-xs sm:text-sm uppercase tracking-wide bg-ink text-paper px-5 py-3 hover:bg-verified transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed h-12 sm:h-[46px] shrink-0"
+        className="font-mono text-xs sm:text-sm uppercase tracking-wide bg-ink text-paper px-5 py-3 hover:bg-verified active:translate-x-[1px] active:translate-y-[1px] transition-all duration-150 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed h-12 sm:h-[46px] shrink-0"
       >
         Notify me
       </button>

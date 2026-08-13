@@ -13,41 +13,22 @@ export function NewsletterSection() {
           Get the next chapter when it&apos;s ready
         </h2>
         <p className="text-muted leading-relaxed max-w-md mb-8">
-          I&apos;ll just send you an email when the next chapter is ready.
-          Nothing else.
+          I&apos;ll send you an email when there&apos;s a new chapter, case study,
+          or useful research note. Nothing else.
         </p>
         <div className="mb-16">
-          <NotifyForm
-            id="notify-footer"
-            formClassName="flex flex-col sm:flex-row gap-3 max-w-md"
-            inputClassName="flex-1"
-          />
+          <NotifyForm id="notify-footer" formClassName="flex flex-col sm:flex-row gap-3 max-w-md" inputClassName="flex-1" />
         </div>
-
         <div className="border-t border-rule pt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3 flex-wrap">
             <Logo />
             <span className="text-muted/30 font-light">&bull;</span>
-            <a
-              href="/contribute"
-              className="font-mono text-xs uppercase tracking-wider text-muted hover:text-ink underline underline-offset-4 decoration-rule transition-colors"
-            >
+            <a href="/contribute" className="font-mono text-xs uppercase tracking-wider text-muted hover:text-ink underline underline-offset-4 decoration-rule transition-colors">
               Contribute
             </a>
           </div>
-
           <div className="flex items-center gap-3 text-xs text-muted font-mono flex-wrap">
-            <span>
-              By{" "}
-              <a
-                href="https://souravinsights.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-ink hover:text-verified underline underline-offset-4 decoration-rule transition-colors font-medium"
-              >
-                Sourav
-              </a>
-            </span>
+            <span>By <a href="https://souravinsights.com" target="_blank" rel="noopener noreferrer" className="text-ink hover:text-verified underline underline-offset-4 decoration-rule transition-colors font-medium">Sourav</a></span>
             <span className="text-muted/30">&middot;</span>
             <span>&copy; 2026</span>
           </div>

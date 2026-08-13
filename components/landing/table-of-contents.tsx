@@ -2,10 +2,16 @@ import * as React from "react";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/landing/section-label";
 
+export interface ChapterSource {
+  label: string;
+  href: string;
+}
+
 export interface Chapter {
   n: string;
   title: string;
   blurb: string;
+  sources?: ChapterSource[];
 }
 
 export interface Part {
@@ -15,142 +21,234 @@ export interface Part {
 
 export const HANDBOOK_PARTS: Part[] = [
   {
-    title: "Part I: Why Tooling Alone Isn't Enough",
+    title: "Part I: The New Engineering System",
     chapters: [
       {
         n: "01",
-        title: "Why Green CI Isn't Evidence of Safety",
-        blurb: "Passing tests prove the tests still pass, not that the product still works.",
+        title: "When Writing Code Stops Being the Bottleneck",
+        blurb: "How the engineering workflow changes when implementation becomes less of a bottleneck, what happens when humans can no longer review every change, and where human judgment becomes more important.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "PostHog: 10k PRs a month", href: "https://posthog.com/blog/10k-prs-a-month" },
+        ],
       },
       {
         n: "02",
-        title: "The Loop, and Where Your Team Is Weakest",
-        blurb: "Using Observe, Understand, Change, Verify, Ship, Learn to find where your own process breaks down.",
+        title: "The Engineering Loop",
+        blurb: "Observe, Understand, Change, Verify, Ship, Learn, and why the stages have to work as one system.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+        ],
       },
       {
         n: "03",
-        title: "You Don't Have Enough Attention to Review Everything",
-        blurb: "Focus your team's limited review time on the changes that need it most.",
+        title: "What Does Correct Actually Mean?",
+        blurb: "Intent, specifications, acceptance criteria, user journeys, behavioral contracts, invariants, and definitions of done.",
+        sources: [
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+        ],
       },
       {
         n: "04",
-        title: "What Actually Changes When Agents Write the Code",
-        blurb: "The review load, what a human reviewer is checking for, and what the team's job becomes.",
+        title: "The Cost of Moving Fast",
+        blurb: "Review fatigue, AI-generated mess, architectural drift, stale tests and docs, duplicated abstractions, and the case for continuous maintenance.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+        ],
       },
     ],
   },
   {
-    title: "Part II: What Counts as Evidence",
+    title: "Part II: Give the System the Right Context",
     chapters: [
       {
         n: "05",
-        title: "What CI Proves (and Doesn't)",
-        blurb: "Test-impact analysis, and handling the tests you no longer trust.",
+        title: "Make the Codebase Legible to Agents",
+        blurb: "Repository knowledge, architecture, domain context, history, ownership, retrieval, skills, and keeping context fresh.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Sourcegraph: Why coding agents fail in large codebases", href: "https://sourcegraph.com/blog/why-coding-agents-fail-large-codebases" },
+        ],
       },
       {
         n: "06",
-        title: "What Production Already Knows",
-        blurb: "Mining the observability you already have for what's already gone wrong.",
+        title: "Understand the Blast Radius",
+        blurb: "Connect a change to dependencies, user journeys, ownership, historical patterns, and production behavior before it is made.",
+        sources: [
+          { label: "Sourcegraph: Why coding agents fail in large codebases", href: "https://sourcegraph.com/blog/why-coding-agents-fail-large-codebases" },
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+        ],
       },
       {
         n: "07",
-        title: "What a Browser Can Verify Right Now",
-        blurb: "For the flows nothing else already covers.",
+        title: "Give Agents a View of Production",
+        blurb: "Errors, logs, traces, analytics, session replay, feature flags, deployments, and the signals that help explain what users actually experience.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "PostHog: What is a Scout?", href: "https://posthog.com/blog/what-is-a-scout" },
+          { label: "PostHog: Replay Vision", href: "https://posthog.com/replay-vision" },
+        ],
       },
       {
         n: "08",
-        title: "What the Diff Itself Signals",
-        blurb: "Blast radius, historical norms, and the categories that never get waved through.",
+        title: "The Agent Harness",
+        blurb: "Tools, skills, memory, permissions, sandboxes, state, checkpoints, retries, and the environment around the model.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "OpenAI: Unlocking the Codex harness", href: "https://openai.com/index/unlocking-the-codex-harness/" },
+          { label: "AI Harness Engineering", href: "https://arxiv.org/abs/2605.13357" },
+        ],
       },
+    ],
+  },
+  {
+    title: "Part III: Change With Guardrails",
+    chapters: [
       {
         n: "09",
-        title: "Who Should Look at This",
-        blurb: "Ownership and reviewer-routing from history: cheap, and usually skipped.",
+        title: "Before You Give an Agent Write Access",
+        blurb: "Repository conventions, contracts, test environments, secrets, permissions, and the boundaries that make agent work safe.",
+        sources: [
+          { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+        ],
       },
       {
         n: "10",
-        title: "Before Anyone Decides, Someone Has to Read This",
-        blurb: "How five sources of evidence become one document. It doesn't give a verdict. It gives a picture.",
+        title: "Long-Running Agents",
+        blurb: "Durable execution, resumability, partial failures, checkpoints, artifacts, handoffs, and what changes when work outlives a single session.",
+        sources: [
+          { label: "Cursor: Long-running Agents", href: "https://cursor.com/changelog/02-12-26" },
+          { label: "Cursor: Scaling long-running autonomous coding", href: "https://cursor.com/blog/scaling-agents" },
+        ],
       },
-    ],
-  },
-  {
-    title: "Part III: Getting Agents Ready to Touch Real Code",
-    chapters: [
       {
         n: "11",
-        title: "Before You Give an Agent Write Access",
-        blurb: "The conventions, docs, and permission boundaries that make the difference between an agent that helps and one that makes a mess.",
+        title: "What Counts as Evidence?",
+        blurb: "Why a green check is only one signal, and how tests, browser runs, traces, replays, static checks, and human judgment fit together.",
+        sources: [
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "AI Harness Engineering", href: "https://arxiv.org/abs/2605.13357" },
+        ],
       },
       {
         n: "12",
-        title: "The Agent Harness",
-        blurb: "Context, memory, sandboxing, and the scaffolding that lets an agent self-correct.",
-      },
-      {
-        n: "13",
-        title: "Safe Autonomy",
-        blurb: "What an agent may do alone, what needs approval, what never gets automated.",
+        title: "Verify What Changed",
+        blurb: "Risk-based verification, test-impact analysis, targeted browser checks, historical regressions, and evidence proportional to the change.",
+        sources: [
+          { label: "PostHog: QA Frontend Skill", href: "https://github.com/PostHog/posthog/blob/master/.agents/skills/qa-frontend/SKILL.md" },
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+        ],
       },
     ],
   },
   {
-    title: "Part IV: Shipping and Learning From What Happens",
+    title: "Part IV: Trust, Autonomy & Shipping",
     chapters: [
       {
+        n: "13",
+        title: "Who Should Decide?",
+        blurb: "What agents can decide alone, what needs approval, and how teams increase autonomy without losing accountability.",
+        sources: [
+          { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+        ],
+      },
+      {
         n: "14",
-        title: "Where to Draw the Line Between Agents and Humans",
-        blurb: "How teams are actually deciding this, with real examples of where they've landed.",
+        title: "Independent Verification",
+        blurb: "How to keep an agent from becoming its own oracle, with external checks, evidence quality, and failure-aware review.",
+        sources: [
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "AI Harness Engineering", href: "https://arxiv.org/abs/2605.13357" },
+        ],
       },
       {
         n: "15",
-        title: "Why a Script Isn't Enough",
-        blurb: "Review processes that survive a crash, a timeout, or an agent that gets halfway through and stops.",
+        title: "Human Review Without the Noise",
+        blurb: "Review routing, ownership, alert fatigue, AI review quality, and preserving human attention for decisions that need it.",
+        sources: [
+          { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
+          { label: "PostHog: 10k PRs a month", href: "https://posthog.com/blog/10k-prs-a-month" },
+        ],
       },
       {
         n: "16",
-        title: "Human-in-the-Loop That Doesn't Get Ignored",
-        blurb: "The alert-fatigue trap: flag too much and people stop reading it.",
-      },
-      {
-        n: "17",
-        title: "Did the Change Actually Work?",
-        blurb: "How to close the loop: feeding what actually happened back into what gets checked next time.",
+        title: "Ship Safely",
+        blurb: "Preview environments, CI/CD, progressive delivery, rollback, auditability, and the boundary between merge and production.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+        ],
       },
     ],
   },
   {
-    title: "Part V: Evaluation & Adoption",
+    title: "Part V: Learn, Evaluate, Improve",
     chapters: [
       {
+        n: "17",
+        title: "Turn Production Failures Into Learning",
+        blurb: "Use incidents, user behavior, replays, and escaped defects to create regression knowledge and better future verification.",
+        sources: [
+          { label: "Factory: Incident Response", href: "https://factory.ai/news/incident-response" },
+          { label: "PostHog: What if your product built itself?", href: "https://posthog.com/blog/what-if-your-product-built-itself" },
+          { label: "PostHog: Replay Vision", href: "https://posthog.com/replay-vision" },
+        ],
+      },
+      {
         n: "18",
-        title: "Measuring Whether Any of This Is Working",
-        blurb: "Backtesting, false-positive rates, time-to-detection. The section most guides like this skip.",
+        title: "Build the Evaluation Loop",
+        blurb: "Offline evals, production-derived evals, traces, golden cases, human judgments, false positives, and evaluating the evaluator.",
+        sources: [
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "Cursor: Continually improving the agent harness", href: "https://cursor.com/blog/continually-improving-agent-harness" },
+        ],
       },
       {
         n: "19",
-        title: "How to Start, Week by Week",
-        blurb: "Start with what you already have, before building anything new.",
+        title: "Keep the System From Decaying",
+        blurb: "Continuously maintain tests, docs, abstractions, architecture, agent skills, and the rules that keep the system legible.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+        ],
       },
       {
         n: "20",
-        title: "Playbooks",
-        blurb: 'For common situations, including: "we just gave an AI agent write access to our repo."',
+        title: "Measure Whether It Actually Works",
+        blurb: "Escaped defects, detection time, regression catch rate, evidence quality, intervention rate, cost, and safe engineering velocity.",
+        sources: [
+          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
+        ],
       },
     ],
   },
   {
-    title: "Part VI: Case Studies & Research Shelf",
+    title: "Part VI: Put It Into Practice",
     chapters: [
       {
         n: "21",
-        title: "How PostHog Does It",
-        blurb: "A close read of one team working this out in public. What transfers to a smaller or differently-shaped team, and what's specific to being them.",
+        title: "Connect the Tools You Already Have",
+        blurb: "Practical setups for GitHub, CI, preview environments, Playwright, Sentry, PostHog, Slack, agent tools, and the feedback loops between them.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "PostHog: What is a Scout?", href: "https://posthog.com/blog/what-is-a-scout" },
+          { label: "Factory: Incident Response", href: "https://factory.ai/news/incident-response" },
+        ],
       },
       {
         n: "22",
-        title: "Further Reading",
-        blurb: "Everything worth reading beyond this handbook, kept current.",
+        title: "Case Studies, Playbooks & Research",
+        blurb: "Close reads of teams doing this in production, practical workflows you can copy, and a small research shelf kept deliberately high signal.",
+        sources: [
+          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Cursor Research", href: "https://cursor.com/blog/topic/research" },
+          { label: "Replit Engineering", href: "https://replit.com/blog" },
+          { label: "Factory News", href: "https://factory.ai/news" },
+          { label: "Sourcegraph Research", href: "https://sourcegraph.com/blog" },
+        ],
       },
     ],
   },
@@ -169,24 +267,18 @@ export function TableOfContents() {
           The full table of contents
         </h2>
         <p className="text-lg text-muted leading-relaxed max-w-xl mb-8">
-          Twenty-two chapters across six parts, written a few at a time, in
-          public. Here&apos;s the whole map, including the parts that don&apos;t
-          exist yet.
+          Twenty-two chapters across six parts. The structure might evolve as I learn
+          from teams doing this in production. Each chapter is grounded in practical work,
+          research, or both.
         </p>
 
         <div className="flex overflow-x-auto whitespace-nowrap gap-2 mb-10 pb-2 scrollbar-none -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap">
           {HANDBOOK_PARTS.map((part, index) => {
             const [roman] = part.title.split(":");
             return (
-              <a
-                key={part.title}
-                href={`#${partSlug(index)}`}
-                className="font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-colors px-3 py-1.5 rounded-none"
-              >
-                {roman}
-                <span className="text-muted/70 normal-case tracking-normal ml-1">
-                  &middot; {part.chapters.length}
-                </span>
+              <a key={part.title} href={`#${partSlug(index)}`}
+                className="font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-colors px-3 py-1.5 rounded-none">
+                {roman}<span className="text-muted/70 normal-case tracking-normal ml-1">&middot; {part.chapters.length}</span>
               </a>
             );
           })}
@@ -201,14 +293,28 @@ export function TableOfContents() {
               <ol className="space-y-5">
                 {part.chapters.map((chapter) => (
                   <li key={chapter.n} className="flex gap-4">
-                    <span className="font-mono text-sm text-muted w-6 shrink-0 text-right">
-                      {chapter.n}
-                    </span>
+                    <span className="font-mono text-sm text-muted w-6 shrink-0 text-right">{chapter.n}</span>
                     <div className="flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
                         <span className="font-medium text-lg leading-snug">{chapter.title}</span>
                       </div>
                       <p className="text-muted text-[15px] leading-snug mt-1">{chapter.blurb}</p>
+                      {chapter.sources?.length ? (
+                        <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 font-mono text-[11px] leading-snug text-muted/80">
+                          <span className="uppercase tracking-wider">Sources</span>
+                          {chapter.sources.map((source) => (
+                            <a
+                              key={source.href}
+                              href={source.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline underline-offset-2 decoration-rule hover:text-ink transition-colors"
+                            >
+                              {source.label}
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
                   </li>
                 ))}

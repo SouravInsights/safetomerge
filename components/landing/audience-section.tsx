@@ -16,8 +16,9 @@ export function AudienceSection() {
             <ul className="space-y-3 text-muted leading-relaxed">
               {[
                 "You ship multiple times a week and a green checkmark doesn't fully reassure you anymore.",
-                'You\'ve started letting an AI agent open PRs and you\'re not totally sure what "safe" means now.',
-                "You want a mental model for the problem, more than another list of product launches to skim.",
+                "You've started letting AI agents make meaningful changes and you're figuring out what context, evidence, and review they actually need.",
+                "You want to understand the engineering systems emerging around agents, not another list of AI tools.",
+                "You're interested in making software improve its own checks and workflows from what happens in production.",
               ].map((text) => (
                 <li key={text} className="flex gap-3">
                   <Plus className="w-4 h-4 text-verified shrink-0 mt-1" />
@@ -32,9 +33,9 @@ export function AudienceSection() {
             </h3>
             <ul className="space-y-3 text-muted leading-relaxed">
               {[
-                "You're hoping for a plug-and-play tool. This is more about rethinking your process.",
-                "You want to learn how to build AI agents. This is about keeping your software reliable when code is written at inference speed.",
-                "You need a finished manual right now. I'm still learning and writing this as I go.",
+                "You're looking for a plug-and-play tool. This is about the engineering system around the tools.",
+                "You want a generic AI-agent tutorial covering prompts, models, or frameworks.",
+                "You need a finished manual right now. I'm still learning and writing this as the field moves.",
               ].map((text) => (
                 <li key={text} className="flex gap-3">
                   <Minus className="w-4 h-4 text-flag shrink-0 mt-1" />

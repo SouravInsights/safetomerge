@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/landing/section-label";
 import { NotifyForm } from "@/app/components/notify-form";
+import { Highlight } from "@/components/ui/highlight";
 
 export function HeroSection() {
   return (
@@ -18,8 +19,8 @@ export function HeroSection() {
           Agents can write, test, review, and ship software at a pace that changes
           the old way of working. The harder problem is building the system around
           them: clear intent, useful context, good evidence, safe boundaries, and
-          feedback from what actually happens in production.
-          <mark className="mark"> This handbook is about how teams are figuring that out.</mark>
+          feedback from what actually happens in production.{" "}
+          <Highlight delay={300}>This handbook is about how teams are figuring that out.</Highlight>
         </p>
 
         <div className="space-y-4">

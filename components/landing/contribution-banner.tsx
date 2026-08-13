@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Highlight } from "@/components/ui/highlight";
 
 export function ContributionBanner() {
   return (
@@ -13,7 +14,8 @@ export function ContributionBanner() {
         </div>
 
         <h2 className="text-3xl sm:text-4xl font-semibold leading-tight tracking-tight mb-4">
-          How does your team ship code <mark className="mark">when agents write a lot of it</mark>?
+          How does your team ship code{" "}
+          <Highlight delay={150}>when agents write a lot of it</Highlight>?
         </h2>
 
         <p className="text-lg text-muted leading-relaxed max-w-xl mb-8">

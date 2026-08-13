@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/landing/section-label";
+import { Highlight } from "@/components/ui/highlight";
 
 export const STUDIED_TEAMS = [
   { name: "PostHog", domain: "posthog.com", href: "https://posthog.com/blog/10k-prs-a-month" },
@@ -69,7 +70,10 @@ export function AuthorSection() {
             </a>
             , a minimal travel platform. To move faster as a solo developer, I started
             relying on agents to write code. I quickly learned that generating code is
-            the easy part. <mark className="mark">The harder problem is building the system around the agent:</mark>
+            the easy part.{" "}
+            <Highlight delay={150}>
+              The harder problem is building the system around the agent:
+            </Highlight>{" "}
             giving it the right context, understanding what a change can affect,
             verifying the result, and learning from what happens after shipping.
           </p>

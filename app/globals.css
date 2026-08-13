@@ -87,29 +87,45 @@ body > * {
   color: var(--color-paper);
 }
 
-/* Hand-drawn highlighter mark, using the book's own verified/flag vocabulary as
-   the accent language rather than an arbitrary decorative color. */
-mark.mark {
+/* Editorial highlighter mark with dual-gradient marker stroke and in-view draw animation */
+mark.mark,
+.letter-mark {
   background: none;
-  background-image: linear-gradient(
-    100deg,
-    color-mix(in srgb, var(--color-mark) 0%, transparent) 0%,
-    color-mix(in srgb, var(--color-mark) 70%, transparent) 6%,
-    color-mix(in srgb, var(--color-mark) 70%, transparent) 92%,
-    color-mix(in srgb, var(--color-mark) 0%, transparent) 100%
-  );
+  background-image: 
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--color-mark) 28%, transparent) 0.9%,
+      var(--color-mark) 2.4%,
+      color-mix(in srgb, var(--color-mark) 65%, transparent) 5.8%,
+      color-mix(in srgb, var(--color-mark) 60%, transparent) 93%,
+      var(--color-mark) 96%,
+      color-mix(in srgb, var(--color-mark) 0%, transparent) 98%
+    ),
+    linear-gradient(
+      transparent 0%,
+      color-mix(in srgb, var(--color-mark) 35%, transparent) 7.9%,
+      color-mix(in srgb, var(--color-mark) 20%, transparent) 15%
+    );
   background-repeat: no-repeat;
-  background-size: 100% 0.64em;
-  background-position: 0 78%;
+  background-size: 0% 62%;
+  background-position: 0 84%;
   color: inherit;
-  padding: 0 0.05em;
-  border-radius: 1px 6px 2px 7px / 4px 2px 6px 3px;
-  transition: background-size 0.2s ease-in-out, filter 0.2s ease-in-out;
+  padding: 0 0.1em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  display: inline;
+  transition: background-size 1.2s cubic-bezier(0.25, 1, 0.5, 1), filter 0.2s ease-in-out;
 }
 
-mark.mark:hover {
-  background-size: 100% 0.75em;
-  filter: brightness(1.05);
+mark.mark.highlight-active,
+.letter-mark.highlight-active {
+  background-size: 100% 62%;
+}
+
+mark.mark:hover,
+.letter-mark:hover {
+  background-size: 100% 68%;
+  filter: brightness(1.04);
 }
 
 /* Alternating band so a long, text-heavy page breaks into readable

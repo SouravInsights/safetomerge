@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/landing/section-label";
+import { Highlight } from "@/components/ui/highlight";
 
 export function WhySection() {
   return (
@@ -26,7 +27,7 @@ export function WhySection() {
             . Over that same stretch, the percentage of PRs created by AI agents grew
             from around 20% to over 70%. The interesting question is no longer just
             how to make agents write code. It is{" "}
-            <mark className="mark">how to build an engineering system that can keep up with that pace.</mark>
+            <Highlight delay={100}>how to build an engineering system that can keep up with that pace.</Highlight>
           </p>
 
           <p>
@@ -34,7 +35,8 @@ export function WhySection() {
             production is observed, how intent and context reach an agent, how a
             change is understood before it is merged, how evidence is gathered, and
             how outcomes feed back into the next decision. Humans move toward the
-            things that still need judgment: <mark className="mark">what's actually worth building, what is safe enough to ship, how to keep systems reliable.</mark>
+            things that still need judgment:{" "}
+            <Highlight delay={200}>what&apos;s actually worth building, what is safe enough to ship, how to keep systems reliable.</Highlight>
           </p>
 
           <p>

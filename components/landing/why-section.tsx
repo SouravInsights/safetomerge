@@ -48,7 +48,7 @@ export function WhySection() {
             There is another problem. Faster development can also mean faster accumulation of mess: stale tests, duplicated abstractions, outdated documentation, weak conventions, and architectural drift. The more we ship, the more important this maintenance becomes.
           </p>
 
-          <p className="text-ink text-xl leading-relaxed border-l-2 border-mark pl-5 -ml-5">
+          <p className="text-ink text-xl leading-relaxed border-l-2 border-mark pl-4 -ml-4 sm:pl-5 sm:-ml-5">
             I am writing this by studying teams who are figuring this out: reading their
             engineering work, following what they are shipping, talking to engineers
             directly, and testing the patterns myself. The goal is to understand what actually works, what doesn't, and why.

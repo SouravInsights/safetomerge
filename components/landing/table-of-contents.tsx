@@ -272,7 +272,7 @@ export function TableOfContents() {
           research, or both.
         </p>
 
-        <div className="flex overflow-x-auto whitespace-nowrap gap-2 mb-10 pb-2 scrollbar-none -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex-wrap">
+        <div className="flex overflow-x-auto whitespace-nowrap gap-2 mb-10 pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
           {HANDBOOK_PARTS.map((part, index) => {
             const [roman] = part.title.split(":");
             return (
@@ -287,7 +287,7 @@ export function TableOfContents() {
         <div className="space-y-14">
           {HANDBOOK_PARTS.map((part, index) => (
             <div key={part.title} id={partSlug(index)} className="scroll-mt-8">
-              <h3 className="sticky top-0 bg-paper/95 backdrop-blur-md py-2.5 -mx-6 px-6 sm:mx-0 sm:px-0 font-mono text-xs tracking-widest uppercase text-ink mb-5 z-10 border-b border-rule/50">
+              <h3 className="sticky top-0 bg-paper/95 backdrop-blur-md py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 font-mono text-xs tracking-widest uppercase text-ink mb-5 z-10 border-b border-rule/50">
                 {part.title}
               </h3>
               <ol className="space-y-5">

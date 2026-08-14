@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Spectral } from "next/font/google";
 import "./globals.css";
 
@@ -17,26 +17,160 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const siteUrl = "https://www.safetomerge.com";
+const siteName = "Safe to Merge";
+
+const description =
+  "A practical handbook for building reliable software when AI agents write and ship more of the code. Learn how teams are rethinking software engineering, code review, testing, verification, observability, agent harnesses, and safe autonomy.";
+
+// Viewport settings: tells mobile browsers the screen width and sets the top browser bar color to match the page background
+export const viewport: Viewport = {
+  themeColor: "#FAF9F5",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: "Safe to Merge: Software is moving faster than you can review it",
-  description:
-    "At PostHog, agents open over 70% of all pull requests. The pipeline that worked when humans wrote every line doesn't hold at that volume. This handbook is about how teams are rebuilding it: what evidence actually proves a change is safe, how to assemble it from tools you already run, and where a human still has to be the one who decides.",
+  // Base URL used to turn relative links (like "/opengraph-image") into full absolute URLs (https://www.safetomerge.com/opengraph-image)
+  metadataBase: new URL(siteUrl),
+
+  // Title: default is for the home page; template lets sub-pages automatically append " | Safe to Merge"
+  title: {
+    default: `${siteName}: Building Reliable Software in the Age of AI Agents`,
+    template: `%s | ${siteName}`,
+  },
+
+  description,
+
+  applicationName: siteName,
+
+  // Search keywords: helps search crawlers and AI search engines index the relevant topics
+  keywords: [
+    "Safe to Merge",
+    "safetomerge",
+    "agentic-engineering",
+    "agentic-workflows",
+    "ai",
+    "ai-agent",
+    "ai-agents",
+    "ai-engineering",
+    "ai-safety",
+    "code-review",
+    "observability",
+    "software",
+    "software-engineering",
+    "software-reliability",
+    "testing",
+    "AI coding",
+    "agent harnesses",
+    "automated code verification",
+    "AI PR review",
+    "safe autonomy",
+    "AI engineering handbook",
+  ],
+
+  authors: [
+    {
+      name: "Sourav Kumar Nanda",
+      url: "https://souravinsights.com",
+    },
+  ],
+
+  creator: "Sourav Kumar Nanda",
+  publisher: siteName,
+
+  // Canonical URL: tells search engines that this is the main, authoritative address of the homepage
+  alternates: {
+    canonical: "/",
+  },
+
+  // Crawler rules: tells Googlebot it is allowed to index the page and use high quality image previews
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
+  // OpenGraph: controls how the link appears when shared on social platforms like Twitter/X, LinkedIn, Discord, and Slack
   openGraph: {
-    title: "Safe to Merge: Software is moving faster than you can review it",
-    description:
-      "At PostHog, agents open over 70% of all pull requests. The pipeline that worked when humans wrote every line doesn't hold at that volume. This handbook is about how teams are rebuilding it: what evidence actually proves a change is safe, how to assemble it from tools you already run, and where a human still has to be the one who decides.",
     type: "website",
+    url: siteUrl,
+    siteName,
+    title: `${siteName}: Building Reliable Software in the Age of AI Agents`,
+    description,
+    locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: `${siteName}: Building Reliable Software in the Age of AI Agents`,
+      },
+    ],
+  },
+
+  // Twitter Card: ensures Twitter/X shows a large preview image and text card when someone tweets your link
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteName}: Building Reliable Software in the Age of AI Agents`,
+    description,
+    images: ["/opengraph-image"],
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+  },
+
+  category: "technology",
+};
+
+// JSON-LD (Structured Data): Machine-readable data for search engines using real site URLs
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteName,
+  url: siteUrl,
+  description,
+  inLanguage: "en-US",
+  author: {
+    "@type": "Person",
+    name: "Sourav Kumar Nanda",
+    url: "https://souravinsights.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: siteName,
+    url: siteUrl,
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
       data-scroll-behavior="smooth"
       className={`${spectral.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-clip">{children}</body>
+      <head>
+        {/* Inject structured data into the HTML header so search engines find it immediately */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col overflow-x-clip">
+        {children}
+      </body>
     </html>
   );
 }

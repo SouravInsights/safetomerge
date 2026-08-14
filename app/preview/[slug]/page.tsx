@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getHandbookChapter, getHandbookChapters } from '@/lib/handbook';
 import { mdxComponents } from '@/components/mdx';
+
+export const metadata: Metadata = {
+  title: 'Preview Chapter',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function PreviewChapterPage({
   params,

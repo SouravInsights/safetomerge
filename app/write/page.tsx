@@ -1,8 +1,17 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getHandbookChapters } from '@/lib/handbook';
 import { createChapter } from '@/app/actions/handbook';
 import { redirect } from 'next/navigation';
 import { FileEdit, Plus, BookOpen } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Handbook Editor',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function WriteDashboard() {
   const chapters = getHandbookChapters();

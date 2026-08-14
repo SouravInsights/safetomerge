@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getHandbookChapters } from '@/lib/handbook';
 import { ArrowLeft } from 'lucide-react';
+import { SidebarNav } from './sidebar-nav';
 
 export default function HandbookLayout({
   children,
@@ -10,31 +11,23 @@ export default function HandbookLayout({
   const chapters = getHandbookChapters();
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row bg-paper">
       {/* Sidebar Navigation */}
       <aside className="w-full md:w-64 lg:w-72 shrink-0 border-r border-rule bg-paper md:h-screen md:sticky md:top-0 overflow-y-auto">
         <div className="p-6">
-          <Link href="/" className="inline-flex items-center gap-2 mb-10 text-sm font-semibold hover:text-verified transition-colors group">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 mb-8 text-sm font-semibold hover:text-verified transition-colors group"
+          >
             <ArrowLeft className="w-4 h-4 text-muted group-hover:text-verified transition-colors" />
             Back to home
           </Link>
-          
+
           <h2 className="font-mono text-xs tracking-widest uppercase text-muted mb-4">
             Chapters
           </h2>
-          <nav>
-            <ul className="space-y-3">
-              {chapters.map((chapter) => (
-                <li key={chapter.slug}>
-                  <Link 
-                    href={`/handbook/${chapter.slug}`}
-                    className="block text-sm text-ink hover:text-verified transition-colors"
-                  >
-                    {chapter.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <nav aria-label="Handbook chapters">
+            <SidebarNav chapters={chapters} />
           </nav>
         </div>
       </aside>

@@ -1,8 +1,17 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getHandbookChapter } from '@/lib/handbook';
 import fs from 'fs/promises';
 import path from 'path';
 import Editor from './editor';
+
+export const metadata: Metadata = {
+  title: 'Edit Chapter',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function WriteChapterPage({
   params,

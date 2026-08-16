@@ -1,176 +1,630 @@
-# Handbook Plan: Ship Safely — Evidence Before Merge
+# Safe to Merge: Handbook Plan
 
-**Working title:** Ship Safely (domain: `safetomerge.dev`)
+**Domain:** `safetomerge.com`
 
-**North star, one line:** how does a team increase the rate at which it changes software without increasing the rate at which it breaks? Not AI, not testing, not agents — **safe velocity**. Every chapter should trace back to this question.
+**Handbook description:** A practical handbook for building reliable software when AI agents write and ship more of the code.
 
----
-
-## 0. What This Handbook Actually Is
-
-Most teams adopting AI coding agents already have the tools — GitHub, some CI, maybe Sentry or PostHog, maybe Playwright — but no shared practice for turning them into justified confidence as agents author a growing share of the code. This handbook is that missing practice: what evidence actually proves a change is safe, how to assemble that evidence from tools a team likely already runs, and where a human still has to be the one who decides.
-
-It is not vendor documentation, not an AI-agent tutorial, and not a disguised product manual. A reader should be able to implement the practice by hand, with whatever stack they already have, and never buy or build anything from us.
+**GitHub description:** A practical handbook for building reliable software in the age of AI agents.
 
 ---
 
-## 1. Editorial Principles
+## 1. What Safe to Merge Is
 
-- **Practice over product.** Every chapter stands alone if the reader never adopts a tool of ours. The product, if it exists, is one reference implementation of the practice — never the reason the practice exists.
-- **Vendor-literate, not vendor-locked.** Name real tools specifically and honestly, including their limits. But no chapter should only make sense for one company's stack — where a tool is named (Sentry, PostHog, Playwright, Temporal), name at least one real alternative alongside it, and write the underlying principle so it survives either choice.
-- **Concrete over abstract.** Every chapter ends with something doable this week.
-- **Show the reasoning, not just the rule.** State the "why," not just the prescription.
-- **Honest about immaturity.** Where something is a bet rather than settled practice, say so.
-- **One shape per chapter type**, so this reads as a system, not a pile of essays (see Section 2a).
+Safe to Merge is a practical, research-led handbook about the engineering systems teams need as AI agents become capable of writing, modifying, reviewing, testing, and shipping software.
 
----
+The subject is **not AI agents themselves**.
 
-## 2. The Loop: Observe → Understand → Change → Verify → Ship → Learn
+The subject is what has to exist around them so that software can keep moving quickly without becoming fragile, opaque, or impossible to trust.
 
-This is the spine the whole handbook hangs off, and every Part below maps to a stage of it:
+The handbook studies how teams are figuring out:
 
-- **Observe** — what the running system actually does (production, users, incidents).
-- **Understand** — what a proposed change touches and what it risks (diffs, dependency graphs, ownership).
-- **Change** — how humans and agents actually make the change.
-- **Verify** — what evidence gets assembled before anyone trusts the change.
-- **Ship** — what happens at merge and deploy time.
-- **Learn** — how outcomes feed back and make the next loop sharper.
+- how to turn human intent into something agents can act on and verify
+- how to give agents the right codebase, product, architectural, historical, and production context
+- how to understand the impact and blast radius of a change before making it
+- how to design the environment and harness around an agent
+- how to give agents increasing autonomy without removing accountability
+- how to gather evidence that a change actually works
+- how to verify agents without allowing them to become their own oracle
+- how to operate agents that run for long periods and recover from failure
+- how production behavior feeds back into engineering
+- how evaluation becomes a continuous feedback loop
+- how teams prevent the software and the agent environment from decaying over time
 
-A team that's weak at any one stage doesn't get a partial version of "safe velocity" — they get the failure mode specific to that gap (no Observe = flying blind; no Verify = shipping on hope; no Learn = repeating the same regression forever). Naming which stage is weakest is often the fastest way to know what to fix first, and several playbooks below are built exactly around that diagnosis.
+It is a **handbook of emerging engineering practice**, not a product manual, vendor guide, or generic AI engineering tutorial.
 
----
-
-## 2a. The Standard Chapter Shape
-
-Every chapter in Parts II–IV follows the same template, so the handbook reads as a system rather than a collection of essays:
-
-1. The problem
-2. Why it matters more as AI authors more of the change
-3. Mental model
-4. What "good" looks like, concretely
-5. Tool-agnostic architecture (the pattern, before any specific vendor)
-6. Example setup (naming real tools, with at least one alternative)
-7. Worked example, using the handbook's single running case
-8. How to tell it's actually working
-9. Common failure modes
-10. What to build/automate next, once this is solid
+A reader should be able to take the ideas, use the tools they already have, and improve their own engineering system without adopting anything from Safe to Merge.
 
 ---
 
-## 3. Chapter Structure
+## 2. The North Star
 
-### Part I — Why This Needs a Practice, Not Just Tools
+### How do we make software safer to change as the cost of changing it keeps falling?
 
-1. **Why Green CI Isn't Evidence of Safety** — opens the book. Passing tests prove the tests still pass, not that the product still works.
-2. **The Loop, and Where Your Team Is Actually Weak** — introduces Observe→Understand→Change→Verify→Ship→Learn as a diagnostic, not just a diagram.
-3. **Trust Is a Budget, Not a Switch** — reframes "should we trust this change" as spending a fixed amount of human attention on the right slice of changes, not all of them equally.
-4. **The Shape of an AI-Native Engineering Org** — what changes when agents author a meaningful share of PRs: volume, review load, what a human reviewer is actually checking for now.
+AI agents are making implementation dramatically cheaper and faster.
 
-### Part II — What Actually Counts as Evidence
+That changes the engineering problem.
 
-5. **What CI Actually Proves (and Doesn't)** — test-impact analysis: did any test that ran actually exercise the changed path? Flaky-test handling.
-6. **What Production Already Knows** — mining existing observability for incidents historically correlated with the code being touched, whatever tool that lives in.
-7. **What a Browser Can Verify Right Now** — the gap-filler: scoped, black-box exploration against a preview URL, only for what nothing else already covers.
-8. **What the Diff Itself Signals** — blast radius from a dependency graph, diff size against historical norms, risk categories (auth, payments, migrations) that should never be waved through regardless of everything else looking clean.
-9. **Who Should Actually Look at This** — ownership and reviewer-routing from history, cheap and usually skipped.
-10. **Assembling the Evidence Report** — how 5–9 become one artifact a human reads before deciding. A report, explicitly not a verdict.
+When producing a code change is no longer the main constraint, the important questions become:
 
-### Part III — Getting Agents Ready to Touch Real Code
+- Did we understand what was actually intended?
+- Did the agent have the context it needed?
+- What could this change affect?
+- What evidence tells us it works?
+- Can we trust that evidence?
+- What should the agent decide on its own?
+- What still needs a human?
+- What happens when something gets through anyway?
+- Does the system learn from that failure?
+- Does the engineering environment become better over time, or slowly accumulate entropy?
 
-11. **Making a Codebase Agent-Ready** — conventions, docs, ownership signals, and permission boundaries that let an agent operate usefully and safely, without which every later chapter is harder.
-12. **The Agent Harness** — context, tools, memory, sandboxing, checkpoints, durable retries: the scaffolding that lets an agent self-correct instead of repeating the same mistake.
-13. **Safe Autonomy** — the actual decision framework for what an agent may do unsupervised, what needs approval, and what should never be automated no matter how good the track record gets.
+**Safe velocity** is the outcome.
 
-### Part IV — Shipping and Actually Learning From What Happens
-
-14. **Deciding What Gets Automated vs. What a Human Must Own** — a real boundary, with worked examples of where actual teams have drawn it.
-15. **Durable, Agentic Verification Loops** — why this needs retries and long-running state, not a script; orchestration patterns without requiring one specific tool.
-16. **Human-in-the-Loop That Doesn't Get Ignored** — where flagged evidence goes, how it's phrased, and the alert-fatigue trap: a system that flags too much trains people to stop reading it.
-17. **Closing the Loop: Learning From Outcomes** — did a flagged risk become a real incident? Did an unflagged change break anyway? How that reshapes what gets checked next time, and how to keep it inspectable rather than an unaccountable black box.
-
-### Part V — Evaluation
-
-18. **Measuring Whether Any of This Is Actually Working** — backtesting against real past incidents, escaped-defect rate, false-positive rate, time-to-detection, cost per verification. The section most guides like this skip, and the one that proves the practice works rather than just sounds right.
-
-### Part VI — Adoption
-
-19. **A 30-Day Adoption Path** — week by week, starting with wiring existing CI results and existing observability into evidence before building anything new.
-20. **Playbooks for Common Starting Points** — see Section 5.
-
-### Part VII — Case Studies & Research Shelf
-
-21. **Worked Case Study: PostHog's Self-Driving Practice** — a close, honest read of scouts, StampHog, Replay Vision, PostHog Code, and their public "how we ship" writing, as a real operating example at extreme scale — what transfers to a smaller or differently-shaped team, what's specific to being a data-platform vendor with your own product to dogfood on.
-22. **Annotated Research Shelf** — see Section 6.
-
-*(20 chapters, not 31 — trimmed on purpose. Several of the ChatGPT draft's chapters — GitHub setup, Playwright setup, Sentry setup, PostHog setup, "Connecting the Stack" — are folded into the integration guides in Section 4 instead of becoming standalone chapters, since they're reference material a reader looks up, not a narrative a reader reads through, and having them as chapters was creating repeat coverage of the same ground.)*
+The handbook is about the system that makes safe velocity possible.
 
 ---
 
-## 4. Integration / Setup Guides
+## 3. The Core Model
 
-Short, practical, tool-specific companions — reference material linked from the relevant chapter, not part of the narrative chapter sequence. Each one: what the tool gives you, the minimum viable connection, one real alternative, and a common misconfiguration to avoid.
+The handbook uses one loop as its conceptual spine:
 
-- **GitHub** — webhook setup for PR events, reading diffs/metadata without requesting broad scopes, posting structured PR comments well.
-- **Preview environments** — Vercel/Netlify/Render patterns, environment isolation, test data.
-- **Browser verification** — Playwright as the reference choice; setup for preview-URL testing, keeping agent-generated tests git-native and reviewable rather than an opaque blob.
-- **Observability** — Sentry and Datadog as reference choices, PostHog as the reference choice when a team already has product analytics/replay too; pulling historical incidents by code path; the common failure of noisy alerting rules that make correlation useless.
-- **CI/CD** — reading structured results back out programmatically; AST-based selective test running basics.
-- **Durable workflow orchestration** — Temporal as the reference choice; the minimum setup for a retry-safe loop; when a simpler queue is enough and this isn't needed yet.
-- **Team notification** — Slack as the reference choice; PR comments vs. chat, and when each is the right surface.
+**Observe → Understand → Change → Verify → Ship → Learn**
 
----
+### Observe
 
-## 5. Practical Playbooks
+Understand what the running product is actually doing.
 
-Each playbook: a named starting situation, what to instrument first, what to explicitly skip, a realistic timeline.
+Production errors, traces, logs, analytics, session replay, incidents, deployments, user behavior, and other operational signals.
 
-- **"We ship multiple times a day and have almost no tests."**
-- **"We have a large test suite nobody fully trusts anymore."** Flaky-test triage and test-impact analysis before adding anything new.
-- **"We just gave an AI coding agent write access to our repo."** The most urgent playbook — what evidence must exist before an agent-authored PR is eligible for fast-tracked review, and what should never be auto-anything.
-- **"We have observability but it's disconnected from our review process."** Usually the highest-leverage, lowest-effort starting point.
-- **"We want to reduce human review load without losing safety."** The StampHog-style playbook: finding the safe-to-automate slice from historical approval patterns, and keeping that boundary honest over time.
-- **"We're writing our first agent skill for verification work."** A concrete worked example of turning a workflow into a well-scoped, maintainable skill.
+### Understand
 
----
+Build enough context to understand the requested change and its consequences.
 
-## 6. Annotated Research Shelf
+Intent, product requirements, repository knowledge, architecture, dependencies, ownership, history, production behavior, and blast radius.
 
-- **PostHog — "What is a Scout?", "What if your product built itself?", "10,000 PRs a month is easy," "PostHog Code and the self-driving product," Replay Vision docs, "How to safely test in production," "A beginner's guide to testing AI agents," "The golden rules of agent-first product engineering."** The most complete real-world example of this practice operating at scale today. Read as case studies, not templates — specific to being a data-platform company with a warehouse and its own product to dogfood on.
-- **PostHog's public engineering handbook** (`posthog.com/handbook`) — worth studying as a structural example too: a living, versioned practice doc, which is close to the format this handbook itself wants to be.
-- **Google's Test Automation Platform / test-impact-analysis research.** Grounding for the CI-evidence chapter.
-- **Meta's Prospector / probabilistic test selection.** A contrasting approach to the same problem.
-- **Site Reliability Engineering (Google's SRE book).** Foundational thinking on error budgets and trust-as-a-resource.
-- **Mitchell Hashimoto's writing on harness engineering.** The conceptual root of "engineer a permanent fix into the environment rather than hoping the next prompt does better."
-- **Anthropic's and OpenAI's agentic coding / eval-design writing.** Grounding for the harness and evaluation chapters.
-- **Netflix's chaos engineering publications.** A different, complementary lineage of building justified confidence in a system you can't fully inspect.
+### Change
 
-Each entry gets a dated "last reviewed" line — this landscape moves fast, especially the PostHog material, which is being actively updated as they ship.
+Let humans and agents make the change.
 
----
+This includes agent harnesses, tools, skills, permissions, environments, long-running execution, checkpoints, and recovery.
 
-## 7. Website / Presentation Principles
+### Verify
 
-- Docs-site shape, not blog shape — persistent nav by Part/Chapter, a reference people return to.
-- Every chapter independently linkable and self-contained, with a one-line pointer back to relevant earlier chapters.
-- Runnable, copy-pasteable snippets, never screenshots of config.
-- A visible confidence marker per chapter — settled practice vs. emerging/contested bet.
-- No login wall, no gated chapters.
-- One single canonical running example (an app + one realistic PR) threaded through Parts II–IV, so the taxonomy and the playbooks visibly connect to the same concrete case.
+Build trustworthy evidence that the change does what it should and does not break what it should not.
+
+Tests are one form of evidence, not the definition of verification.
+
+### Ship
+
+Move the change into production with appropriate controls.
+
+CI, previews, progressive delivery, rollbacks, auditability, and change-specific risk controls.
+
+### Learn
+
+Feed what actually happened back into the system.
+
+Escaped bugs, incidents, user behavior, failed evaluations, agent mistakes, review feedback, and production evidence should improve future context, tests, skills, evaluations, and engineering rules.
+
+The loop matters because none of these stages is sufficient on its own.
 
 ---
 
-## 8. What Gets Built First (MVP scope)
+## 4. The Big Ideas We Want the Reader to Leave With
 
-1. Chapter 1 (Why Green CI Isn't Evidence) — the hook, shortest path to something shareable.
-2. Chapter 10 (Assembling the Evidence Report) — makes the abstract idea tangible fast.
-3. One playbook — "We just gave an AI coding agent write access to our repo" — most urgent and most linkable right now.
-4. Chapter 21 (PostHog case study) — the research is already done; borrowed credibility, fast to write.
-5. Everything else, in the order listed above.
+### 4.1 Intent becomes infrastructure
 
-Four pieces is enough to test whether the practice resonates before committing to all 20 chapters.
+As agents get better at implementation, vague requirements become more expensive.
+
+The system needs ways to express:
+
+- product intent
+- acceptance criteria
+- behavioral contracts
+- user journeys
+- invariants
+- definitions of done
+- constraints
+
+The question is not only "can the agent implement this?"
+
+It is also:
+
+> **What would let the system know that the implementation is correct?**
 
 ---
 
-## 9. How This Relates to the Product
+### 4.2 Context is part of the engineering system
 
-The handbook works whether or not the product ships. If the product gets built, each feature should map to a specific chapter's practice — never the reverse. The moment a chapter only makes sense if the reader adopts the tool, it's stopped being a handbook.
+An agent cannot safely change a large product from the task description and a handful of files.
+
+Context can include:
+
+- repository structure
+- architecture
+- domain knowledge
+- product behavior
+- historical decisions
+- ownership
+- dependencies
+- current production behavior
+- previous incidents
+- relevant skills and tools
+
+The handbook should teach teams how to make this context available, useful, discoverable, and maintainable.
+
+---
+
+### 4.3 The agent harness matters as much as the model
+
+The model is only one component.
+
+The surrounding environment determines what the agent can see, what it can do, how it is constrained, how it recovers, and how its work is evaluated.
+
+Harness topics include:
+
+- tools
+- skills
+- context
+- permissions
+- sandboxes
+- state
+- checkpoints
+- retries
+- durable execution
+- feedback
+- evaluation
+- recovery
+
+---
+
+### 4.4 Cheap changes create a new maintenance problem
+
+If agents make changes extremely cheap, they can also make bad abstractions extremely cheap to create.
+
+The system therefore needs continuous maintenance:
+
+- architectural drift detection
+- stale tests
+- stale documentation
+- duplicated abstractions
+- dead code
+- agent skill drift
+- dependency drift
+- quality rules
+- automated cleanup
+
+The goal is not just to prevent breakage.
+
+It is to keep the software understandable enough for the next agent and human to work on.
+
+---
+
+### 4.5 Evidence is more important than output
+
+A test suite, review comment, successful build, or agent explanation is an output.
+
+The deeper question is:
+
+> **What does this evidence actually prove?**
+
+Safe to Merge should teach teams to reason about evidence quality, independence, coverage, false confidence, and the relationship between a check and the behavior it is supposed to establish.
+
+---
+
+### 4.6 Autonomy should be earned
+
+The goal is not maximum autonomy.
+
+The goal is appropriate autonomy.
+
+Agents should be given more freedom where the system has strong context, strong evidence, small blast radius, and reliable recovery.
+
+Humans should remain involved where uncertainty, consequence, ambiguity, or accountability demands it.
+
+---
+
+### 4.7 Production is part of the test system
+
+Production should not be the end of the engineering loop.
+
+Real failures, user behavior, session replays, traces, incidents, and successful changes can become future engineering knowledge.
+
+A mature system should increasingly learn from what actually happens.
+
+---
+
+### 4.8 Evaluation is a continuous system
+
+Evaluation should not only answer "is this agent good?"
+
+It should answer:
+
+- Did this change to the harness improve anything?
+- Did a new skill help?
+- Did an agent regression appear?
+- Did a new verification rule reduce escaped defects?
+- Did the system become noisier?
+- Did production behavior improve?
+
+Evaluation becomes part of the development loop itself.
+
+---
+
+## 5. Handbook Structure
+
+The chapters are organized around the engineering problems above, not around individual tools.
+
+### Part I: The Shift
+
+#### 1. When Writing Code Stops Being the Bottleneck
+What changes when agents can produce software faster than humans can review and reason about it. Where the bottleneck moves next.
+
+#### 2. What Does Correct Actually Mean?
+Intent, specifications, acceptance criteria, behavioral contracts, invariants, user journeys, and machine-checkable definitions of done.
+
+#### 3. The New Engineering Loop
+Observe → Understand → Change → Verify → Ship → Learn as one connected system.
+
+#### 4. When Software Becomes Cheap to Change
+AI-generated entropy, architectural drift, stale knowledge, duplicated abstractions, and why continuous maintenance becomes a first-class engineering activity.
+
+---
+
+### Part II: Context & Understanding
+
+#### 5. Make the Codebase Legible to Agents
+Repository knowledge, architecture, domain knowledge, ownership, history, skills, retrieval, progressive disclosure, and keeping knowledge fresh.
+
+#### 6. Give Agents the Right Context
+How code, product intent, documentation, history, production signals, and task-specific information should come together without creating unusable context.
+
+#### 7. Understand the Blast Radius
+Dependencies, affected user journeys, ownership, historical changes, production behavior, and deciding what deserves deeper verification.
+
+#### 8. Give Agents a View of Production
+Errors, logs, traces, analytics, session replay, feature flags, deployments, and how operational evidence can become agent context.
+
+---
+
+### Part III: The Agent Environment
+
+#### 9. The Agent Harness
+Tools, skills, permissions, sandboxes, context, state, feedback, recovery, and the environment surrounding the model.
+
+#### 10. Before You Give an Agent Write Access
+Repository conventions, contracts, secrets, permissions, environments, isolation, and the minimum boundaries required for safe agent work.
+
+#### 11. When an Agent Runs for Six Hours
+Long-running work, durable execution, checkpoints, resumability, partial failures, artifacts, handoffs, and recovery.
+
+---
+
+### Part IV: Verification & Trust
+
+#### 12. What Counts as Evidence?
+Why green CI is not the same as confidence. Tests, browser runs, static checks, traces, replays, production evidence, and human judgment.
+
+#### 13. Verify What Changed
+Risk-based verification, targeted checks, test-impact analysis, historical regressions, change-specific evidence, and avoiding unnecessary verification.
+
+#### 14. Don't Let the Agent Be Its Own Oracle
+Independent verification, external signals, evaluator independence, evidence quality, reward hacking, and false confidence.
+
+#### 15. Human Review Without the Noise
+Review routing, ownership, AI review quality, false positives, alert fatigue, and preserving human attention for decisions that actually need it.
+
+---
+
+### Part V: Autonomy & Shipping
+
+#### 16. Who Should Decide?
+Designing human and agent boundaries. What can be automated, what needs approval, and how autonomy can increase as confidence increases.
+
+#### 17. Ship Safely
+Preview environments, CI/CD, progressive delivery, rollback, auditability, and the boundary between merge and production.
+
+#### 18. Measure Safe Velocity
+Escaped defects, detection time, regression catch rate, intervention rate, evidence quality, cost, and whether faster development is actually producing better outcomes.
+
+---
+
+### Part VI: Learning Systems
+
+#### 19. Turn Production Failures Into Learning
+Trace a real failure from detection through investigation, fix, verification, and the change that prevents the same failure from disappearing into history.
+
+#### 20. Build the Evaluation Loop
+Offline evaluations, production-derived evaluations, traces, golden cases, human judgments, false positives, online experiments, and evaluating the evaluator.
+
+#### 21. Keep the System From Decaying
+Maintaining tests, docs, architecture, context, skills, evaluation cases, and the rules that keep the system useful to future agents and humans.
+
+---
+
+### Part VII: Practice
+
+#### 22. Connect the Tools You Already Have
+Practical integration patterns for GitHub, CI, preview environments, Playwright, Sentry, PostHog, Slack, agent tools, and the feedback between them.
+
+#### 23. Case Studies
+Deep studies of teams that are actually operating these systems. Focus on concrete workflows, decisions, failures, and what transfers.
+
+#### 24. Playbooks
+Short practical starting points for teams at different stages of agent adoption.
+
+#### 25. Research Shelf
+A deliberately small collection of high-signal primary engineering work and empirical research.
+
+---
+
+## 6. Integration Guides
+
+These are practical companions to the chapters, not a separate software tutorial.
+
+Every integration guide should answer:
+
+1. What does this tool contribute to the engineering loop?
+2. What information should move into or out of it?
+3. What is the minimum useful setup?
+4. What permissions are actually required?
+5. What should the team avoid connecting?
+6. What common failure mode appears after integration?
+7. What becomes possible once the systems are connected?
+8. What is a reasonable alternative?
+
+Initial areas:
+
+- GitHub and pull requests
+- CI/CD
+- Preview environments
+- Playwright and browser verification
+- Sentry / Datadog / other observability
+- PostHog and product analytics/replay
+- Slack and team notifications
+- Agent skills and repository instructions
+- MCP and external tools
+- Durable workflow orchestration where genuinely necessary
+
+The guides should explain the **engineering pattern**, not reproduce vendor documentation.
+
+---
+
+## 7. Case Study Method
+
+Case studies are a core part of the handbook.
+
+We are looking for teams that are actually figuring this out, not companies that merely publish AI positioning.
+
+For every case study, try to capture:
+
+- What problem were they trying to solve?
+- What did the workflow look like before?
+- What changed?
+- What tools did they connect?
+- What context does the agent receive?
+- What evidence does the system produce?
+- Where does a human still intervene?
+- What went wrong?
+- What did they change after it went wrong?
+- How do they know the new system is better?
+- What would transfer to another team?
+- What is specific to their company?
+
+Primary sources should be preferred:
+
+- engineering blog posts
+- public agent skills
+- GitHub repositories
+- architecture documents
+- technical talks
+- product documentation
+- direct conversations with engineers and founders
+
+---
+
+## 8. Research Standard
+
+The research shelf should be intentionally small.
+
+Do not collect papers because they contain "AI agents" in the title.
+
+Prioritize work that gives us evidence or a useful primary account of how these systems actually operate.
+
+### Companies and teams to study
+
+- **OpenAI**: Harness Engineering, repository knowledge, agent-accessible observability, quality enforcement, entropy, feedback loops.
+- **Cursor**: agent harness evolution, cloud agent lessons, long-running agents, autonomy, review, production feedback.
+- **Replit**: evaluation at scale, production experiments, traces, continuous optimization.
+- **Sourcegraph**: context and retrieval in large codebases.
+- **Factory**: incident response, software factory, production investigation and memory.
+- **PostHog**: Scout, self-driving product work, 10k PRs/month, Replay Vision, QA skills, agent-first product engineering.
+- **CodeRabbit**: AI review at scale and the practical limits of automated review.
+- Other emerging teams should be added when their primary work contains genuinely useful evidence.
+
+### Academic areas worth mining
+
+- empirical studies of agent-authored PRs
+- AI code review outcomes
+- software testing and test-impact analysis
+- runtime verification
+- automated program repair
+- fault localization
+- self-adaptive and self-healing systems
+- agent observability and debugging
+- evaluation of agent trajectories
+- human and automated software review
+- long-running agent reliability
+
+### Evidence rule
+
+Important claims should be supported by one or more of:
+
+1. a concrete case study
+2. a primary engineering source
+3. empirical research
+4. clearly labelled synthesis or opinion
+
+Emerging ideas should be presented as emerging.
+
+Every source should have:
+- a direct link
+- a short note explaining why it matters
+- a date or publication period
+- a last-reviewed date when appropriate
+
+---
+
+## 9. Human Research
+
+The handbook should learn directly from engineers and founders who are working through these problems.
+
+The research form and conversations should feel like a human-to-human engineering conversation, not a survey.
+
+Good questions are concrete:
+
+- "Walk me through what happens when someone opens a PR."
+- "What usually gives you confidence that it is safe to merge?"
+- "Tell me about the last bug that made it to production. What happened?"
+- "How did you find out about it?"
+- "Once it was fixed, did anything change because of it?"
+- "When an agent makes a change, what makes you comfortable accepting it?"
+- "What still creates the most noise for your engineers?"
+- "Is there something you wish your tools knew about each other?"
+- "What's something about this workflow you still haven't figured out?"
+- "Tell me about the last time something went wrong. What happened from the moment you found it until you were confident it wouldn't happen again?"
+
+The goal is to collect workflows and stories that can be turned into useful case studies.
+
+---
+
+## 10. Practical Playbooks
+
+Playbooks should be short, concrete, and tied to a real starting situation.
+
+Initial candidates:
+
+- **We just gave an AI coding agent write access to our repo.**
+- **We ship multiple times a day and have almost no tests.**
+- **We have a large test suite nobody fully trusts anymore.**
+- **We have observability, but it is disconnected from engineering changes.**
+- **We want to reduce human review without losing safety.**
+- **Our agents keep making the same mistakes.**
+- **Our agents don't understand the codebase well enough.**
+- **We have too much agent context and still get poor results.**
+- **We want production failures to improve future verification.**
+- **We want to run agents for much longer than a single coding session.**
+
+Each playbook should say:
+
+- where to start
+- what to connect first
+- what to measure
+- what not to automate yet
+- common failure modes
+- what to do next
+
+---
+
+## 11. Website & Content Architecture
+
+The handbook is a **docs site**, not a blog.
+
+Requirements:
+
+- every chapter gets its own crawlable URL
+- chapters have descriptive titles and metadata
+- each chapter is independently understandable
+- related chapters link to one another
+- source material is visible and linked
+- practical examples are copyable
+- emerging vs established practices are clearly marked
+- no login wall or gated chapters
+- the site should have `sitemap.ts` and `robots.ts`
+- canonical URLs should be defined
+- Open Graph images should exist for the handbook and important chapters
+- structured data should be used where appropriate
+- internal linking should create a useful knowledge graph
+- search language should be natural, never keyword-stuffed
+
+The landing page should communicate the thesis.
+
+The individual chapters should become the durable search surface.
+
+---
+
+## 12. MVP
+
+Do not build all 25 chapters before publishing.
+
+The first version should establish the intellectual direction through a small number of unusually strong pieces:
+
+1. **When Writing Code Stops Being the Bottleneck**
+2. **What Does Correct Actually Mean?**
+3. **Make the Codebase Legible to Agents**
+4. **What Counts as Evidence?**
+5. One concrete production failure case study
+6. One deep case study of a team operating an agentic workflow
+7. One practical integration guide
+
+Then use conversations, research, and reader feedback to decide what comes next.
+
+The MVP should prove that Safe to Merge can produce **useful engineering practice and original synthesis**, not just another AI content site.
+
+---
+
+## 13. What Safe to Merge Should Not Become
+
+Do not turn it into:
+
+- generic AI engineering 101
+- prompt engineering
+- LLM fundamentals
+- model comparisons
+- RAG tutorials
+- vector database tutorials
+- generic MCP documentation
+- "best AI coding tools" lists
+- generic multi-agent architecture
+- a testing-tool comparison site
+- a product disguised as a handbook
+- a collection of speculative predictions
+
+The handbook should sit one abstraction above the tools.
+
+Tools will change.
+
+The engineering problems around **intent, context, change impact, evidence, autonomy, observability, evaluation, recovery, and learning** are much more durable.
+
+---
+
+## 14. How It Relates to a Future Product
+
+The handbook stands on its own.
+
+If a product is eventually built, it should emerge from a repeatedly observed problem in the handbook's research and case studies.
+
+The relationship is:
+
+**Research → Practice → Repeated Problem → Product**
+
+Never:
+
+**Product idea → Write a chapter explaining why the product is necessary**
+
+The handbook should remain useful even if no product is ever built.
+
+---
+
+## 15. Current Positioning
+
+Safe to Merge is ultimately exploring a larger question:
+
+> **If agents make software dramatically easier to change, what engineering system do we need to keep that software reliable?**
+
+The answer is unlikely to be a better test generator alone.
+
+It is a system that connects:
+
+**Intent → Context → Change → Evidence → Decision → Production → Learning**
+
+The handbook exists to study how the best teams are building that system today.

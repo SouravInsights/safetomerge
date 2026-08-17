@@ -21,6 +21,18 @@ if (!token) {
     capture_exceptions: true,
     // Turn on debug in development mode
     debug: process.env.NODE_ENV === "development",
+    loaded: (ph) => {
+      if (typeof window !== "undefined") {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("ph_opt_out") === "true") {
+          ph.opt_out_capturing();
+          alert("PostHog: Tracking disabled for this browser.");
+        } else if (urlParams.get("ph_opt_in") === "true") {
+          ph.opt_in_capturing();
+          alert("PostHog: Tracking re-enabled for this browser.");
+        }
+      }
+    },
   });
 }
 

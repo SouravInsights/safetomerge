@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { contributions } from "@/lib/db/schema";
 import { desc } from "drizzle-orm";
 import crypto from "crypto";
+import { getPostHogClient } from "@/lib/posthog-server";
 
 const COOKIE_NAME = "admin_session";
 
@@ -38,6 +39,17 @@ export async function loginAdmin(password: string) {
       maxAge: 60 * 60 * 24 * 90, // 90 days
       path: "/",
     });
+
+    const posthog = getPostHogClient();
+    posthog.capture({
+      distinctId: "admin",
+      event: "admin_logged_in",
+      properties: {
+        source: "admin_dashboard",
+      },
+    });
+    await posthog.flush();
+
     return { success: true };
   }
 

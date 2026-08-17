@@ -16,6 +16,7 @@ import {
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { submitContribution } from "@/app/actions/contribute";
 import { Logo } from "@/components/logo";
+import posthog from "posthog-js";
 
 /* ── Form State Types ── */
 
@@ -157,7 +158,15 @@ export default function ContributePage() {
       e.stopPropagation();
     }
     if (validateStep(currentStep)) {
-      setCurrentStep((prev) => Math.min(prev + 1, STEPS.length));
+      const nextStep = Math.min(currentStep + 1, STEPS.length);
+      posthog.capture("contribution_step_advanced", {
+        from_step: currentStep,
+        from_step_title: STEPS[currentStep - 1].title,
+        to_step: nextStep,
+        to_step_title: STEPS[nextStep - 1].title,
+        total_steps: STEPS.length,
+      });
+      setCurrentStep(nextStep);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
@@ -189,6 +198,15 @@ export default function ContributePage() {
 
       if (res.success) {
         setSubmitted(true);
+        posthog.capture("contribution_submitted", {
+          role: form.role,
+          team_size: form.teamSize,
+          ai_share: form.aiShare,
+          credit_preference: form.credit,
+          open_to_follow_up: form.followUp,
+          confidence_signal_count: form.confidenceSignals.length,
+          tools_used_count: form.toolsUsed.length,
+        });
       } else {
         setError(res.error || "Failed to save response. Please try again.");
       }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { subscribeEmail } from "../actions/notify";
+import posthog from "posthog-js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -30,6 +31,9 @@ export function NotifyForm({
     
     if (result.success) {
       setStatus("done");
+      posthog.capture("newsletter_subscribed", {
+        form_id: id,
+      });
     } else {
       setStatus("error");
       setErrorMessage(result.error || "Failed to submit.");

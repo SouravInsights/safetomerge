@@ -3,6 +3,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { revalidatePath } from 'next/cache';
+import { getPostHogClient } from '@/lib/posthog-server';
 
 const contentDir = path.join(process.cwd(), 'content/handbook');
 
@@ -41,5 +42,16 @@ Start writing here...
   await fs.writeFile(filePath, initialContent, 'utf8');
   revalidatePath('/handbook');
   revalidatePath('/write');
+
+  const posthog = getPostHogClient();
+  posthog.capture({
+    distinctId: 'admin',
+    event: 'chapter_created',
+    properties: {
+      slug,
+    },
+  });
+  await posthog.flush();
+
   return { success: true, slug };
 }

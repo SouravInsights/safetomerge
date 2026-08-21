@@ -30,15 +30,26 @@ export const LOOP_STAGES = [
   },
 ];
 
+/* Slight hand-placed tilt per badge so the numbers feel stamped, not set
+   on a grid. They straighten out on hover. */
+const BADGE_TILTS = [
+  "-rotate-2",
+  "rotate-1",
+  "-rotate-1",
+  "rotate-2",
+  "-rotate-[1.5deg]",
+  "rotate-[0.75deg]",
+];
+
 export function HandbookLoop() {
   return (
     <section id="loop" className="section-band max-w-full py-16 sm:py-20">
       <Container size="narrow">
-        <SectionLabel>How it&apos;s organized</SectionLabel>
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+        <SectionLabel index="02" className="reveal">How it&apos;s organized</SectionLabel>
+        <h2 className="reveal reveal-d1 text-2xl sm:text-3xl font-semibold mb-4">
           The whole book maps to six stages.
         </h2>
-        <p className="text-lg text-muted leading-relaxed max-w-xl mb-10">
+        <p className="reveal reveal-d2 text-lg text-muted leading-relaxed max-w-xl mb-10">
           The loop is simple. The hard part is building each stage well enough that
           the next one can rely on it.
         </p>
@@ -47,9 +58,9 @@ export function HandbookLoop() {
           {LOOP_STAGES.map((stage, index) => (
             <li
               key={stage.label}
-              className="group flex gap-4 cursor-pointer sm:cursor-default select-none touch-manipulation transition-transform duration-150 active:scale-[0.98]"
+              className={`group flex gap-4 cursor-pointer sm:cursor-default select-none touch-manipulation transition-transform duration-150 active:scale-[0.98] reveal ${index % 2 === 0 ? "reveal-d1" : "reveal-d2"}`}
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-ink bg-paper font-mono text-xs shrink-0 mt-0.5 transition-all duration-150 group-hover:bg-ink group-hover:text-paper group-active:bg-ink group-active:text-paper">
+              <span className={`flex h-8 w-8 items-center justify-center rounded-full border border-ink bg-paper font-mono text-xs shrink-0 mt-0.5 shadow-[1.5px_1.5px_0_0_var(--color-ink)] transition-all duration-150 group-hover:bg-ink group-hover:text-paper group-hover:shadow-none group-hover:rotate-0 group-active:bg-ink group-active:text-paper ${BADGE_TILTS[index % BADGE_TILTS.length]}`}>
                 {index + 1}
               </span>
               <div>
@@ -60,10 +71,10 @@ export function HandbookLoop() {
               </div>
             </li>
           ))}
-          <li className="group flex gap-4 sm:col-span-2 border-t border-rule pt-8 mt-2 cursor-default select-none">
+          <li className="group flex gap-4 sm:col-span-2 border-t border-rule pt-8 mt-2 cursor-default select-none reveal reveal-d2">
             <span
               aria-hidden="true"
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-muted bg-paper shrink-0 text-muted mt-0.5 transition-colors duration-300 group-hover:border-ink group-hover:text-ink"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-muted bg-paper shrink-0 text-muted mt-0.5 -rotate-3 shadow-[1.5px_1.5px_0_0_var(--color-rule)] transition-all duration-300 group-hover:border-ink group-hover:text-ink group-hover:rotate-0 group-hover:shadow-none"
             >
               <RotateCcw className="w-3.5 h-3.5 origin-center transition-transform duration-500 ease-out group-hover:-rotate-180 group-active:-rotate-360" />
             </span>

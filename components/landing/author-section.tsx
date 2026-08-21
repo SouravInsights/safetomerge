@@ -20,9 +20,9 @@ export function AuthorSection() {
   return (
     <Container size="narrow" className="py-16 sm:py-20" id="about">
       <section>
-        <SectionLabel>Who&apos;s putting this together</SectionLabel>
+        <SectionLabel index="05" className="reveal">Who&apos;s putting this together</SectionLabel>
 
-        <div className="group/author flex items-center gap-4 sm:gap-5 border-b border-rule pb-6 mb-8">
+        <div className="group/author flex items-center gap-4 sm:gap-5 border-b border-rule pb-6 mb-8 reveal reveal-d1">
           <a
             href="https://souravinsights.com"
             target="_blank"
@@ -52,7 +52,7 @@ export function AuthorSection() {
         </div>
 
         <div className="space-y-6 text-lg leading-relaxed">
-          <p>
+          <p className="reveal reveal-d1">
             Hi, I&apos;m{" "}
             <a href="https://souravinsights.com" target="_blank" rel="noopener noreferrer"
               className="underline underline-offset-4 decoration-rule hover:text-ink transition-colors">
@@ -62,7 +62,7 @@ export function AuthorSection() {
             small teams (Paragraph, Pimlico, Gallery, RabbitHole) and working on my own things.
           </p>
 
-          <p>
+          <p className="reveal reveal-d2">
             Right now, I&apos;m building{" "}
             <a href="https://www.beenthere.page/" target="_blank" rel="noopener noreferrer"
               className="underline underline-offset-4 decoration-rule hover:text-ink">
@@ -78,7 +78,7 @@ export function AuthorSection() {
             verifying the result, and learning from what happens after shipping.
           </p>
 
-          <p>
+          <p className="reveal reveal-d2">
             I&apos;m putting this handbook together because I needed it. I&apos;m studying
             engineering work from teams already doing this in production, talking to
             engineers directly, and reading research on agentic software engineering,
@@ -86,7 +86,7 @@ export function AuthorSection() {
             understand what really works in practice.
           </p>
 
-          <div className="py-2">
+          <div className="py-2 reveal reveal-d3">
             <p className="font-mono text-[10px] tracking-widest uppercase text-muted mb-3">
               Teams I&apos;m studying:
             </p>
@@ -111,7 +111,7 @@ export function AuthorSection() {
             </div>
           </div>
 
-          <p className="text-muted pt-2 leading-relaxed">
+          <p className="reveal reveal-d3 text-muted pt-2 leading-relaxed">
             These are the teams with useful public work or workflows worth studying. My role is to test the patterns hands-on,
             see what actually works, and organize what I learn. If your team is figuring
             this out in production, <a href="/contribute"

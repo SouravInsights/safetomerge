@@ -42,7 +42,7 @@ export function NotifyForm({
 
   if (status === "done") {
     return (
-      <div className="inline-flex items-center gap-2.5 px-4 py-3 border border-verified text-verified bg-verified/5 w-full sm:w-auto h-[46px]">
+      <div className="inline-flex items-center gap-2.5 px-4 py-3 border border-verified text-verified bg-verified/5 shadow-[3px_3px_0_0_color-mix(in_srgb,var(--color-verified)_30%,transparent)] w-full sm:w-auto h-[46px]">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 shrink-0">
           <polyline points="20 6 9 17 4 12" />
         </svg>
@@ -69,7 +69,7 @@ export function NotifyForm({
         }}
         aria-invalid={status === "invalid" || status === "error"}
         aria-describedby={status === "invalid" || status === "error" ? `${id}-error` : undefined}
-        className={`font-mono text-base sm:text-sm bg-transparent outline-none px-4 py-3 h-12 sm:h-[46px] placeholder:text-muted/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
+        className={`font-mono text-base sm:text-sm bg-white/50 shadow-[inset_1px_1px_0_0_var(--color-rule)] outline-none px-4 py-3 h-12 sm:h-[46px] placeholder:text-muted/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${
           status === "invalid" || status === "error"
             ? "border-flag focus:border-flag"
             : "border-rule focus:border-ink"
@@ -78,7 +78,7 @@ export function NotifyForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="font-mono text-xs sm:text-sm uppercase tracking-wide bg-ink text-paper px-5 py-3 hover:bg-verified active:translate-x-[1px] active:translate-y-[1px] transition-all duration-150 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed h-12 sm:h-[46px] shrink-0"
+        className="font-mono text-xs sm:text-sm uppercase tracking-wide font-semibold inline-flex items-center justify-center border-2 border-ink bg-paper text-ink px-5 py-3 shadow-[3px_3px_0_0_var(--color-ink)] hover:border-verified hover:text-verified hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] active:border-verified active:text-verified active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all duration-150 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed h-[45px] sm:h-[43px] shrink-0"
       >
         Notify me
       </button>

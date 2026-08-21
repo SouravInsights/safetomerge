@@ -14,10 +14,8 @@ export default function Home() {
       <HeroSection />
       <SectionDivider />
       <WhySection />
-      <SectionDivider />
       <HandbookLoop />
       <TableOfContents />
-      <SectionDivider />
       <AudienceSection />
       <ContributionBanner />
       <AuthorSection />

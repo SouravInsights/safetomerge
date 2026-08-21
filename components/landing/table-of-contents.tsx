@@ -258,27 +258,39 @@ function partSlug(index: number) {
   return `part-${index + 1}`;
 }
 
+/* Slight hand-placed tilt per chip, like labels stuck onto a folder. */
+const CHIP_TILTS = [
+  "-rotate-1",
+  "rotate-[0.5deg]",
+  "-rotate-[0.5deg]",
+  "rotate-1",
+  "-rotate-[1.25deg]",
+  "rotate-[0.75deg]",
+];
+
 export function TableOfContents() {
   return (
     <Container size="narrow" className="py-16 sm:py-20" id="contents">
       <section>
-        <SectionLabel>What&apos;s inside</SectionLabel>
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+        <SectionLabel index="03" className="reveal">What&apos;s inside</SectionLabel>
+        <h2 className="reveal reveal-d1 text-2xl sm:text-3xl font-semibold mb-4">
           The full table of contents
         </h2>
-        <p className="text-lg text-muted leading-relaxed max-w-xl mb-8">
+        <p className="reveal reveal-d2 text-lg text-muted leading-relaxed max-w-xl mb-8">
           Twenty-two chapters across six parts. The structure might evolve as I learn
           from teams doing this in production. Each chapter is grounded in practical work,
           research, or both.
         </p>
 
-        <div className="flex overflow-x-auto whitespace-nowrap gap-2 mb-10 pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+        {/* Extra top and right room so the tilted corners and offset shadows
+            never clip against the scroll container's edge. */}
+        <div className="reveal reveal-d2 flex overflow-x-auto whitespace-nowrap gap-2 mb-10 pt-1 pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:pl-0 sm:pr-2 sm:flex-wrap">
           {HANDBOOK_PARTS.map((part, index) => {
             const [roman] = part.title.split(":");
             return (
               <a key={part.title} href={`#${partSlug(index)}`}
-                className="font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-all duration-150 active:translate-y-[1px] px-3 py-1.5 rounded-none bg-paper">
-                {roman}<span className="text-muted/70 normal-case tracking-normal ml-1">&middot; {part.chapters.length}</span>
+                className={`font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-all duration-150 active:translate-y-[1px] px-3 py-1.5 rounded-none bg-paper shadow-[2px_2px_0_0_var(--color-rule)] hover:shadow-[2px_2px_0_0_var(--color-ink)] ${CHIP_TILTS[index % CHIP_TILTS.length]}`}>
+                {roman}
               </a>
             );
           })}
@@ -290,9 +302,9 @@ export function TableOfContents() {
               <h3 className="sticky top-0 bg-paper/95 backdrop-blur-md py-2.5 -mx-4 px-4 sm:mx-0 sm:px-0 font-mono text-xs tracking-widest uppercase text-ink mb-5 z-10 border-b border-rule/50">
                 {part.title}
               </h3>
-              <ol className="space-y-5">
+              <ol>
                 {part.chapters.map((chapter) => (
-                  <li key={chapter.n} className="group flex gap-4 cursor-pointer sm:cursor-default select-none touch-manipulation transition-transform duration-150 active:scale-[0.99]">
+                  <li key={chapter.n} className="group flex gap-4 cursor-pointer sm:cursor-default select-none touch-manipulation transition-transform duration-150 active:scale-[0.99] border-b border-dotted border-rule/70 py-5 first:pt-0">
                     <span className="font-mono text-sm text-muted w-6 shrink-0 text-right transition-colors duration-150 group-hover:text-verified group-hover:font-semibold group-active:text-verified">
                       {chapter.n}
                     </span>

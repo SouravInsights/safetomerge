@@ -7,9 +7,9 @@ export function WhySection() {
   return (
     <Container size="narrow" className="py-16 sm:py-20" id="why">
       <section>
-        <SectionLabel>Why this exists</SectionLabel>
+        <SectionLabel index="01" className="reveal">Why this exists</SectionLabel>
         <div className="space-y-5 text-lg leading-relaxed max-w-2xl">
-          <p>
+          <p className="reveal">
             <img
               src="https://www.google.com/s2/favicons?domain=posthog.com&sz=64"
               alt="PostHog"
@@ -30,7 +30,7 @@ export function WhySection() {
             <Highlight delay={100}>how to build an engineering system that can keep up with that pace.</Highlight>
           </p>
 
-          <p>
+          <p className="reveal reveal-d1">
             The teams figuring this out are changing the whole pipeline: how
             production is observed, how intent and context reach an agent, how a
             change is understood before it is merged, how evidence is gathered, and
@@ -39,18 +39,18 @@ export function WhySection() {
             <Highlight delay={200}>what&apos;s actually worth building, what is safe enough to ship, how to keep systems reliable.</Highlight>
           </p>
 
-          <p>
+          <p className="reveal reveal-d2">
             Most teams already have the raw tools: GitHub, CI, observability,
             browser tests, deployment platforms, and agent tooling. The harder problem
             is connecting them into a system that stays useful as the software,
             models, and workflows change.
           </p>
 
-          <p>
+          <p className="reveal reveal-d2">
             There is another problem. Faster development can also mean faster accumulation of mess: stale tests, duplicated abstractions, outdated documentation, weak conventions, and architectural drift. The more we ship, the more important this maintenance becomes.
           </p>
 
-          <p className="text-ink text-xl leading-relaxed border-l-2 border-mark pl-4 -ml-4 sm:pl-5 sm:-ml-5">
+          <p className="reveal reveal-d3 text-ink text-xl leading-relaxed border-l-2 border-mark bg-mark/15 py-3 pr-3 pl-4 -ml-4 sm:pl-5 sm:-ml-5">
             I am writing this by studying teams who are figuring this out: reading their
             engineering work, following what they are shipping, talking to engineers
             directly, and testing the patterns myself. The goal is to understand what actually works, what doesn't, and why.

@@ -9,13 +9,13 @@ export function HeroSection() {
   return (
     <Container size="narrow" className="pt-20 pb-16 sm:pt-28 sm:pb-20">
       <header>
-        <SectionLabel>A handbook for software teams</SectionLabel>
+        <SectionLabel className="hero-enter hero-enter-d1">A handbook for software teams</SectionLabel>
 
-        <h1 className="text-4xl sm:text-6xl font-semibold leading-[1.05] tracking-tight mb-6">
+        <h1 className="hero-enter hero-enter-d2 text-4xl sm:text-6xl font-semibold leading-[1.05] tracking-tight text-balance mb-6">
           Software is moving faster than you can review it.
         </h1>
 
-        <p className="text-lg sm:text-xl text-muted leading-relaxed mb-10">
+        <p className="hero-enter hero-enter-d3 text-lg sm:text-xl text-muted leading-relaxed mb-10">
           Agents can write, test, review, and ship software at a pace that changes
           the old way of working. The harder problem is building the system around
           them: clear intent, useful context, good evidence, safe boundaries, and
@@ -23,7 +23,7 @@ export function HeroSection() {
           <Highlight delay={300}>This handbook is about how teams are figuring that out.</Highlight>
         </p>
 
-        <div className="space-y-4">
+        <div className="hero-enter hero-enter-d4 space-y-4">
           <NotifyForm
             id="notify-hero"
             formClassName="flex flex-col sm:flex-row gap-3 max-w-md"

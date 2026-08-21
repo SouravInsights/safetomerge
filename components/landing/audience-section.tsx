@@ -7,9 +7,9 @@ export function AudienceSection() {
   return (
     <section id="for-you" className="section-band max-w-full py-16 sm:py-20">
       <Container size="narrow">
-        <SectionLabel className="mb-10">Is this for you</SectionLabel>
+        <SectionLabel index="04" className="mb-10 reveal">Is this for you</SectionLabel>
         <div className="grid sm:grid-cols-2 gap-10 sm:gap-16">
-          <div>
+          <div className="reveal reveal-d1">
             <h3 className="font-mono text-xs tracking-widest uppercase text-verified mb-4">
               This is for you if
             </h3>
@@ -27,7 +27,7 @@ export function AudienceSection() {
               ))}
             </ul>
           </div>
-          <div>
+          <div className="reveal reveal-d2">
             <h3 className="font-mono text-xs tracking-widest uppercase text-flag mb-4">
               Probably not if
             </h3>

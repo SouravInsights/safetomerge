@@ -37,9 +37,9 @@
   --paper: #121826;
   --ink: #e3e8f2;
   --muted-text: #b1b9cc;
-  --verified: #91c79e;
-  --flag: #f5a27c;
-  --mark: #9ee0af;
+  --verified: #62d286;
+  --flag: #f99f77;
+  --mark: #7aea9c;
   --rule: #515969;
   --edge: #7b8395;
   --plate: #05070d;
@@ -321,13 +321,13 @@ mark.mark:hover,
   --muted-foreground: #b1b9cc;
   --accent: #232938;
   --accent-foreground: #e3e8f2;
-  --destructive: #f5a27c;
+  --destructive: #f99f77;
   --border: #2f3543;
   --input: #2f3543;
-  --ring: #91c79e;
-  --chart-1: #91c79e;
+  --ring: #62d286;
+  --chart-1: #62d286;
   --chart-2: #b1b9cc;
-  --chart-3: #f5a27c;
+  --chart-3: #f99f77;
   --chart-4: #e3e8f2;
   --chart-5: #515969;
   --sidebar: #121826;
@@ -337,7 +337,7 @@ mark.mark:hover,
   --sidebar-accent: #232938;
   --sidebar-accent-foreground: #e3e8f2;
   --sidebar-border: #2f3543;
-  --sidebar-ring: #91c79e;
+  --sidebar-ring: #62d286;
 }
 
 @layer base {

@@ -15,6 +15,7 @@ export default function Home() {
       <LeafShadows
         srcMp4="/assets/leaves-shadows.mp4"
         opacity={0.28}
+        focusX={0}
       />
       <HeroSection />
       <SectionDivider />

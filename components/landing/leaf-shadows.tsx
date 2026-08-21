@@ -70,6 +70,13 @@ export interface LeafShadowsProps {
   opacityDark?: number;
   /** Whether dark mode is currently active — swaps to opacityDark when true. */
   isDark?: boolean;
+  /** Horizontal anchor of the cover crop, 0 (left) to 1 (right), default
+      0.5 (centered). Videos with foliage near the edges have an empty
+      center, and portrait screens crop away most of the width — anchor the
+      crop at the foliage so phones keep the leaves in frame. */
+  focusX?: number;
+  /** Vertical anchor of the cover crop, 0 (top) to 1 (bottom). */
+  focusY?: number;
   /** Extra className merged onto the canvas element. */
   className?: string;
 }
@@ -80,6 +87,8 @@ export function LeafShadows({
   opacity = 0.2,
   opacityDark = 0.6,
   isDark = false,
+  focusX = 0.5,
+  focusY = 0.5,
   className = "",
 }: LeafShadowsProps) {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -150,8 +159,9 @@ export function LeafShadows({
 
     let ready = false;
 
-    // Cover-fit crop math (same as CSS object-fit: cover), keeps the video
-    // filling the viewport without distortion at any aspect ratio.
+    // Cover-fit crop math (same as CSS object-fit: cover with
+    // object-position: focusX/focusY), keeps the video filling the viewport
+    // without distortion at any aspect ratio.
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = window.innerWidth * dpr;
@@ -163,11 +173,13 @@ export function LeafShadows({
         const videoAR = video.videoWidth / video.videoHeight;
         let u0 = 0, v0 = 0, u1 = 1, v1 = 1;
         if (videoAR > canvasAR) {
-          u0 = (1 - canvasAR / videoAR) / 2;
-          u1 = 1 - u0;
+          const visible = canvasAR / videoAR;
+          u0 = focusX * (1 - visible);
+          u1 = u0 + visible;
         } else {
-          v0 = (1 - videoAR / canvasAR) / 2;
-          v1 = 1 - v0;
+          const visible = videoAR / canvasAR;
+          v0 = focusY * (1 - visible);
+          v1 = v0 + visible;
         }
         gl.bindBuffer(gl.ARRAY_BUFFER, texBuf);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([u0, v0, u1, v0, u0, v1, u1, v1]), gl.STATIC_DRAW);
@@ -261,7 +273,7 @@ export function LeafShadows({
       gl.deleteBuffer(texBuf);
       gl.deleteTexture(texture);
     };
-  }, [srcMp4, srcWebm]);
+  }, [srcMp4, srcWebm, focusX, focusY]);
 
   return (
     <canvas

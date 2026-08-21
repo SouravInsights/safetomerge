@@ -194,6 +194,11 @@ export interface LeafShadowsProps {
   opacityDark?: number;
   /** Whether dark mode is currently active — swaps to opacityDark when true. */
   isDark?: boolean;
+  /** Whether the effect is visible. When false the canvas stays mounted
+      (remounting would re-measure the viewport at a bad moment, e.g. while
+      mobile browser chrome is still out) but the video pauses and the
+      render loop stops. */
+  enabled?: boolean;
   /** Horizontal anchor of the cover crop, 0 (left) to 1 (right), default
       0.5 (centered). Videos with foliage near the edges have an empty
       center, and portrait screens crop away most of the width — anchor the
@@ -227,6 +232,7 @@ export function LeafShadows({
   opacity = 0.2,
   opacityDark = 0.6,
   isDark = false,
+  enabled = true,
   focusX = 0.5,
   focusY = 0.5,
   className = "",
@@ -238,6 +244,26 @@ export function LeafShadows({
   contrast = 0.6,
 }: LeafShadowsProps) {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const videoRef = React.useRef<HTMLVideoElement | null>(null);
+  const enabledRef = React.useRef(enabled);
+
+  /* The canvas never unmounts when the effect is toggled off: remounting
+     re-measures the viewport at whatever moment the toggle happens (often
+     while mobile browser chrome is still out), which leaves the cover crop
+     composed for the wrong height. Pause and hide instead. */
+  React.useEffect(() => {
+    enabledRef.current = enabled;
+    const canvas = canvasRef.current;
+    if (canvas) canvas.style.visibility = enabled ? "" : "hidden";
+    const video = videoRef.current;
+    if (!video) return;
+    if (enabled) {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduce) video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [enabled]);
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -292,6 +318,7 @@ export function LeafShadows({
     gl.uniform1f(gl.getUniformLocation(program, "u_lo"), 0.6 * contrast);
 
     const video = document.createElement("video");
+    videoRef.current = video;
     video.crossOrigin = "anonymous";
     video.muted = true;
     video.loop = true;
@@ -312,37 +339,61 @@ export function LeafShadows({
     }
 
     let ready = false;
+    let viewW = 0;
+    let viewH = 0;
+
+    /* Mobile browser chrome shrinks and grows the viewport during scroll.
+       window.resize only fires when the chrome finishes animating (one big
+       jump when momentum scrolling settles), so the viewport is polled
+       every frame instead: visualViewport.height tracks the chrome's own
+       animation, and the composition follows it smoothly. */
+    const viewSize = () => {
+      const vv = window.visualViewport;
+      const h = vv && Math.abs(vv.scale - 1) < 0.01 ? vv.height : window.innerHeight;
+      return { w: Math.round(window.innerWidth), h: Math.round(h) };
+    };
 
     // Cover-fit crop math (same as CSS object-fit: cover with
     // object-position: focusX/focusY), keeps the video filling the viewport
-    // without distortion at any aspect ratio.
+    // without distortion at any aspect ratio. Runs once the video metadata
+    // is available and on every viewport change — the first resize happens
+    // before metadata loads, so this must not be skipped on size alone.
+    const updateCrop = () => {
+      if (!video.videoWidth || !video.videoHeight) return;
+      const canvasAR = canvas.width / canvas.height;
+      const videoAR = video.videoWidth / video.videoHeight;
+      let u0 = 0, v0 = 0, u1 = 1, v1 = 1;
+      if (videoAR > canvasAR) {
+        const visible = canvasAR / videoAR;
+        u0 = focusX * (1 - visible);
+        u1 = u0 + visible;
+      } else {
+        const visible = videoAR / canvasAR;
+        v0 = focusY * (1 - visible);
+        v1 = v0 + visible;
+      }
+      gl.bindBuffer(gl.ARRAY_BUFFER, texBuf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([u0, v0, u1, v0, u0, v1, u1, v1]), gl.STATIC_DRAW);
+      gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
+    };
+
     const resize = () => {
+      const { w, h } = viewSize();
+      if (w === viewW && h === viewH) return;
+      viewW = w;
+      viewH = h;
+
       // The footage is soft and low-res, so rendering the canvas at half
       // device resolution loses nothing visible and halves the GPU cost of
       // the ray march.
       const dpr = Math.min(window.devicePixelRatio || 1, 2) * 0.5;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
+      canvas.width = viewW * dpr;
+      canvas.height = viewH * dpr;
+      canvas.style.width = `${viewW}px`;
+      canvas.style.height = `${viewH}px`;
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uRes, canvas.width, canvas.height);
-
-      if (video.videoWidth && video.videoHeight) {
-        const canvasAR = canvas.width / canvas.height;
-        const videoAR = video.videoWidth / video.videoHeight;
-        let u0 = 0, v0 = 0, u1 = 1, v1 = 1;
-        if (videoAR > canvasAR) {
-          const visible = canvasAR / videoAR;
-          u0 = focusX * (1 - visible);
-          u1 = u0 + visible;
-        } else {
-          const visible = videoAR / canvasAR;
-          v0 = focusY * (1 - visible);
-          v1 = v0 + visible;
-        }
-        gl.bindBuffer(gl.ARRAY_BUFFER, texBuf);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([u0, v0, u1, v0, u0, v1, u1, v1]), gl.STATIC_DRAW);
-        gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
-      }
+      updateCrop();
     };
 
     const start = performance.now();
@@ -354,6 +405,7 @@ export function LeafShadows({
     // footage itself is ~30fps.
     const drawLoop = () => {
       rafHandle = requestAnimationFrame(drawLoop);
+      resize(); // cheap no-op unless the viewport changed since last frame
       if (video.paused || video.ended) return;
       if (ready && (frameDirty || !supportsRVFC)) {
         gl.activeTexture(gl.TEXTURE0);
@@ -397,7 +449,11 @@ export function LeafShadows({
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const applyMotionPref = () => {
-      reduceMotion.matches ? video.pause() : video.play().catch(() => {});
+      if (!enabledRef.current || reduceMotion.matches) {
+        video.pause();
+      } else {
+        video.play().catch(() => {});
+      }
     };
     reduceMotion.addEventListener("change", applyMotionPref);
 
@@ -413,10 +469,15 @@ export function LeafShadows({
     video.addEventListener("loadeddata", () => {
       ready = true;
       resize();
+      updateCrop();
       applyMotionPref();
     });
 
+    /* The per-frame poll in the draw loop handles smooth tracking while the
+       video plays; these listeners catch viewport changes while the loop is
+       stopped (video paused, FX off, reduced motion). */
     window.addEventListener("resize", resize);
+    window.visualViewport?.addEventListener("resize", resize);
     resize();
     video.load();
 
@@ -427,6 +488,7 @@ export function LeafShadows({
       reduceMotion.removeEventListener("change", applyMotionPref);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
+      window.visualViewport?.removeEventListener("resize", resize);
       video.pause();
       video.remove();
       gl.deleteProgram(program);
@@ -442,7 +504,7 @@ export function LeafShadows({
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className={`pointer-events-none fixed inset-0 z-40 h-full w-full mix-blend-multiply transform-gpu ${className}`}
+      className={`pointer-events-none fixed top-0 left-0 z-40 mix-blend-multiply transform-gpu ${className}`}
       style={{ opacity: isDark ? opacityDark : opacity }}
     />
   );

@@ -49,7 +49,7 @@ export function SiteControls() {
         <SlidersHorizontal className="w-4 h-4" />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Positioner side="bottom" align="end" sideOffset={10} className="z-50">
+        <Popover.Positioner side="bottom" align="end" sideOffset={10} positionMethod="fixed" className="z-50">
           <Popover.Popup className="w-52 border-2 border-edge bg-paper p-1.5 shadow-[3px_3px_0_0_var(--plate)] outline-none rounded-none">
             <Button
               variant="ghost"

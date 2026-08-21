@@ -7,12 +7,21 @@ import * as React from "react";
  *
  * Renders soft, animated leaf shadows over the page.
  *
- * Despite the WebGL canvas, this is not a generative shader. The component
- * plays a short looping video of leaf shadows and draws each frame onto a
- * fullscreen canvas. The fragment shader is a plain passthrough: it copies
- * the video pixel for pixel, with zero image processing. WebGL is only used
- * so frames paint in sync with the video (requestVideoFrameCallback) and
- * scale to any viewport without distortion.
+ * The component plays a short looping video of real leaf shadows and draws
+ * each frame onto a fullscreen WebGL canvas. The fragment shader is not a
+ * passthrough: it layers what footage alone cannot do — a levels remap that
+ * pulls real shadow depth out of the footage's grays (multiply blending
+ * only shows darkening, and the raw footage has no true blacks, so this is
+ * what makes everything below visible), crepuscular rays marched toward
+ * the sun with the video itself as the occluder, independent sway per leaf
+ * region (parallax the flat video lacks), dust motes twinkling in the
+ * shafts, a warm-light/cool-shadow color grade, slow gusts, and a soft
+ * vignette. Each is a uniform-prop you can dial to zero.
+ *
+ * Texture uploads run at the video's framerate (requestVideoFrameCallback)
+ * while drawing runs on rAF at display rate, so the shader motion stays
+ * smooth on high-refresh screens. The canvas renders at half device
+ * resolution: the footage is soft and low-res, so nothing visible is lost.
  *
  * The shadow effect itself is plain CSS compositing: the canvas uses
  * mix-blend-mode: multiply at low opacity. The video is dark leaf
@@ -34,14 +43,129 @@ const VERT = `
   }
 `;
 
-// Pure passthrough — no image processing happens in GLSL. All of the
-// visual effect comes from the CSS blend mode applied to the canvas.
+// The real shader work. The video is the base, and the shader layers what
+// footage alone cannot do: crepuscular rays marched toward the sun with the
+// video itself as the occluder (shafts shift as the foliage sways),
+// independent sway per leaf region (parallax the flat video lacks), dust
+// motes twinkling in the light, slow gusts that swell and calm, and a soft
+// vignette keeping focus on the content column. Every uniform can be dialed
+// to zero for a plain pass.
 const FRAG = `
   precision mediump float;
   uniform sampler2D u_video;
+  uniform vec2 u_res;
+  uniform float u_time;
+  uniform float u_sway;
+  uniform float u_rays;
+  uniform float u_gust;
+  uniform float u_vignette;
+  uniform float u_motes;
+  uniform float u_lo;
   varying vec2 v_texCoord;
+
+  /* Sun sits just off the top-left edge; shafts slant down-right. */
+  const vec2 LIGHT_POS = vec2(0.10, 1.10);
+  /* Warm sunlight in the gaps, cool sky ambient in the shadows — real
+     foliage shadows are never neutral gray. */
+  const vec3 RAY_TINT = vec3(1.0, 0.93, 0.78);
+  const vec3 SHADE_TINT = vec3(0.94, 0.98, 1.06);
+
+  float hash(vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+  }
+
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    float a = hash(i);
+    float b = hash(i + vec2(1.0, 0.0));
+    float c = hash(i + vec2(0.0, 1.0));
+    float d = hash(i + vec2(1.0, 1.0));
+    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+  }
+
+  /* Levels remap. The footage is low-contrast (soft grays, no true blacks)
+     and multiply blending only ever darkens the page, so bright pixels are
+     composited away to nothing. u_lo pulls real shadow depth out of the
+     grays; every effect below needs those darks to be visible at all. */
+  float lev(float x) {
+    return clamp((x - u_lo) / (1.0 - u_lo), 0.0, 1.0);
+  }
+
   void main() {
-    gl_FragColor = texture2D(u_video, v_texCoord);
+    vec2 uv = v_texCoord;
+    vec2 asp = vec2(u_res.x / u_res.y, 1.0);
+    float t = u_time;
+
+    /* Sway: leaves at different depths drift on different phases, so the
+       frame feels layered instead of one flat plate. Two octaves is enough
+       for organic motion. */
+    vec2 sway = vec2(
+      noise(uv * asp * 3.0 + vec2(t * 0.24, t * 0.11)),
+      noise(uv * asp * 3.0 + vec2(7.3 - t * 0.19, 2.1 + t * 0.13)));
+    sway += 0.5 * vec2(
+      noise(uv * asp * 6.5 + vec2(-t * 0.41, 3.7)),
+      noise(uv * asp * 6.5 + vec2(1.9, t * 0.37)));
+    uv = clamp(uv + (sway - 0.75) * (0.012 * u_sway), 0.0, 1.0);
+
+    vec3 raw = texture2D(u_video, uv).rgb;
+    vec3 col = vec3(lev(raw.r), lev(raw.g), lev(raw.b));
+
+    /* Crepuscular rays: march from the pixel toward the sun, accumulating
+       the footage's bright gaps with decay. The leaves themselves occlude
+       the light, so the shafts move with the foliage. */
+    float ray = 0.0;
+    if (u_rays > 0.001) {
+      vec2 uvA = uv * asp;
+      vec2 toLight = LIGHT_POS * asp - uvA;
+      float dist = length(toLight);
+      vec2 stepA = toLight * (0.9 / 12.0);
+      vec2 posA = uvA;
+      float decay = 1.0;
+      for (int i = 0; i < 12; i++) {
+        posA += stepA;
+        float g = lev(texture2D(u_video, clamp(posA / asp, 0.0, 1.0)).g);
+        ray += smoothstep(0.55, 1.0, g) * decay;
+        decay *= 0.85;
+      }
+      ray = ray / 12.0 * smoothstep(1.6, 0.3, dist) * u_rays;
+    }
+
+    /* Color grade: cool the shadows, warm the light that gets through. */
+    float gap = smoothstep(0.5, 0.95, col.g);
+    col *= mix(SHADE_TINT, vec3(1.0), gap);
+    col += RAY_TINT * ray * 0.8;
+
+    /* Dust motes: one drifting, twinkling speck per grid cell. Only shows
+       where a shaft lands on darker foliage — bright specks over bright
+       gaps are invisible under multiply blending anyway. */
+    if (u_motes > 0.001) {
+      vec2 g = uv * asp * 26.0;
+      vec2 id = floor(g);
+      vec2 f = fract(g);
+      vec2 o = vec2(hash(id), hash(id + 17.31));
+      o += 0.25 * vec2(
+        sin(t * (0.25 + 0.3 * hash(id + 5.7)) + hash(id) * 6.2831),
+        cos(t * (0.20 + 0.3 * hash(id + 9.1)) + hash(id + 3.3) * 6.2831));
+      float mote = smoothstep(0.06, 0.0, length(f - o));
+      mote *= 0.5 + 0.5 * sin(t * (0.6 + hash(id + 13.7)) + hash(id * 1.7) * 6.2831);
+      float darkBehind = 1.0 - smoothstep(0.4, 0.9, col.g);
+      col += RAY_TINT * mote * darkBehind * (0.25 + ray) * u_motes;
+    }
+
+    /* Gusts: a slow, incommensurate swell so the whole frame breathes. */
+    float gust = 1.0 + u_gust * (0.5 * sin(t * 0.21) + 0.3 * sin(t * 0.077 + 1.3));
+    col *= gust;
+
+    /* Vignette: corners fall off softly toward the content column. */
+    vec2 vc = (v_texCoord - 0.5) * asp;
+    float vig = 1.0 - u_vignette * smoothstep(0.4, 1.1, length(vc));
+    col *= vig;
+
+    gl_FragColor = vec4(col, 1.0);
   }
 `;
 
@@ -79,6 +203,22 @@ export interface LeafShadowsProps {
   focusY?: number;
   /** Extra className merged onto the canvas element. */
   className?: string;
+  /** How much the leaf regions sway independently (parallax). 0 = off. */
+  sway?: number;
+  /** Intensity of the light shafts marching from the sun through the
+      foliage. 0 = off. */
+  rays?: number;
+  /** How strongly the gusts swell and calm the whole frame. 0 = off. */
+  gust?: number;
+  /** Soft darkening of the corners toward the content column. 0 = off. */
+  vignette?: number;
+  /** Dust motes twinkling where shafts land on darker foliage. 0 = off. */
+  motes?: number;
+  /** Shadow depth pulled from the footage's grays via a levels remap.
+      Multiply blending only shows darkening and the raw footage has no
+      true blacks, so without this everything above stays invisible.
+      0 = passthrough, 1 = maximum crush. */
+  contrast?: number;
 }
 
 export function LeafShadows({
@@ -90,6 +230,12 @@ export function LeafShadows({
   focusX = 0.5,
   focusY = 0.5,
   className = "",
+  sway = 0.5,
+  rays = 0.7,
+  gust = 0.2,
+  vignette = 0.35,
+  motes = 0.4,
+  contrast = 0.6,
 }: LeafShadowsProps) {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
@@ -136,6 +282,14 @@ export function LeafShadows({
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.uniform1i(gl.getUniformLocation(program, "u_video"), 0);
+    const uRes = gl.getUniformLocation(program, "u_res");
+    const uTime = gl.getUniformLocation(program, "u_time");
+    gl.uniform1f(gl.getUniformLocation(program, "u_sway"), sway);
+    gl.uniform1f(gl.getUniformLocation(program, "u_rays"), rays);
+    gl.uniform1f(gl.getUniformLocation(program, "u_gust"), gust);
+    gl.uniform1f(gl.getUniformLocation(program, "u_vignette"), vignette);
+    gl.uniform1f(gl.getUniformLocation(program, "u_motes"), motes);
+    gl.uniform1f(gl.getUniformLocation(program, "u_lo"), 0.6 * contrast);
 
     const video = document.createElement("video");
     video.crossOrigin = "anonymous";
@@ -163,10 +317,14 @@ export function LeafShadows({
     // object-position: focusX/focusY), keeps the video filling the viewport
     // without distortion at any aspect ratio.
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      // The footage is soft and low-res, so rendering the canvas at half
+      // device resolution loses nothing visible and halves the GPU cost of
+      // the ray march.
+      const dpr = Math.min(window.devicePixelRatio || 1, 2) * 0.5;
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
 
       if (video.videoWidth && video.videoHeight) {
         const canvasAR = canvas.width / canvas.height;
@@ -187,45 +345,50 @@ export function LeafShadows({
       }
     };
 
-    const drawFrame = () => {
-      if (ready && !video.paused && !video.ended) {
+    const start = performance.now();
+    let frameDirty = false;
+
+    // Texture uploads run at the video's framerate (rVFC), but drawing runs
+    // on its own rAF loop at display rate, so the shader motion (sway, rays,
+    // motes) stays butter-smooth on high-refresh screens even though the
+    // footage itself is ~30fps.
+    const drawLoop = () => {
+      rafHandle = requestAnimationFrame(drawLoop);
+      if (video.paused || video.ended) return;
+      if (ready && (frameDirty || !supportsRVFC)) {
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+        frameDirty = false;
       }
+      gl.uniform1f(uTime, (performance.now() - start) / 1000);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
     const supportsRVFC = "requestVideoFrameCallback" in HTMLVideoElement.prototype;
-    let handle: number | null = null;
+    let rafHandle: number | null = null;
+    let rvfcHandle: number | null = null;
 
-    const loop = () => {
-      if (video.paused || video.ended) {
-        handle = null;
-        return;
-      }
-      if (supportsRVFC) {
-        
-        handle = video.requestVideoFrameCallback(() => {
-          drawFrame();
-          loop();
-        });
-      } else {
-        handle = requestAnimationFrame(() => {
-          drawFrame();
-          loop();
-        });
-      }
+    const onVideoFrame = () => {
+      frameDirty = true;
+      rvfcHandle = video.requestVideoFrameCallback(onVideoFrame);
     };
 
     const startLoop = () => {
-      if (handle === null && ready) loop();
+      if (!ready) return;
+      if (rafHandle === null) rafHandle = requestAnimationFrame(drawLoop);
+      if (supportsRVFC && rvfcHandle === null) {
+        rvfcHandle = video.requestVideoFrameCallback(onVideoFrame);
+      }
     };
     const stopLoop = () => {
-      if (handle !== null) {
-       
-        supportsRVFC ? video.cancelVideoFrameCallback(handle) : cancelAnimationFrame(handle);
-        handle = null;
+      if (rafHandle !== null) {
+        cancelAnimationFrame(rafHandle);
+        rafHandle = null;
+      }
+      if (rvfcHandle !== null) {
+        video.cancelVideoFrameCallback(rvfcHandle);
+        rvfcHandle = null;
       }
     };
 
@@ -273,7 +436,7 @@ export function LeafShadows({
       gl.deleteBuffer(texBuf);
       gl.deleteTexture(texture);
     };
-  }, [srcMp4, srcWebm, focusX, focusY]);
+  }, [srcMp4, srcWebm, focusX, focusY, sway, rays, gust, vignette, motes, contrast]);
 
   return (
     <canvas

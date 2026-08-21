@@ -14,8 +14,14 @@ export default function Home() {
     <main className="flex-1">
       <LeafShadows
         srcMp4="/assets/leaves-shadows.mp4"
-        opacity={0.28}
+        opacity={0.22}
         focusX={0}
+        contrast={0.6}
+        sway={0.5}
+        rays={0.7}
+        gust={0.2}
+        vignette={0.35}
+        motes={0.4}
       />
       <HeroSection />
       <SectionDivider />

@@ -60,7 +60,7 @@ export function HandbookLoop() {
               key={stage.label}
               className={`group flex gap-4 cursor-pointer sm:cursor-default select-none touch-manipulation transition-transform duration-150 active:scale-[0.98] reveal ${index % 2 === 0 ? "reveal-d1" : "reveal-d2"}`}
             >
-              <span className={`flex h-8 w-8 items-center justify-center rounded-full border border-ink bg-paper font-mono text-xs shrink-0 mt-0.5 shadow-[1.5px_1.5px_0_0_var(--color-ink)] transition-all duration-150 group-hover:bg-ink group-hover:text-paper group-hover:shadow-none group-hover:rotate-0 group-active:bg-ink group-active:text-paper ${BADGE_TILTS[index % BADGE_TILTS.length]}`}>
+              <span className={`flex h-8 w-8 items-center justify-center rounded-full border border-edge bg-paper font-mono text-xs shrink-0 mt-0.5 shadow-[1.5px_1.5px_0_0_var(--plate)] transition-all duration-150 group-hover:bg-ink group-hover:text-paper group-hover:shadow-none group-hover:rotate-0 group-active:bg-ink group-active:text-paper ${BADGE_TILTS[index % BADGE_TILTS.length]}`}>
                 {index + 1}
               </span>
               <div>
@@ -74,7 +74,7 @@ export function HandbookLoop() {
           <li className="group flex gap-4 sm:col-span-2 border-t border-rule pt-8 mt-2 cursor-default select-none reveal reveal-d2">
             <span
               aria-hidden="true"
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-muted bg-paper shrink-0 text-muted mt-0.5 -rotate-3 shadow-[1.5px_1.5px_0_0_var(--color-rule)] transition-all duration-300 group-hover:border-ink group-hover:text-ink group-hover:rotate-0 group-hover:shadow-none"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-muted bg-paper shrink-0 text-muted mt-0.5 -rotate-3 shadow-[1.5px_1.5px_0_0_var(--plate-soft)] transition-all duration-300 group-hover:border-ink group-hover:text-ink group-hover:rotate-0 group-hover:shadow-none"
             >
               <RotateCcw className="w-3.5 h-3.5 origin-center transition-transform duration-500 ease-out group-hover:-rotate-180 group-active:-rotate-360" />
             </span>

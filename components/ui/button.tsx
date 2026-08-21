@@ -12,11 +12,11 @@ const buttonVariants = cva(
         default:
           "bg-ink text-paper border border-ink hover:bg-verified hover:border-verified hover:text-paper font-semibold shadow-xs",
         outline:
-          "border border-rule bg-paper text-ink hover:border-ink hover:text-ink hover:bg-white",
+          "border border-rule bg-paper text-ink hover:border-ink hover:text-ink hover:bg-white dark:hover:bg-white/10",
         verified:
           "bg-verified/10 text-verified border border-verified/30 hover:bg-verified hover:border-verified hover:text-paper font-semibold",
         ghost:
-          "text-muted hover:text-ink hover:bg-black/5 border border-transparent",
+          "text-muted hover:text-ink hover:bg-black/5 dark:hover:bg-white/10 border border-transparent",
         link:
           "text-ink underline underline-offset-4 decoration-rule hover:text-verified hover:decoration-verified p-0 h-auto active:translate-x-0 active:translate-y-0",
       },

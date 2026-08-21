@@ -23,8 +23,8 @@ export function SidebarNav({ chapters }: { chapters: ChapterItem[] }) {
               href={href}
               className={`block px-3 py-2 text-sm transition-colors rounded-none ${
                 isActive
-                  ? "bg-black/5 font-semibold text-verified"
-                  : "text-muted hover:text-ink hover:bg-black/[0.02]"
+                  ? "bg-black/5 dark:bg-white/5 font-semibold text-verified"
+                  : "text-muted hover:text-ink hover:bg-black/[0.02] dark:hover:bg-white/5"
               }`}
             >
               {chapter.title}

@@ -46,7 +46,7 @@ export function AdminSpreadsheetView({
             });
 
             return (
-              <tr key={item.id} className="hover:bg-white/90 transition-colors group">
+              <tr key={item.id} className="hover:bg-white/90 dark:hover:bg-white/10 transition-colors group">
                 <td className="p-3 border-r border-rule text-center text-muted font-bold">
                   {totalCount - idx}
                 </td>

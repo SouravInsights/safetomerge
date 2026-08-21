@@ -4,14 +4,64 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Raw token values, scoped per color scheme. The theme below references
+   these so utilities resolve at runtime and flip with .dark. */
+:root {
+  color-scheme: light;
+  --paper: #f5f4ef;
+  --ink: #1e2530;
+  --muted-text: #62697a;
+  --verified: #3b6e52;
+  --flag: #b5481d;
+  --mark: #ffde59;
+  --rule: #d8d4c8;
+  /* Structural borders on buttons and tiles match the ink; in dark they
+     step down so outlined boxes sit quieter than the text inside them. */
+  --edge: #1e2530;
+  /* Raised physical tiles sit on an offset plate that echoes their border;
+     fields sit recessed on a faint wash; chips sit on a faint lift. */
+  --plate: #1e2530;
+  --plate-soft: #d8d4c8;
+  --tile: rgb(255 255 255 / 0.5);
+  --field: rgb(255 255 255 / 0.5);
+  /* Alternating spread background, a faint tint of the hairline. */
+  --band: color-mix(in srgb, var(--rule) 28%, transparent);
+}
+
+/* Midnight scheme: one blue-neutral ramp (constant hue 264, built in OKLCH)
+   plus reduced-vividness accents. Every text/border pair measured against
+   its real background; see .dark mark overrides below for the thinned
+   highlighter wash. */
+.dark {
+  color-scheme: dark;
+  --paper: #121826;
+  --ink: #e3e8f2;
+  --muted-text: #b1b9cc;
+  --verified: #91c79e;
+  --flag: #f5a27c;
+  --mark: #9ee0af;
+  --rule: #515969;
+  --edge: #7b8395;
+  --plate: #05070d;
+  --plate-soft: #0b0e17;
+  --tile: rgb(255 255 255 / 0.04);
+  --field: rgb(0 0 0 / 0.22);
+  --band: #1a202e;
+}
+
 @theme inline {
-  --color-paper: #f5f4ef;
-  --color-ink: #1e2530;
-  --color-muted: #62697a;
-  --color-verified: #3b6e52;
-  --color-flag: #b5481d;
-  --color-mark: #ffde59;
-  --color-rule: #d8d4c8;
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted-text);
+  --color-verified: var(--verified);
+  --color-flag: var(--flag);
+  --color-mark: var(--mark);
+  --color-rule: var(--rule);
+  --color-edge: var(--edge);
+  --color-plate: var(--plate);
+  --color-plate-soft: var(--plate-soft);
+  --color-tile: var(--tile);
+  --color-field: var(--field);
   --font-serif: var(--font-spectral);
   --font-mono: var(--font-plex-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -55,11 +105,12 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--paper);
 }
 
 body {
-  background-color: var(--color-paper);
-  color: var(--color-ink);
+  background-color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-serif);
   -webkit-font-smoothing: antialiased;
   position: relative;
@@ -81,15 +132,17 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* In dark mode the grain must lighten the surface, not darken it. */
+/* In dark mode the grain must lighten the surface, not darken it, so the
+   speck flips to white and the blend to screen. */
 .dark body::after {
   mix-blend-mode: screen;
-  opacity: 0.06;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 ::selection {
-  background-color: var(--color-verified);
-  color: var(--color-paper);
+  background-color: var(--verified);
+  color: var(--paper);
 }
 
 /* Editorial highlighter mark with dual-gradient marker stroke and in-view draw animation */
@@ -99,17 +152,17 @@ mark.mark,
   background-image: 
     linear-gradient(
       100deg,
-      color-mix(in srgb, var(--color-mark) 28%, transparent) 0.9%,
-      var(--color-mark) 2.4%,
-      color-mix(in srgb, var(--color-mark) 65%, transparent) 5.8%,
-      color-mix(in srgb, var(--color-mark) 60%, transparent) 93%,
-      var(--color-mark) 96%,
-      color-mix(in srgb, var(--color-mark) 0%, transparent) 98%
+      color-mix(in srgb, var(--mark) 28%, transparent) 0.9%,
+      var(--mark) 2.4%,
+      color-mix(in srgb, var(--mark) 65%, transparent) 5.8%,
+      color-mix(in srgb, var(--mark) 60%, transparent) 93%,
+      var(--mark) 96%,
+      color-mix(in srgb, var(--mark) 0%, transparent) 98%
     ),
     linear-gradient(
       transparent 0%,
-      color-mix(in srgb, var(--color-mark) 35%, transparent) 7.9%,
-      color-mix(in srgb, var(--color-mark) 20%, transparent) 15%
+      color-mix(in srgb, var(--mark) 35%, transparent) 7.9%,
+      color-mix(in srgb, var(--mark) 20%, transparent) 15%
     );
   background-repeat: no-repeat;
   background-size: 0% 62%;
@@ -133,10 +186,35 @@ mark.mark:hover,
   filter: brightness(1.04);
 }
 
+/* Dark-mode highlighter: the yellow marker's job passes to a pale sage
+   band — the verified hue's light step, drawn solid behind dark text.
+   Yellow-family washes mix to olive over the blue night surface; sage is
+   analogous to it, so the band reads clean. Paper text on the 93% band
+   measures Lc 71. */
+.dark mark.mark,
+.dark .letter-mark {
+  color: var(--paper);
+  background-image:
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--mark) 85%, transparent) 0.9%,
+      var(--mark) 2.4%,
+      color-mix(in srgb, var(--mark) 92%, transparent) 5.8%,
+      color-mix(in srgb, var(--mark) 88%, transparent) 93%,
+      var(--mark) 96%,
+      color-mix(in srgb, var(--mark) 0%, transparent) 98%
+    ),
+    linear-gradient(
+      transparent 0%,
+      color-mix(in srgb, var(--mark) 45%, transparent) 7.9%,
+      color-mix(in srgb, var(--mark) 30%, transparent) 15%
+    );
+}
+
 /* Alternating band so a long, text-heavy page breaks into readable
    "spreads" instead of one undifferentiated scroll. */
 .section-band {
-  background-color: color-mix(in srgb, var(--color-rule) 28%, transparent);
+  background-color: var(--band);
   position: relative;
 }
 
@@ -225,6 +303,41 @@ mark.mark:hover,
   --sidebar-accent-foreground: #1e2530;
   --sidebar-border: #d8d4c8;
   --sidebar-ring: #3b6e52;
+}
+
+/* shadcn variables, midnight scheme */
+.dark {
+  --background: #121826;
+  --foreground: #e3e8f2;
+  --card: #121826;
+  --card-foreground: #e3e8f2;
+  --popover: #121826;
+  --popover-foreground: #e3e8f2;
+  --primary: #e3e8f2;
+  --primary-foreground: #121826;
+  --secondary: #232938;
+  --secondary-foreground: #e3e8f2;
+  --muted: #232938;
+  --muted-foreground: #b1b9cc;
+  --accent: #232938;
+  --accent-foreground: #e3e8f2;
+  --destructive: #f5a27c;
+  --border: #2f3543;
+  --input: #2f3543;
+  --ring: #91c79e;
+  --chart-1: #91c79e;
+  --chart-2: #b1b9cc;
+  --chart-3: #f5a27c;
+  --chart-4: #e3e8f2;
+  --chart-5: #515969;
+  --sidebar: #121826;
+  --sidebar-foreground: #e3e8f2;
+  --sidebar-primary: #e3e8f2;
+  --sidebar-primary-foreground: #121826;
+  --sidebar-accent: #232938;
+  --sidebar-accent-foreground: #e3e8f2;
+  --sidebar-border: #2f3543;
+  --sidebar-ring: #91c79e;
 }
 
 @layer base {

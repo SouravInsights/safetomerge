@@ -97,7 +97,7 @@ export function AuthorSection() {
                   href={co.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-1.5 px-2.5 py-1 border border-rule rounded-none text-sm text-ink bg-white/50 shadow-xs transition-all duration-150 hover:border-ink hover:bg-paper hover:-translate-y-0.5 active:translate-y-0 active:scale-95 touch-manipulation"
+                  className="group inline-flex items-center gap-1.5 px-2.5 py-1 border border-rule rounded-none text-sm text-ink bg-tile shadow-xs transition-all duration-150 hover:border-ink hover:bg-paper hover:-translate-y-0.5 active:translate-y-0 active:scale-95 touch-manipulation"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img

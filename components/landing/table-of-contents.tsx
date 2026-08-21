@@ -289,7 +289,7 @@ export function TableOfContents() {
             const [roman] = part.title.split(":");
             return (
               <a key={part.title} href={`#${partSlug(index)}`}
-                className={`font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-all duration-150 active:translate-y-[1px] px-3 py-1.5 rounded-none bg-paper shadow-[2px_2px_0_0_var(--color-rule)] hover:shadow-[2px_2px_0_0_var(--color-ink)] ${CHIP_TILTS[index % CHIP_TILTS.length]}`}>
+                className={`font-mono text-xs tracking-widest uppercase border border-rule text-muted hover:text-ink hover:border-ink transition-all duration-150 active:translate-y-[1px] px-3 py-1.5 rounded-none bg-paper shadow-[2px_2px_0_0_var(--plate-soft)] hover:shadow-[2px_2px_0_0_var(--plate)] ${CHIP_TILTS[index % CHIP_TILTS.length]}`}>
                 {roman}
               </a>
             );

@@ -37,7 +37,7 @@ To prevent visual drift, every AI agent MUST follow these design primitives and 
 - **Dark Mode (class-based, `.dark` on `<html>`):**
   - Token values live in the `:root` (light) and `.dark` (midnight ink) blocks in `globals.css`. Never hardcode per-scheme hex in components; extend both blocks instead.
   - Physical tiles: faces stay `bg-paper`, offset plates use `var(--plate)` / `var(--plate-soft)` (deep night-shadow in dark, never lighter than the face). Faint washes use `bg-tile`.
-  - The color scheme is set by the inline script in `app/layout.tsx` (localStorage `theme`, falls back to OS preference) and flipped by `components/theme-toggle.tsx`.
+  - The color scheme is set by the inline script in `app/layout.tsx` (localStorage `theme`, falls back to OS preference) and the FX layer by localStorage `fx` (`data-fx="off"` on `<html>`). Both are user-switchable from `components/site-controls.tsx` (fixed top-right settings popover).
 
 - **NO Rounded Corners (Strict 0 Border Radius):**
   - Every container, button, card, badge, input, and modal MUST be `rounded-none`. NEVER write `rounded-md`, `rounded-lg`, or `rounded-full`.

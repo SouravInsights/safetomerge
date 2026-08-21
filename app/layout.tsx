@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Spectral } from "next/font/google";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { SiteControls } from "@/components/site-controls";
 import "./globals.css";
 
 const spectral = Spectral({
@@ -154,9 +154,10 @@ const jsonLd = {
   },
 };
 
-// Applies the saved color scheme before first paint so there is no flash of
-// the wrong theme. Falls back to the OS preference.
-const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}`;
+// Applies the saved color scheme and FX preference before first paint so
+// there is no flash of the wrong theme or the effects layer. Theme falls
+// back to the OS preference.
+const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}if(localStorage.getItem("fx")==="off"){document.documentElement.setAttribute("data-fx","off")}}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -180,7 +181,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col overflow-x-clip">
         {children}
-        <ThemeToggle />
+        <SiteControls />
       </body>
     </html>
   );

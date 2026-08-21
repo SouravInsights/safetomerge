@@ -27,7 +27,7 @@ const description =
 // Viewport settings: tells mobile browsers the screen width and sets the top browser bar color to match the page background
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FAF9F5" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f4ef" },
     { media: "(prefers-color-scheme: dark)", color: "#121826" },
   ],
   width: "device-width",

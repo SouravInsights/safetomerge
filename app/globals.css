@@ -4,49 +4,52 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Raw token values, scoped per color scheme. The theme below references
-   these so utilities resolve at runtime and flip with .dark. */
+/* Raw token values, scoped per color scheme. Both palettes are authored
+   in OKLCH so hue/lightness relationships stay visible; the theme below
+   references these so utilities resolve at runtime and flip with .dark. */
 :root {
   color-scheme: light;
-  --paper: #f5f4ef;
-  --ink: #1e2530;
-  --muted-text: #62697a;
-  --verified: #3b6e52;
-  --flag: #b5481d;
-  --mark: #ffde59;
-  --rule: #d8d4c8;
+  --paper: oklch(0.967 0.007 97.4);
+  --ink: oklch(0.263 0.023 259.3);
+  --muted-text: oklch(0.521 0.028 267.7);
+  --verified: oklch(0.494 0.072 158.3);
+  --flag: oklch(0.542 0.152 39.9);
+  --mark: oklch(0.9045 0.1526 95.1616);
+  --rule: oklch(0.870 0.017 91.6);
   /* Structural borders on buttons and tiles match the ink; in dark they
      step down so outlined boxes sit quieter than the text inside them. */
-  --edge: #1e2530;
+  --edge: var(--ink);
   /* Raised physical tiles sit on an offset plate that echoes their border;
      fields sit recessed on a faint wash; chips sit on a faint lift. */
-  --plate: #1e2530;
-  --plate-soft: #d8d4c8;
+  --plate: var(--ink);
+  --plate-soft: var(--rule);
   --tile: rgb(255 255 255 / 0.5);
   --field: rgb(255 255 255 / 0.5);
   /* Alternating spread background, a faint tint of the hairline. */
   --band: color-mix(in srgb, var(--rule) 28%, transparent);
 }
 
-/* Midnight scheme: one blue-neutral ramp (constant hue 264, built in OKLCH)
-   plus reduced-vividness accents. Every text/border pair measured against
-   its real background; see .dark mark overrides below for the thinned
-   highlighter wash. */
+/* Midnight scheme, authored in OKLCH: one blue-neutral ramp (hue ~266) in
+   equal perceptual steps, plus high-chroma accents (dark surrounds read
+   desaturated, so chroma is pushed near the sRGB edge while lightness —
+   and therefore measured text contrast — stays put). The highlighter is a
+   solid sage band behind dark text; yellow-family washes mix to olive
+   over the blue surface. */
 .dark {
   color-scheme: dark;
-  --paper: #121826;
-  --ink: #e3e8f2;
-  --muted-text: #b1b9cc;
-  --verified: #62d286;
-  --flag: #f99f77;
-  --mark: #7aea9c;
-  --rule: #515969;
-  --edge: #7b8395;
-  --plate: #05070d;
-  --plate-soft: #0b0e17;
+  --paper: oklch(0.210 0.029 266.1);
+  --ink: oklch(0.930 0.015 264.5);
+  --muted-text: oklch(0.785 0.028 267.5);
+  --verified: oklch(0.779 0.150 151.9);
+  --flag: oklch(0.784 0.121 44.5);
+  --mark: oklch(0.851 0.151 151.9);
+  --rule: oklch(0.463 0.028 264.3);
+  --edge: oklch(0.610 0.029 266.5);
+  --plate: oklch(0.129 0.015 266.4);
+  --plate-soft: oklch(0.165 0.020 269.9);
   --tile: rgb(255 255 255 / 0.04);
   --field: rgb(0 0 0 / 0.22);
-  --band: #1a202e;
+  --band: oklch(0.244 0.028 266.4);
 }
 
 @theme inline {
@@ -269,75 +272,78 @@ mark.mark:hover,
   }
 }
 
-/* ── Map our design tokens to shadcn's CSS variable system ── */
+/* ── Map our design tokens to shadcn's CSS variable system ──
+   Everything references the tokens above or derives from them, so a
+   palette retune touches exactly one block per scheme. The secondary
+   surface is ink mixed over paper (6% light, 10% dark). */
 :root {
-  --background: #f5f4ef;
-  --foreground: #1e2530;
-  --card: #f5f4ef;
-  --card-foreground: #1e2530;
-  --popover: #f5f4ef;
-  --popover-foreground: #1e2530;
-  --primary: #1e2530;
-  --primary-foreground: #f5f4ef;
-  --secondary: #e8e6df;
-  --secondary-foreground: #1e2530;
-  --muted: #e8e6df;
-  --muted-foreground: #62697a;
-  --accent: #e8e6df;
-  --accent-foreground: #1e2530;
-  --destructive: #b5481d;
-  --border: #d8d4c8;
-  --input: #d8d4c8;
-  --ring: #3b6e52;
-  --chart-1: #3b6e52;
-  --chart-2: #62697a;
-  --chart-3: #b5481d;
-  --chart-4: #1e2530;
-  --chart-5: #d8d4c8;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: color-mix(in oklch, var(--ink) 6%, var(--paper));
+  --secondary-foreground: var(--ink);
+  --muted: color-mix(in oklch, var(--ink) 6%, var(--paper));
+  --muted-foreground: var(--muted-text);
+  --accent: color-mix(in oklch, var(--ink) 6%, var(--paper));
+  --accent-foreground: var(--ink);
+  --destructive: var(--flag);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: var(--verified);
+  --chart-1: var(--verified);
+  --chart-2: var(--muted-text);
+  --chart-3: var(--flag);
+  --chart-4: var(--ink);
+  --chart-5: var(--rule);
   --radius: 0rem;
-  --sidebar: #f5f4ef;
-  --sidebar-foreground: #1e2530;
-  --sidebar-primary: #1e2530;
-  --sidebar-primary-foreground: #f5f4ef;
-  --sidebar-accent: #e8e6df;
-  --sidebar-accent-foreground: #1e2530;
-  --sidebar-border: #d8d4c8;
-  --sidebar-ring: #3b6e52;
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: color-mix(in oklch, var(--ink) 6%, var(--paper));
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--verified);
 }
 
 /* shadcn variables, midnight scheme */
 .dark {
-  --background: #121826;
-  --foreground: #e3e8f2;
-  --card: #121826;
-  --card-foreground: #e3e8f2;
-  --popover: #121826;
-  --popover-foreground: #e3e8f2;
-  --primary: #e3e8f2;
-  --primary-foreground: #121826;
-  --secondary: #232938;
-  --secondary-foreground: #e3e8f2;
-  --muted: #232938;
-  --muted-foreground: #b1b9cc;
-  --accent: #232938;
-  --accent-foreground: #e3e8f2;
-  --destructive: #f99f77;
-  --border: #2f3543;
-  --input: #2f3543;
-  --ring: #62d286;
-  --chart-1: #62d286;
-  --chart-2: #b1b9cc;
-  --chart-3: #f99f77;
-  --chart-4: #e3e8f2;
-  --chart-5: #515969;
-  --sidebar: #121826;
-  --sidebar-foreground: #e3e8f2;
-  --sidebar-primary: #e3e8f2;
-  --sidebar-primary-foreground: #121826;
-  --sidebar-accent: #232938;
-  --sidebar-accent-foreground: #e3e8f2;
-  --sidebar-border: #2f3543;
-  --sidebar-ring: #62d286;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: color-mix(in oklch, var(--ink) 10%, var(--paper));
+  --secondary-foreground: var(--ink);
+  --muted: color-mix(in oklch, var(--ink) 10%, var(--paper));
+  --muted-foreground: var(--muted-text);
+  --accent: color-mix(in oklch, var(--ink) 10%, var(--paper));
+  --accent-foreground: var(--ink);
+  --destructive: var(--flag);
+  --border: color-mix(in oklch, var(--ink) 17%, var(--paper));
+  --input: color-mix(in oklch, var(--ink) 17%, var(--paper));
+  --ring: var(--verified);
+  --chart-1: var(--verified);
+  --chart-2: var(--muted-text);
+  --chart-3: var(--flag);
+  --chart-4: var(--ink);
+  --chart-5: var(--rule);
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: color-mix(in oklch, var(--ink) 10%, var(--paper));
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: color-mix(in oklch, var(--ink) 17%, var(--paper));
+  --sidebar-ring: var(--verified);
 }
 
 @layer base {

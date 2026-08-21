@@ -65,21 +65,26 @@ body {
   position: relative;
 }
 
-/* Subtle paper grain so the background reads as a page, not a flat fill */
-body::before {
+/* Film grain over the whole page, the way a fine print reads: slightly
+   scaled-up fractal noise, black speck on multiply so it only ever deepens
+   the surface underneath. Rendered as a composited layer (not a background
+   repaint) so nothing re-rasterizes on scroll or hover. */
+body::after {
   content: "";
   position: fixed;
-  inset: 0;
+  inset: -100%;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.35;
+  z-index: 100;
+  will-change: transform;
+  opacity: 0.045;
   mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-body > * {
-  position: relative;
-  z-index: 1;
+/* In dark mode the grain must lighten the surface, not darken it. */
+.dark body::after {
+  mix-blend-mode: screen;
+  opacity: 0.06;
 }
 
 ::selection {
@@ -132,6 +137,7 @@ mark.mark:hover,
    "spreads" instead of one undifferentiated scroll. */
 .section-band {
   background-color: color-mix(in srgb, var(--color-rule) 28%, transparent);
+  position: relative;
 }
 
 /* Shared rise used by the hero entrance and the scroll reveals. */

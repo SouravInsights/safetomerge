@@ -24,12 +24,11 @@ const siteName = "Safe to Merge";
 const description =
   "A practical handbook for building reliable software when AI agents write and ship more of the code. Learn how teams are rethinking software engineering, code review, testing, verification, observability, agent harnesses, and safe autonomy.";
 
-// Viewport settings: tells mobile browsers the screen width and sets the top browser bar color to match the page background
+// Viewport settings: tells mobile browsers the screen width. The browser
+// bar color (theme-color meta) is derived at runtime from the --paper
+// token by the theme script below, so it follows the site's manual toggle
+// too, not just the OS scheme.
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f4ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#121826" },
-  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -157,7 +156,7 @@ const jsonLd = {
 // Applies the saved color scheme and FX preference before first paint so
 // there is no flash of the wrong theme or the effects layer. Theme falls
 // back to the OS preference.
-const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}if(localStorage.getItem("fx")==="off"){document.documentElement.setAttribute("data-fx","off")}}catch(e){}`;
+const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}if(localStorage.getItem("fx")==="off"){document.documentElement.setAttribute("data-fx","off")}var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.content=getComputedStyle(document.documentElement).backgroundColor}catch(e){}`;
 
 export default function RootLayout({
   children,

@@ -17,6 +17,10 @@ export function SiteControls() {
     const root = document.documentElement;
     const next = !root.classList.contains("dark");
     root.classList.toggle("dark", next);
+    /* The browser bar color is derived from the token, not restated:
+       re-read the root background after the scheme flips. */
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", getComputedStyle(root).backgroundColor);
     try {
       localStorage.setItem("theme", next ? "dark" : "light");
     } catch {

@@ -28,8 +28,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "When Writing Code Stops Being the Bottleneck",
         blurb: "How the engineering workflow changes when implementation becomes less of a bottleneck, what happens when humans can no longer review every change, and where human judgment becomes more important.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Geoffrey Litt: Understanding is the new bottleneck", href: "https://www.geoffreylitt.com/2026/07/02/understanding-is-the-new-bottleneck" },
           { label: "PostHog: 10k PRs a month", href: "https://posthog.com/blog/10k-prs-a-month" },
+          { label: "LangChain: Agentic engineering, a new discipline", href: "https://www.langchain.com/blog/agentic-engineering-redefining-software-engineering" },
         ],
       },
       {
@@ -37,8 +38,8 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "The Engineering Loop",
         blurb: "Observe, Understand, Change, Verify, Ship, Learn, and why the stages have to work as one system.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "PostHog: What if your product built itself?", href: "https://posthog.com/blog/what-if-your-product-built-itself" },
+          { label: "OpenHands: Agents in the outer loop", href: "https://www.openhands.dev/blog/20251202-agents-in-the-outer-loop" },
         ],
       },
       {
@@ -46,7 +47,8 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "What Does Correct Actually Mean?",
         blurb: "Intent, specifications, acceptance criteria, user journeys, behavioral contracts, invariants, and definitions of done.",
         sources: [
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "Kiro: Catching requirement bugs before they become code", href: "https://kiro.dev/blog/deep-spec-analysis/" },
+          { label: "PostHog: Anatomy of a self-driving PR", href: "https://posthog.com/docs/self-driving/anatomy-of-a-pr" },
         ],
       },
       {
@@ -54,7 +56,8 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "The Cost of Moving Fast",
         blurb: "Review fatigue, AI-generated mess, architectural drift, stale tests and docs, duplicated abstractions, and the case for continuous maintenance.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "OpenHands: Coding agents and technical debt", href: "https://www.openhands.dev/blog/coding-agents-and-technical-debt" },
+          { label: "Kiro: The bug fix paradox", href: "https://kiro.dev/blog/bug-fix-paradox/" },
         ],
       },
     ],
@@ -67,8 +70,10 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Make the Codebase Legible to Agents",
         blurb: "Repository knowledge, architecture, domain context, history, ownership, retrieval, skills, and keeping context fresh.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
           { label: "Sourcegraph: Why coding agents fail in large codebases", href: "https://sourcegraph.com/blog/why-coding-agents-fail-large-codebases" },
+          { label: "Modem: How coding agents read your code", href: "https://modem.dev/blog/how-coding-agents-read-your-code" },
+          { label: "Factory: The AGENTS.md working group", href: "https://factory.ai/news/agents-md" },
+          { label: "HumanLayer: Writing a good CLAUDE.md", href: "https://www.humanlayer.dev/blog/writing-a-good-claude-md" },
         ],
       },
       {
@@ -76,8 +81,8 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Understand the Blast Radius",
         blurb: "Connect a change to dependencies, user journeys, ownership, historical patterns, and production behavior before it is made.",
         sources: [
-          { label: "Sourcegraph: Why coding agents fail in large codebases", href: "https://sourcegraph.com/blog/why-coding-agents-fail-large-codebases" },
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Sourcegraph: The intelligence layer for coding agents", href: "https://sourcegraph.com/blog/a-new-era-for-sourcegraph-the-intelligence-layer-for-ai-coding-agents-and-developers" },
+          { label: "Relace: Fast agentic code search", href: "https://relace.ai/blog/fast-agentic-search" },
         ],
       },
       {
@@ -85,9 +90,8 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Give Agents a View of Production",
         blurb: "Errors, logs, traces, analytics, session replay, feature flags, deployments, and the signals that help explain what users actually experience.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
           { label: "PostHog: What is a Scout?", href: "https://posthog.com/blog/what-is-a-scout" },
-          { label: "PostHog: Replay Vision", href: "https://posthog.com/replay-vision" },
+          { label: "OpenHands: Debugging production issues with agents", href: "https://www.openhands.dev/blog/debugging-production-issues-with-ai-agents-automating-datadog-error-analysis" },
         ],
       },
       {
@@ -95,9 +99,10 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "The Agent Harness",
         blurb: "Tools, skills, memory, permissions, sandboxes, state, checkpoints, retries, and the environment around the model.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "OpenAI: Harness engineering", href: "https://openai.com/index/harness-engineering/" },
           { label: "OpenAI: Unlocking the Codex harness", href: "https://openai.com/index/unlocking-the-codex-harness/" },
-          { label: "AI Harness Engineering", href: "https://arxiv.org/abs/2605.13357" },
+          { label: "LangChain: The anatomy of an agent harness", href: "https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" },
+          { label: "Baseten: Harnesses are everything", href: "https://www.baseten.co/blog/harnesses-are-everything-heres-how-to-optimize-yours/" },
         ],
       },
     ],
@@ -110,8 +115,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Before You Give an Agent Write Access",
         blurb: "Repository conventions, contracts, test environments, secrets, permissions, and the boundaries that make agent work safe.",
         sources: [
-          { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Cursor: Agent sandboxing", href: "https://cursor.com/blog/agent-sandboxing" },
+          { label: "Modal: A note on the Hugging Face agent incident", href: "https://modal.com/blog/a-note-on-the-hugging-face-agent-incident" },
+          { label: "E2B: Limitations of running AI agents locally", href: "https://e2b.dev/blog/limitations-of-running-ai-agents-locally" },
         ],
       },
       {
@@ -119,8 +125,10 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Long-Running Agents",
         blurb: "Durable execution, resumability, partial failures, checkpoints, artifacts, handoffs, and what changes when work outlives a single session.",
         sources: [
-          { label: "Cursor: Long-running Agents", href: "https://cursor.com/changelog/02-12-26" },
+          { label: "Cursor: Long-running agents", href: "https://cursor.com/blog/long-running-agents" },
           { label: "Cursor: Scaling long-running autonomous coding", href: "https://cursor.com/blog/scaling-agents" },
+          { label: "Ramp: Why we built our own background agent", href: "https://builders.ramp.com/post/why-we-built-our-background-agent" },
+          { label: "Inngest: Background agents need orchestration", href: "https://www.inngest.com/blog/background-agents-are-here-your-orchestration-isnt-ready" },
         ],
       },
       {
@@ -128,8 +136,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "What Counts as Evidence?",
         blurb: "Why a green check is only one signal, and how tests, browser runs, traces, replays, static checks, and human judgment fit together.",
         sources: [
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
-          { label: "AI Harness Engineering", href: "https://arxiv.org/abs/2605.13357" },
+          { label: "OpenHands: The verification stack", href: "https://www.openhands.dev/blog/20260506-the-verification-stack" },
+          { label: "Vibe Kanban: Does Playwright MCP unlock autonomous QA?", href: "https://vibekanban.com/blog/does-playwright-mcp-unlock-autonomous-qa" },
+          { label: "PostHog: Replay Vision", href: "https://posthog.com/replay-vision" },
         ],
       },
       {
@@ -137,8 +146,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Verify What Changed",
         blurb: "Risk-based verification, test-impact analysis, targeted browser checks, historical regressions, and evidence proportional to the change.",
         sources: [
-          { label: "PostHog: QA Frontend Skill", href: "https://github.com/PostHog/posthog/blob/master/.agents/skills/qa-frontend/SKILL.md" },
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "PostHog: QA frontend agent skill", href: "https://github.com/PostHog/posthog/blob/master/.agents/skills/qa-frontend/SKILL.md" },
+          { label: "Factory: Automated QA", href: "https://factory.ai/news/automated-qa" },
+          { label: "Steel: Why browser agents fail in production", href: "https://steel.dev/blog/why-browser-agents-fail-in-production" },
         ],
       },
     ],
@@ -152,7 +162,8 @@ export const HANDBOOK_PARTS: Part[] = [
         blurb: "What agents can decide alone, what needs approval, and how teams increase autonomy without losing accountability.",
         sources: [
           { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "PostHog: How much can you delegate to agents?", href: "https://posthog.com/newsletter/agent-autonomy" },
+          { label: "Browserbase: Browser agent autonomy levels", href: "https://www.browserbase.com/blog/browser-agent-autonomy-levels" },
         ],
       },
       {
@@ -160,8 +171,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Independent Verification",
         blurb: "How to keep an agent from becoming its own oracle, with external checks, evidence quality, and failure-aware review.",
         sources: [
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
-          { label: "AI Harness Engineering", href: "https://arxiv.org/abs/2605.13357" },
+          { label: "OpenHands: Learning to verify AI-generated code", href: "https://www.openhands.dev/blog/20260305-learning-to-verify-ai-generated-code" },
+          { label: "Browserbase: Building verifiers for computer-use agents", href: "https://www.browserbase.com/blog/building-verifiers-for-computer-use-agents" },
+          { label: "LangChain: Aligning LLM judges with human preferences", href: "https://www.langchain.com/blog/aligning-llm-as-a-judge-with-human-preferences" },
         ],
       },
       {
@@ -169,8 +181,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Human Review Without the Noise",
         blurb: "Review routing, ownership, alert fatigue, AI review quality, and preserving human attention for decisions that need it.",
         sources: [
-          { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
-          { label: "PostHog: 10k PRs a month", href: "https://posthog.com/blog/10k-prs-a-month" },
+          { label: "Factory: Code review benchmark", href: "https://factory.ai/news/code-review-benchmark" },
+          { label: "Cursor: Assign PR reviewers automation", href: "https://cursor.com/marketplace/automations/assign-pr-reviewers" },
+          { label: "Cursor: Reviewing and testing code", href: "https://cursor.com/learn/reviewing-testing" },
         ],
       },
       {
@@ -178,8 +191,8 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Ship Safely",
         blurb: "Preview environments, CI/CD, progressive delivery, rollback, auditability, and the boundary between merge and production.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "PostHog: Improving PostHog deployments", href: "https://posthog.com/blog/improving-posthog-deployments" },
+          { label: "Cursor: CI autofix workflow", href: "https://cursor.com/workflows/autonomous-agents/ci-autofix" },
         ],
       },
     ],
@@ -192,9 +205,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Turn Production Failures Into Learning",
         blurb: "Use incidents, user behavior, replays, and escaped defects to create regression knowledge and better future verification.",
         sources: [
-          { label: "Factory: Incident Response", href: "https://factory.ai/news/incident-response" },
-          { label: "PostHog: What if your product built itself?", href: "https://posthog.com/blog/what-if-your-product-built-itself" },
-          { label: "PostHog: Replay Vision", href: "https://posthog.com/replay-vision" },
+          { label: "Factory: Incident response", href: "https://factory.ai/news/incident-response" },
+          { label: "PostHog: Agents closed 4,063 errors", href: "https://posthog.com/blog/agents-closed-4063-errors" },
+          { label: "LangChain: Observability that powers learning", href: "https://www.langchain.com/blog/agent-observability-needs-feedback-to-power-learning" },
         ],
       },
       {
@@ -202,8 +215,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Build the Evaluation Loop",
         blurb: "Offline evals, production-derived evals, traces, golden cases, human judgments, false positives, and evaluating the evaluator.",
         sources: [
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
+          { label: "Replit: Evaluating and improving Agent at scale", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
           { label: "Cursor: Continually improving the agent harness", href: "https://cursor.com/blog/continually-improving-agent-harness" },
+          { label: "Kiro: Continuous prompt evaluation", href: "https://kiro.dev/blog/continuous-prompt-evaluation/" },
         ],
       },
       {
@@ -211,7 +225,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Keep the System From Decaying",
         blurb: "Continuously maintain tests, docs, abstractions, architecture, agent skills, and the rules that keep the system legible.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
+          { label: "Lilian Weng: Harness engineering for self-improvement", href: "https://lilianweng.github.io/posts/2026-07-04-harness/" },
+          { label: "PostHog: Agent-first product engineering rules", href: "https://posthog.com/newsletter/agent-first-product-engineering" },
+          { label: "Factory: Agent readiness", href: "https://factory.ai/news/agent-readiness" },
         ],
       },
       {
@@ -219,8 +235,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Measure Whether It Actually Works",
         blurb: "Escaped defects, detection time, regression catch rate, evidence quality, intervention rate, cost, and safe engineering velocity.",
         sources: [
-          { label: "Replit: Closing the loop", href: "https://replit.com/blog/evaluating-and-improving-agent-at-scale" },
-          { label: "Cursor: Governing agent autonomy with Auto-review", href: "https://cursor.com/blog/agent-autonomy-auto-review" },
+          { label: "PostHog: 8 learnings from 1 year of agents", href: "https://posthog.com/blog/8-learnings-from-1-year-of-agents-posthog-ai" },
+          { label: "Factory: Measuring agent effectiveness", href: "https://factory.ai/news/agent-effectiveness" },
+          { label: "Kiro: The hidden inefficiencies in AI coding", href: "https://kiro.dev/blog/hidden-inefficiencies-ai-coding/" },
         ],
       },
     ],
@@ -233,9 +250,9 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Connect the Tools You Already Have",
         blurb: "Practical setups for GitHub, CI, preview environments, Playwright, Sentry, PostHog, Slack, agent tools, and the feedback loops between them.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
-          { label: "PostHog: What is a Scout?", href: "https://posthog.com/blog/what-is-a-scout" },
-          { label: "Factory: Incident Response", href: "https://factory.ai/news/incident-response" },
+          { label: "Cursor: Investigate Sentry issues workflow", href: "https://cursor.com/workflows/autonomous-agents/investigate-sentry-issues" },
+          { label: "Steel: Give Claude Code a real browser", href: "https://steel.dev/blog/give-claude-code-a-real-browser" },
+          { label: "Anthropic: How Slack builds human-agent teams", href: "https://claude.com/blog/turning-conversation-into-knowledge-how-slack-builds-human-agent-teams" },
         ],
       },
       {
@@ -243,11 +260,13 @@ export const HANDBOOK_PARTS: Part[] = [
         title: "Case Studies, Playbooks & Research",
         blurb: "Close reads of teams doing this in production, practical workflows you can copy, and a small research shelf kept deliberately high signal.",
         sources: [
-          { label: "OpenAI: Harness Engineering", href: "https://openai.com/index/harness-engineering/" },
           { label: "Cursor Research", href: "https://cursor.com/blog/topic/research" },
           { label: "Replit Engineering", href: "https://replit.com/blog" },
           { label: "Factory News", href: "https://factory.ai/news" },
-          { label: "Sourcegraph Research", href: "https://sourcegraph.com/blog" },
+          { label: "Sourcegraph Blog", href: "https://sourcegraph.com/blog" },
+          { label: "AI Harness Engineering (paper)", href: "https://arxiv.org/abs/2605.13357" },
+          { label: "The Agentic Engineering Guide", href: "https://agents.siddhantkhare.com/" },
+          { label: "Inngest: AI in Production 2026 report", href: "https://www.inngest.com/blog/ai-in-production-report-2026" },
         ],
       },
     ],
